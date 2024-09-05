@@ -6,6 +6,6 @@ module.exports = {
     instances: 2,
     kill_timeout: 120000,
     watch: false,
-    args: 'start -p 10024',
+    args: 'start -p 10044',
   }]
 };
