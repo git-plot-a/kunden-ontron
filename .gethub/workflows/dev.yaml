@@ -22,9 +22,9 @@ jobs:
           chmod 600 private_key
           
           ssh -o StrictHostKeyChecking=off -i private_key ${USER_NAME}@${HOSTNAME} '
-            cd /data/ontron-site &&
+            cd /data/kunden-ontron-site &&
             git fetch --all &&
-            git checkout new-dev &&
+            git checkout dev &&
             git reset --hard origin/dev &&
-            git pull origin new-dev &&
+            git pull origin dev &&
             bash deploy/init-dev.bash
