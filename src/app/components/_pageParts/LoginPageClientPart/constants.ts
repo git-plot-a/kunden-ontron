@@ -1,3 +1,4 @@
+"use client"
 import utils from "../../../utils";
 
 const email = utils.user.getSavedEmail()
