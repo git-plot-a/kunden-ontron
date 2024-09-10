@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'ontron-frontend',
+    name: 'ontron-kunden-frontend',
     script: './node_modules/next/dist/bin/next',
     exec_mode: 'cluster',
     instances: 2,
