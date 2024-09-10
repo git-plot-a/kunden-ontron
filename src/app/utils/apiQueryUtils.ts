@@ -1,77 +1,55 @@
-// import utils from ".";
-// import errorConstants from "../constants/errors";
+import errorConstants from "../constants/errors";
+import user from "./userData";
 
-// //TODO: Set correct error handler
-// type Errors = {
-// [key: string]: string
-// }
-// const defaultErrorHandler = (err: Errors) => {
-//   console.log(err);
-// };
+type Errors = {
+  [key: string]: string;
+};
 
-// const getData = async (
-//   axiosType : any,
-//   address: string,
-//   // stateFunction: void,
-//   headers = {},
-//   errorHandler = defaultErrorHandler
-// ) => {
-//   try {
-//     const response = await axiosType.get(address, headers);
-//     if (response && response.data) {
-//       // stateFunction(response.data);
-//       return;
-//     }
-//     // errorHandler(errorConstants.EMPTY_ANSWER );
-//     throw new Error(errorConstants.EMPTY_ANSWER);
-//   } catch (err) {
-//     console.log(err)
-//     if (err.response) {
-//       if (err.response.status == "401" || err.response.status == "403") {
-//         utils.user.resetToken();
-//         window.location.reload();
-//       }
-//       errorHandler(err);
-//     } else {
-//       errorHandler(`Error ${err.message}`);
-//     }
-//   }
-// };
+type queryMethods = "GET" | "POST";
 
-// const postData = async (
-//   axiosType,
-//   address,
-//   stateFunction,
-//   data = {},
-//   headers = {},
-//   errorHandler = defaultErrorHandler
-// ) => {
-//   try {
-//     const response = await axiosType.post(address, data, headers);
-//     if (response && response.data) {
-//       stateFunction(response.data);
-//       return;
-//     }
-//     throw new Error(errorConstants.EMPTY_ANSWER);
-//   } catch (err) {
-//     if (err.response) {
-//       if (err.response.status == "401" || err.response.status == "403") {
-//         utils.user.resetToken();
-//         window.location.reload();
-//       }
-//       errorHandler(err.response.data.message);
-//     } else {
-//       errorHandler(`Error ${err.message}`);
-//     }
-//     return;
-//   }
-// };
+const defaultErrorHandler = (err: Errors) => {
+  console.log(err);
+};
 
-// export default {
-//   defaultErrorHandler,
-//   getData,
-//   postData,
-// };
+const fetchData = async (
+  address: string,
+  method: queryMethods,
+  body: BodyInit | null | undefined,
+  authorised: boolean = true
+) => {
+  const token = user.getToken();
+  if ((token && authorised) || !authorised) {
+    try {
+      const response = await fetch(address, {
+        method: method,
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        //   "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        //   "Pragma": "0"
+        //   Pragma: "no-cache",
+        //   Expires: "0",
+        //   ...(authorised && token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: body,
+      });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`${response.status}: ${errorText}`);
+      }
 
-export default {}
+      return await response.json();
+    } catch (error) {
+      console.error("Fetch error: ", error);
+      throw error;
+    }
+  } else {
+    throw new Error(errorConstants.NO_USER_TOKEN);
+  }
+};
+
+export default {
+  defaultErrorHandler,
+  fetchData,
+};

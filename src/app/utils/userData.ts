@@ -1,3 +1,5 @@
+"use client"
+
 import localStorageVariables from '../constants/local.storage'
 
 
@@ -59,18 +61,18 @@ const getSavedPassword = () => {
     return localStorage.getItem(localStorageVariables.USER_PASSWORD_VARIABLE)
 }
 
-const headerWithAuth = (headers: object) => {
-    const token = getToken()
-    return token
-        ? {
-            'headers': {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-                ...headers,
-            },
-        }
-        : null
-}
+// const headerWithAuth = (headers: object) => {
+//     const token = getToken()
+//     return token
+//         ? {
+//             'headers': {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${token}`,
+//                 ...headers,
+//             },
+//         }
+//         : null
+// }
 
 const setID = (id: string | number) => {
     if (id) {
@@ -120,7 +122,7 @@ export default {
     setEnterData,
     getSavedEmail,
     getSavedPassword,
-    headerWithAuth,
+    // headerWithAuth,
     setID,
     resetID,
     getUserID,

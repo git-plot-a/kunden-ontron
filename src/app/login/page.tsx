@@ -1,15 +1,17 @@
 import HeaderMeta from '../components/_pageParts/HeaderMeta/HeaderMeta';
-import UserFrom from '../components/_forms/UserForm/UserFrom';
+import LoginPageClientPart from '../components/_pageParts/LoginPageClientPart/LoginPageClientPart';
 
 const LoginPage = async () => {
+  
   const metadata = await {title: 'Anmeldung', description:'test', keywords: '', image: ''}
 
+  
 
   return (
     <>
       <HeaderMeta metadata={metadata} />
       <h1>Login</h1>
-      <UserFrom/>
+      <LoginPageClientPart/>
     </>
   );
 };
