@@ -1,21 +1,23 @@
-"use client"
-import utils from "../../../utils";
+// "use client"
+// import utils from "../../../utils";
 
-const email = utils.user.getSavedEmail()
+// const email = utils.user.getSavedEmail()
 
-const password = utils.user.getSavedPassword()
+// const password = utils.user.getSavedPassword()
 
 const FIELDS: FiledList = [
   {
     name: "username",
     type: "email",
-    value: email ? email : undefined ,
+    value: '',
+    // value: email ? email : undefined ,
     placeholder: "E-Mail-Adresse"
   },
   {
     name: "password",
     type: "password",
-    value: password ? password : undefined,
+    // value: password ? password : undefined,
+    value: '',
     eyeVisibility: false,
     placeholder: "Passwort"
   },
