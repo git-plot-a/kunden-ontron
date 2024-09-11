@@ -1,0 +1,73 @@
+.field {
+  &Container {
+    margin-top: 39px;
+    white-space: nowrap;
+    position: relative;
+    input {
+      outline: none;
+      border: none;
+      width: -webkit-fill-available;
+      width: -moz-available;
+      border-bottom: 1.5px solid var(--gray-borders);
+      color: var(--dark-text);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 300;
+      transition: color 0.2s, border-color 0.2s;
+      &::placeholder {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 300;
+        color: var(--gray-borders);
+        transition: color 0.2s;
+      }
+      &:focus,
+      &:active {
+        border-bottom: 1.5px solid var(--active-text-color);
+        &::placeholder {
+          color: var(--placeholder-light-gray);
+        }
+      }
+      &[type='checkbox'] {
+        // display: none;
+        margin-top: 26px;
+        display: inline;
+        width: auto;
+        margin: 7.5px 11.5px 7.5px 3.5px;
+      }
+    }
+  }
+  &Label {
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: var(--gray-borders);
+    display: inline-block;
+  }
+}
+
+.error {
+  color: var(--error);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 300;
+  padding-top: 12px;
+}
+
+.eyes {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  transform: scale(1);
+  .hidden{
+    display: none;
+  }
+  &:active, &:focus{
+    transform: scale(0.9);
+  }
+}
+
+.formButton{
+    margin-top: 40px;
+}

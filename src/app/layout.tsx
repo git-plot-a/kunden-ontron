@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import Head from "next/head";
 import { poppins } from "./fonts"
 import { useScrollManager } from "@/app/hooks/ScrollManager"
-import "./globals.css";
+import "./globals.scss";
 
 
 
@@ -25,12 +25,13 @@ export default function RootLayout({
         <meta name="description" content="Persönlichen ontron Kundenbereich für maßgeschneiderten Support, Statusüberwachung und sichere Verwaltung Ihres Kontos."/>
         <meta name="keywords" content="Kundenbereich ontron"/>
         <meta name="robots" content="noindex"></meta>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+        <link rel="icon" type="image/x-icon" href="favicon.ico"/>
       </Head>
       <body className={clsx(poppins.variable)}>
       <main className={"main"}>
           <Suspense fallback={<div>Loading...</div>}>
             {children}
+
           </Suspense>
         </main>
       </body>

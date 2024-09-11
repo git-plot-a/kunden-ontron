@@ -10,7 +10,6 @@ const LoginPage = async () => {
   return (
     <>
       <HeaderMeta metadata={metadata} />
-      <h1>Login</h1>
       <LoginPageClientPart/>
     </>
   );

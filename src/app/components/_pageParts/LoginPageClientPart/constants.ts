@@ -1,5 +1,7 @@
 const REMEMBER_ME_LABEL = "Login-Daten für die Zukunft speichern"
 
+const DESCRIPTION = "Bitte geben Sie für den Anmeldedaten ein"
+
 const FIELDS: FiledList = [
   {
     name: "username",
@@ -26,7 +28,13 @@ const FIELDS: FiledList = [
 
 const BUTTON_TITLE = "Einreichen"
 
+const LINKS = [
+  '<spana>Haben Sie Ihr <a href="/resetpass">Passwort vergessen?</a></spana>'
+]
+
 export default {
     FIELDS,
-    BUTTON_TITLE
+    BUTTON_TITLE,
+    DESCRIPTION,
+    LINKS
 }

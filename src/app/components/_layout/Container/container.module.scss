@@ -1,0 +1,23 @@
+.container{
+    max-width: 1160px;
+    width: calc(100vw - 30px);
+    margin-left: auto;
+    margin-right: auto;
+    &.fullScreen{
+        width: 100vw !important;
+        max-width: none !important;
+    }
+}
+
+@media (max-width: 1024px){
+    .container{
+        max-width: calc(100vw - 172px);
+
+    } 
+}
+
+@media (max-width: 650px){
+    .container{
+       max-width: calc(100vw - 26px);
+    }   
+}

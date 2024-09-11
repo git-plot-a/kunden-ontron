@@ -19,6 +19,10 @@
   --error: #C70039;
   --blue-button: #F3FBFF;
   --share-button-color: #009fe3;
+  --start-back-gradient: #009EE3;
+  --finish-back-gradient: #67C5EE;
+  --gray-borders: #898997;
+  --placeholder-light-gray: #EEEEEE;
 }
 
 * {
@@ -90,6 +94,35 @@ a{
   padding-top: 83px;
 }
 
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-block {
+  width: 100%;
+  height: 25px;
+  background-color: var(--most-light);
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-block.small {
+  width: 60%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-color: var(--most-light);
+  }
+  50% {
+    background-color: var(--color-border);
+  }
+  100% {
+    background-color: var(--most-light);
+  }
+}
 
 @media(max-width: 650px){
   .specific-padding{
