@@ -8,11 +8,12 @@ import constants from './constants';
 
 type Props = {
     fields: FiledList,
-    handler: (props: {[key: string] : string | boolean | undefined}) => void,
+    handler: (props: { [key: string]: string | boolean | undefined }) => void,
     buttonTitle: string,
+    verificationSheme: object
 }
 
-const UserFrom: React.FC<Props> = ({ fields, handler, buttonTitle = constants.DEFAULT_SUBMIT_TEXT }) => {
+const UserFrom: React.FC<Props> = ({ fields, handler, buttonTitle = constants.DEFAULT_SUBMIT_TEXT, verificationSheme }) => {
 
     useEffect(() => {
         if (utils.user.getToken()) {
@@ -26,20 +27,34 @@ const UserFrom: React.FC<Props> = ({ fields, handler, buttonTitle = constants.DE
                 res[field.name] = field.value
                 return res
             }, {})}
-            //   validationSchema={verificationSheme}
+            validationSchema={verificationSheme}
             onSubmit={handler}
         >
-            {() => {
+            {(props) => {
                 return <Form>
                     {fields.map((field, key) => (
-                        <Field
-                            key={key}
-                            id={field.name}
-                            name={field.name}
-                            type={
-                                field.type
+                        <div key={key}>
+                            <Field
+                                id={field.name}
+                                name={field.name}
+                                type={
+                                    field.type
+                                }
+                                // value={field.value}
+                                // checked={field.type == 'checkbox' ? field.value : undefined}
+                                placeholder={field.placeholder}
+                            />
+                            {field.type == 'checkbox' &&
+                                (<label>{field.placeholder}</label>)
                             }
-                            placeholder={field.placeholder} />
+                            {props.errors[field.name] ? (
+                                <div>
+                                    <span>{props.errors[field.name]}</span>
+                                </div>
+                            ) : (
+                                ""
+                            )}
+                        </div>
                     ))}
                     <input
                         type="submit"

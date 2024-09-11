@@ -1,6 +1,6 @@
 declare global {
     
-    type FieldType = "text" | "textarea" | "password" | "email"
+    type FieldType = "text" | "textarea" | "password" | "email" | "checkbox"
 
     interface FormField  {
         name: string,
@@ -14,11 +14,6 @@ declare global {
     
      type FiledList = Array<FormField | PassWordField>
 
-     type loginFiledValues = {
-        username: string,
-        password: string,
-        [key: string]: string | boolean | undefined
-    }
   }
   
   export {};

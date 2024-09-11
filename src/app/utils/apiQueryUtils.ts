@@ -17,7 +17,7 @@ const fetchData = async (
   body: BodyInit | null | undefined,
   authorised: boolean = true
 ) => {
-  const token = user.getToken();
+  const token = authorised ? JSON.parse(user.getUserData())?.token : false;
   if ((token && authorised) || !authorised) {
     try {
       const response = await fetch(address, {

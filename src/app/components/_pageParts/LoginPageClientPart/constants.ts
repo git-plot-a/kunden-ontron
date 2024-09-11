@@ -1,3 +1,5 @@
+const REMEMBER_ME_LABEL = "Login-Daten für die Zukunft speichern"
+
 const FIELDS: FiledList = [
   {
     name: "username",
@@ -13,6 +15,12 @@ const FIELDS: FiledList = [
     placeholder: "Passwort"
   },
 
+  {
+    name: "rememberme",
+    type:"checkbox",
+    value: false,
+    placeholder: REMEMBER_ME_LABEL,
+  },
 ];
 
 

@@ -17,11 +17,11 @@ const getLastPage = () => {
     return localStorage.getItem(localStorageVariables.LAST_VISITED_PAGE)
 }
 
-const setToken = (token: string | undefined) => {
-    if (token) {
-        localStorage.setItem(localStorageVariables.USER_TOKEN_VALIABLE, token)
-    }
-}
+// const setToken = (token: string | undefined) => {
+//     if (token) {
+//         localStorage.setItem(localStorageVariables.USER_TOKEN_VALIABLE, token)
+//     }
+// }
 
 const setAvatar = (avatar: string) => {
     if (avatar) {
@@ -30,7 +30,11 @@ const setAvatar = (avatar: string) => {
 }
 
 const getToken = () => {
-    return localStorage.getItem(localStorageVariables.USER_TOKEN_VALIABLE)
+    const userData = localStorage.getItem(localStorageVariables.CURRENT_USER)
+    if(userData){
+        return JSON.parse(userData)?.token
+    }
+    return false
 }
 
 const getAvatar = () => {
@@ -92,31 +96,31 @@ const getUserID = () => {
     return localStorage.getItem(localStorageVariables.USER_ID_VARIABLE)
 }
 
-// const setUserData = (user) => {
-//     if (user.user_email) {
-//         localStorage.setItem(
-//             `${globalVarsProcess.getEnvValue('TAG', 'unknown')}-${localStorageVariables.CURRENT_USER}`,
-//             JSON.stringify(user),
-//         )
-//     }
-// }
+const setUserData = (user: {[key: string]: string | object}) => {
+    if (user?.user_email) {
+        localStorage.setItem(
+            localStorageVariables.CURRENT_USER,
+            JSON.stringify(user),
+        )
+    }
+}
 
-// const getUserData = () => {
-//     return JSON.parse(localStorage.getItem(`${globalVarsProcess.getEnvValue('TAG', 'unknown')}-${localStorageVariables.CURRENT_USER}`))
-// }
-// const resetUserData = () => {
-//     localStorage.removeItem(`${globalVarsProcess.getEnvValue('TAG', 'unknown')}-${localStorageVariables.CURRENT_USER}`)
-// }
+const getUserData = () => {
+    return JSON.parse(localStorageVariables.CURRENT_USER)
+}
+const resetUserData = () => {
+    localStorage.removeItem(localStorageVariables.CURRENT_USER)
+}
 
 const resetAllData = () => {
     resetAvatar();
     resetID();
     resetToken();
-    // resetUserData();
+    resetUserData();
 }
 
 export default {
-    setToken,
+    // setToken,
     getToken,
     resetToken,
     setEnterData,
@@ -129,9 +133,9 @@ export default {
     setAvatar,
     resetAvatar,
     getAvatar,
-    // setUserData,
-    // getUserData,
-    // resetUserData,
+    setUserData,
+    getUserData,
+    resetUserData,
     resetAllData,
     setLastPage,
     resetLastPage,

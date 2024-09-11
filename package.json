@@ -15,7 +15,9 @@
     "formik": "^2.4.6",
     "next": "14.2.8",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "yap": "^0.0.2",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",

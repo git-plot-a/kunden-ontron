@@ -21,18 +21,16 @@ export default function RootLayout({
     <html lang="de">
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1" />
-        <title>ontron GmBH</title>
+        <title>Kundenbereich | ontron</title>
+        <meta name="description" content="Persönlichen ontron Kundenbereich für maßgeschneiderten Support, Statusüberwachung und sichere Verwaltung Ihres Kontos."/>
+        <meta name="keywords" content="Kundenbereich ontron"/>
         <meta name="robots" content="noindex"></meta>
         <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
       </Head>
       <body className={clsx(poppins.variable)}>
       <main className={"main"}>
           <Suspense fallback={<div>Loading...</div>}>
-            {/* <Header /> */}
-            {/* <div className={"parallax"}> */}
-              {children}
-              {/* <Footer /> */}
-            {/* </div> */}
+            {children}
           </Suspense>
         </main>
       </body>
