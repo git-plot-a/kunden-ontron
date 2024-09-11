@@ -36,6 +36,12 @@ const LoginPageClientPart = () => {
     };
 
     useEffect(() => {
+        if (utils.user.getToken()) {
+            router.push('/')
+        }
+    }, [])
+
+    useEffect(() => {
         const savedEmail = utils.user.getSavedEmail()
         const savedPassword = utils.user.getSavedPassword()
 

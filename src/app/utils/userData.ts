@@ -2,7 +2,6 @@
 
 import localStorageVariables from '../constants/local.storage'
 
-
 const setLastPage = (lastVisitedPage: string | undefined) => {
     if (lastVisitedPage) {
         localStorage.setItem(localStorageVariables.LAST_VISITED_PAGE, lastVisitedPage)
@@ -33,7 +32,7 @@ const getToken = () => {
     const userData = localStorage.getItem(localStorageVariables.CURRENT_USER)
     if(userData){
         return JSON.parse(userData)?.token
-    }
+    }   
     return false
 }
 

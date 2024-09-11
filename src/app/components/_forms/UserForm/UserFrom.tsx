@@ -40,8 +40,6 @@ const UserFrom: React.FC<Props> = ({ fields, handler, buttonTitle = constants.DE
                                 type={
                                     field.type
                                 }
-                                // value={field.value}
-                                // checked={field.type == 'checkbox' ? field.value : undefined}
                                 placeholder={field.placeholder}
                             />
                             {field.type == 'checkbox' &&
