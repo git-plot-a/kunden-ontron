@@ -1,0 +1,149 @@
+.column {
+  width: max-content;
+  max-width: 100%;
+  margin-left: 12px;
+  margin-right: 12px;
+  &-span-1 {
+    width: 4.16%;
+    max-width: 4.16%;
+    min-width: 4.16%;
+  }
+  &-span-2 {
+    width: 8.3%;
+    max-width: 8.3%;
+    min-width: 8.3%;
+  }
+  &-span-3 {
+    width: 8.3%;
+    max-width: 12.48%;
+    min-width: 12.48%;
+  }
+  &-span-4 {
+    width: 16.64%;
+    max-width: 16.64%;
+    min-width: 16.64%;
+  }
+  &-span-5 {
+    width: calc(20.8% - 24px);
+    max-width: calc(20.8% - 24px);
+    min-width: calc(20.8% - 24px);
+  }
+  &-span-6 {
+    width: calc(24.96% - 24px);
+    max-width: calc(24.96% - 24px);
+    min-width: calc(24.96% - 24px);
+  }
+  &-span-7 {
+    width: calc(29.12% - 24px);
+    max-width: calc(29.12% - 24px);
+    min-width: calc(29.12% - 24px);
+  }
+  &-span-8 {
+    width: calc(33.28% - 24px);
+    max-width: calc(33.28% - 24px);
+    min-width: calc(33.28% - 24px);
+  }
+  &-span-9 {
+    width: calc(37.44% - 24px);
+    max-width: calc(37.44% - 24px);
+    min-width: calc(37.44% - 24px);
+  }
+  &-span-10 {
+    width: calc(41.6% - 24px);
+    max-width: calc(41.6% - 24px);
+    min-width: calc(41.6% - 24px);
+  }
+  &-span-11 {
+    width: calc(45.76% - 24px);
+    max-width: calc(45.76% - 24px);
+    min-width: calc(45.76% - 24px);
+  }
+  &-span-12 {
+    width: calc(49.92% - 24px);
+    max-width: calc(49.92% - 24px);
+    min-width: calc(49.92% - 24px);
+  }
+  &-span-13 {
+    width: calc(54.08% - 24px);
+    max-width: calc(54.08% - 24px);
+    min-width: calc(54.08% - 24px);
+  }
+  &-span-14 {
+    width: calc(58.24% - 24px);
+    max-width: calc(58.24% - 24px);
+    min-width: calc(58.24% - 24px);
+  }
+  &-span-15 {
+    width: calc(62.4% - 24px);
+    max-width: calc(62.4% - 24px);
+    min-width: calc(62.4% - 24px);
+  }
+  &-span-16 {
+    width: calc(69.56% - 24px);
+    max-width: calc(69.56% - 24px);
+    min-width: calc(69.56% - 24px);
+  }
+  &-span-17 {
+    width: calc(70.72% - 24px);
+    max-width: calc(70.72% - 24px);
+    min-width: calc(70.72% - 24px);
+  }
+  &-span-18 {
+    width: calc(74.88% - 24px);
+    max-width: calc(74.88% - 24px);
+    min-width: calc(74.88% - 24px);
+  }
+  &-span-19 {
+    width: calc(79.04% - 24px);
+    max-width: calc(79.04% - 24px);
+    min-width: calc(79.04% - 24px);
+  }
+  &-span-20 {
+    width: calc(83.2% - 24px);
+    max-width: calc(83.2% - 24px);
+    min-width: calc(83.2% - 24px);
+  }
+  &-span-21 {
+    width: calc(87.36% - 24px);
+    max-width: calc(87.36% - 24px);
+    min-width: calc(87.36% - 24px);
+  }
+  &-span-22 {
+    width: calc(91.52% - 24px);
+    max-width: calc(91.52% - 24px);
+    min-width: calc(91.52% - 24px);
+  }
+  &-span-23 {
+    width: calc(95.68% - 24px);
+    max-width: calc(95.68% - 24px);
+    min-width: calc(95.68% - 24px);
+  }
+  &-span-24 {
+    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
+    min-width: calc(100% - 24px);
+  }
+}
+
+@media (max-width: 900px) {
+  .column {
+    &-span-sm-12 {
+      width: calc(49.92% - 24px);
+      max-width: calc(49.92% - 24px);
+      min-width: calc(49.92% - 24px);
+    }
+    &-span-sm-24 {
+      width: calc(100% - 24px);
+      max-width: calc(100% - 24px);
+      min-width: calc(100% - 24px);
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .column {
+    width: calc(100vw - 24px);
+    max-width: none;
+    min-width: auto;
+  }
+}

@@ -1,0 +1,32 @@
+.container {
+  padding: 10px 12px 10px 12px;
+  width: max-content;
+  font-size: 16px;
+  display: block;
+  text-decoration: none;
+  line-height: 24px;
+  color: var(--dark-text);
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+  font-weight: 400;
+  &:hover {
+    background-color: var(--hover-light);
+  }
+  &:active {
+    color: var(--active-text-color);
+  }
+  span {
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding: 4px 6px;
+    span {
+      font-size: 14px;
+      line-height: 21px;
+    }
+  }
+}

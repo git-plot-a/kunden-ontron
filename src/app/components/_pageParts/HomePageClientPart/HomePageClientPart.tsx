@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import utils from "@/app/utils"
+import styles from "./homePage.client.module.scss"
 
 type ClientPartComponentProps = {
     [key: string]: string
@@ -20,17 +21,13 @@ const HomePageClientPart: React.FC<ClientPartComponentProps> = () => {
         }
     }, [])
 
-    //temporary function
-    const logOut = () =>{
-        console.log('logged out')
-        utils.user.resetAllData(); 
-        router.push('/login')
-    }
 
-    return <>{showContent && (<>
-    <h1>Welcome to the page with authorized access</h1>
-    <button onClick={logOut}>Log out</button>
-    </>)}</>
+    return <>{showContent && (
+        <div className={styles.mainCover}
+        >
+            <h1>Welcome to the page with authorized access</h1>
+        </div>
+    )}</>
 }
 
 export default HomePageClientPart
