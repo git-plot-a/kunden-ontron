@@ -22,16 +22,13 @@ const ResetPassPageClientPart = () => {
             "username": props.username,
         });
         try {
-            console.log(api.custom.RESET_PASWORD)
             const result = await utils.api.fetchData(api.custom.RESET_PASWORD, "POST", dataArray, false);
-            console.log(result?.data?.status)
             if (result?.data?.status != "200") {
                 console.log(result?.message);
                 const errorText: React.ReactNode = <div className={"error"}>{result?.message}</div>
                 setResultinText(errorText)
                 return
             }
-            console.log(result?.message);
             const successText: React.ReactNode = <div className={"success"}>{result?.message}</div>
             setResultinText(successText)
         } catch (error) {

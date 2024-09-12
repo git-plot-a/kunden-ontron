@@ -13,6 +13,7 @@ const LoginPageClientPart = () => {
     const router = useRouter();
     const [loading, setLoading] = useState(true)
     const [startFields, setStartFields] = useState<FiledList>(constants.FIELDS)
+    const [resultingText, setResultinText] = useState<React.ReactNode | undefined>(undefined)
 
     const loginHandler = async (props: { [key: string]: string | boolean | undefined }) => {
         const dataArray = JSON.stringify({
@@ -23,15 +24,35 @@ const LoginPageClientPart = () => {
         try {
             const result = await utils.api.fetchData(api.custom.LOGIN, "POST", dataArray, false);
             console.log(result)
+            if (result?.data?.status && result?.data?.status != "200") {
+                let errorText: React.ReactNode = <></>
+                console.log(result?.data?.status)
+                switch (result?.data?.status) {
+                    case 403: {
+                        errorText = <div className={"error"}>{constants.INCORRECT_LOGON_OR_PASSWORD}</div>
+                        break
+                    }
+                    default: {
+                        errorText = <div className={"error"}>{constants.SOMETHING_WENT_WRONG_TEXT}</div>
+                    }
+
+                }
+                setResultinText(errorText)
+                return
+            }
             if (result?.token) {
                 console.log(result)
                 utils.user.setUserData(result)
                 if (props.rememberme) {
                     utils.user.setEnterData(props.username as string, props.password as string)
                 }
-                router.push('/');
+                //router.push('/');
             }
+
         } catch (error) {
+            const errorText: React.ReactNode = <div className={"error"}>{error as string}</div>
+            setResultinText(errorText)
+            return
             console.error("Login error:", error);
         }
     };
@@ -55,7 +76,7 @@ const LoginPageClientPart = () => {
     }, [])
 
 
-    return <UserFormSection fields={startFields} handler={loginHandler} buttonTitle={constants.BUTTON_TITLE} verificationSheme={userLoginFormSchems} changeFieldsList={setStartFields} loading={loading} links={constants.LINKS}/>
+    return <UserFormSection fields={startFields} handler={loginHandler} buttonTitle={constants.BUTTON_TITLE} verificationSheme={userLoginFormSchems} changeFieldsList={setStartFields} loading={loading} links={constants.LINKS} resultingText={resultingText} />
     // return <Container fullScreen={true} classes={styles.background}>
     //     <div className={clsx(styles.userFormContainer, loading ? styles.smallHeight : '')}>
     //         <div className={styles.logo}>

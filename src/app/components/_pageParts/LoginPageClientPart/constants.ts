@@ -30,8 +30,14 @@ const LINKS = [
   '<spana>Haben Sie Ihr <a href="/resetpass">Passwort vergessen?</a></spana>'
 ]
 
+const INCORRECT_LOGON_OR_PASSWORD = 'Ungültiges Login oder Passwort'
+
+const SOMETHING_WENT_WRONG_TEXT = 'Etwas ist schief gelaufen. Kontaktieren Sie den Administrator: yulia.arkadeva@plot-a.eu'
+
 export default {
     FIELDS,
     BUTTON_TITLE,
-    LINKS
+    LINKS,
+    INCORRECT_LOGON_OR_PASSWORD,
+    SOMETHING_WENT_WRONG_TEXT
 }

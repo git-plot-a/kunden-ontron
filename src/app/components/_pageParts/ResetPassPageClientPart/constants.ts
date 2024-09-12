@@ -15,6 +15,7 @@ const LINKS = [
 
 const TEMPORARY_TEXT = 'Diese Funktion ist vorübergehend deaktiviert.<br>Um das Passwort zu ändern, wenden Sie sich bitte an Ihren Administrator:<br>yulia.arkadeva@plot-a.eu'
 
+
 export default {
   FIELDS,
   BUTTON_TITLE,
