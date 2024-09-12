@@ -46,7 +46,7 @@ const LoginPageClientPart = () => {
                 if (props.rememberme) {
                     utils.user.setEnterData(props.username as string, props.password as string)
                 }
-                //router.push('/');
+                router.push('/');
             }
 
         } catch (error) {
