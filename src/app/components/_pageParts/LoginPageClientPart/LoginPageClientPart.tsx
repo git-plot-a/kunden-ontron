@@ -1,16 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import clsx from "clsx";
 import { useRouter } from 'next/navigation';
-import UserFrom from "../../_forms/UserForm/UserFrom";
 import utils from "@/app/utils";
 import api from "../../../api/crud";
 import constants from "./constants";
 import { userLoginFormSchems } from "../../../schemes"
-import Container from "../../_layout/Container/Container";
-import styles from "./loginpage.client.module.scss"
-import Image from "next/image";
+import UserFormSection from "../../_sections/UserFromSection/UserFromSection";
+
 
 const LoginPageClientPart = () => {
     const router = useRouter();
@@ -58,33 +55,29 @@ const LoginPageClientPart = () => {
     }, [])
 
 
-    return <Container fullScreen={true} classes={styles.background}>
-        <div className={clsx(styles.userFormContainer, loading ? styles.smallHeight : '')}>
-            <div className={styles.logo}>
-                <Image alt={'ontron'} src={'/img/Logo_ontron.svg'} width={132} height={21} />
-            </div>
-            <div className={styles.descriptionText}>
-                {constants.DESCRIPTION}
-            </div>
-            {
-                !loading ?
-                    <div>
-                        <UserFrom handler={loginHandler} fields={startFields} buttonTitle={constants.BUTTON_TITLE} verificationSheme={userLoginFormSchems} changeFieldsList={setStartFields} />
-                    </div> :
-
-                    <div className="skeleton">
-                        <div className="skeleton-block"></div>
-                        <div className="skeleton-block small"></div>
-                        <div className="skeleton-block"></div>
-                    </div>
-            }
-            <div className={styles.linksArea}>
-                {constants?.LINKS.map((link, key) => (
-                    <div className={styles.linkItem} key={key} dangerouslySetInnerHTML={{ __html: link }} />
-                ))}
-            </div>
-        </div>
-    </Container>;
+    return <UserFormSection fields={startFields} handler={loginHandler} buttonTitle={constants.BUTTON_TITLE} verificationSheme={userLoginFormSchems} changeFieldsList={setStartFields} loading={loading} links={constants.LINKS}/>
+    // return <Container fullScreen={true} classes={styles.background}>
+    //     <div className={clsx(styles.userFormContainer, loading ? styles.smallHeight : '')}>
+    //         <div className={styles.logo}>
+    //             <Image alt={'ontron'} src={'/img/Logo_ontron.svg'} width={132} height={21} />
+    //         </div>
+    //         <div className={styles.descriptionText}>
+    //             {constants.DESCRIPTION}
+    //         </div>
+    //         {
+    //             !loading ?
+    //                 <div>
+    //                     <UserFrom handler={loginHandler} fields={startFields} buttonTitle={constants.BUTTON_TITLE} verificationSheme={userLoginFormSchems} changeFieldsList={setStartFields} />
+    //                 </div> :
+    //                 <SceletonLoading />
+    //         }
+    //         <div className={styles.linksArea}>
+    //             {constants?.LINKS.map((link, key) => (
+    //                 <div className={styles.linkItem} key={key} dangerouslySetInnerHTML={{ __html: link }} />
+    //             ))}
+    //         </div>
+    //     </div>
+    // </Container>;
 };
 
 export default LoginPageClientPart;

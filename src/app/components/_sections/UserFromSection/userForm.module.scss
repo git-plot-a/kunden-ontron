@@ -1,0 +1,68 @@
+.background {
+    background: linear-gradient(
+      to right,
+      var(--start-back-gradient),
+      var(--finish-back-gradient)
+    );
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  .userForm{
+      &Container{
+          background-color: var(--most-light);
+          width: max-content;
+          height: max-content;
+          position: absolute;
+          margin: auto;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          border-radius: 24px;
+          padding: 66px;
+          width: 503px;
+          overflow-y: hidden;
+          max-height: 100vh;
+          transition: max-height 0.5s;
+          &.smallHeight{
+              max-height: 400px;   
+          }
+      }
+  }
+  
+  .logo{
+      text-align: center;
+      padding-bottom: 16.5px;
+  }
+  .descriptionText{
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 300;
+      text-align: center;
+      color: var(--dark-text);
+      margin-bottom: 42px;
+  }
+  
+  .linksArea{
+      padding-top: 12px;
+      .linkItem{
+          text-align: center;
+          font-size: 16px;
+          font-weight: 300;
+          line-height: 24px;
+          color: var(--gray-borders);
+          a{
+              color: var(--active-text-color);
+              text-decoration: none;
+              &:hover{
+                  color: var(--title-gradient);
+              }
+          }
+      }
+  }
+
+  .resultingText{
+    margin-top: 20px;
+    text-align: center;
+  }

@@ -1,7 +1,5 @@
 const REMEMBER_ME_LABEL = "Login-Daten für die Zukunft speichern"
 
-const DESCRIPTION = "Bitte geben Sie für den Anmeldedaten ein"
-
 const FIELDS: FiledList = [
   {
     name: "username",
@@ -35,6 +33,5 @@ const LINKS = [
 export default {
     FIELDS,
     BUTTON_TITLE,
-    DESCRIPTION,
     LINKS
 }

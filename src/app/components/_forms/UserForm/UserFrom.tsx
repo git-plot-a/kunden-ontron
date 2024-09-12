@@ -1,6 +1,7 @@
 "use client"
 
 import { Formik, Form, Field, } from 'formik';
+import clsx from 'clsx';
 import React, { useEffect } from "react"
 import actions from "../../../actions"
 import utils from "../../../utils"
@@ -8,6 +9,7 @@ import constants from './constants';
 import styles from "./userfrom.module.scss"
 import Image from 'next/image';
 import { SubmitFormButton } from '../../_buttons/SubmitFormButton/SubmitFormButton';
+
 
 type Props = {
     fields: FiledList,
@@ -53,7 +55,7 @@ const UserFrom: React.FC<Props> = ({ fields, handler, buttonTitle = constants.DE
 
                 return <Form>
                     {fields.map((field, key) => (
-                        <div className={styles.fieldContainer} key={key}>
+                        <div className={clsx(styles.fieldContainer, field.type == 'checkbox' ? styles.checkbox : '')} key={key}>
                             <Field
                                 id={field.name}
                                 name={field.name}

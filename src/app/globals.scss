@@ -112,6 +112,13 @@ a{
   width: 60%;
 }
 
+
+.error{
+  color: var(--error);
+  font-size: 14px;
+  line-height: 24px;
+}
+
 @keyframes shimmer {
   0% {
     background-color: var(--most-light);

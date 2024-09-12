@@ -34,15 +34,11 @@ const fetchData = async (
         body: body,
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`${response.status}: ${errorText}`);
-      }
-
-      return await response.json();
+      return response.json();
+    
+      return response.json();
     } catch (error) {
-      console.error("Fetch error: ", error);
-      throw error;
+      return error;
     }
   } else {
     throw new Error(errorConstants.NO_USER_TOKEN);

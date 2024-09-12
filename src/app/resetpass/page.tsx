@@ -1,4 +1,5 @@
 import HeaderMeta from '../components/_pageParts/HeaderMeta/HeaderMeta';
+import ResetPassPageClientPart from '../components/_pageParts/ResetPassPageClientPart/ResetPassPageClientPart';
 // import UserFrom from '../components/_forms/UserForm/UserFrom';
 
 const ResetPassPage = async () => {
@@ -8,7 +9,7 @@ const ResetPassPage = async () => {
   return (
     <>
       <HeaderMeta metadata={metadata} />
-      <h1>Reset password page</h1>
+      <ResetPassPageClientPart/>
       {/* <UserFrom/> */}
     </>
   );
