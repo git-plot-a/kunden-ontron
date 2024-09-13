@@ -7,7 +7,7 @@ import { userResetPasswordFormSchems } from "@/app/schemes";
 import utils from "@/app/utils";
 import api from "@/app/api/crud";
 import constants from "./constants";
-import styles from "./resetPass.client.module.scss"
+// import styles from "./resetPass.client.module.scss"
 
 
 const ResetPassPageClientPart = () => {
@@ -54,7 +54,7 @@ const ResetPassPageClientPart = () => {
     }, [])
 
     return <>
-        <div className={styles.temporaryClosed}><div className={styles.text} dangerouslySetInnerHTML={{ __html: constants.TEMPORARY_TEXT }}></div></div>
+        {/* <div className={styles.temporaryClosed}><div className={styles.text} dangerouslySetInnerHTML={{ __html: constants.TEMPORARY_TEXT }}></div></div> */}
         <UserFormSection fields={constants.FIELDS} handler={resetPassword} buttonTitle={constants.BUTTON_TITLE} verificationSheme={userResetPasswordFormSchems} loading={loading} links={constants.LINKS} resultingText={resultingText} />
     </>
 }
