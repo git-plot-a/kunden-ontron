@@ -92,7 +92,7 @@ const UserFrom: React.FC<Props> = ({ fields, handler, buttonTitle = constants.DE
                                 <label htmlFor={field.name} className={styles.fieldLabel}>{field.placeholder}</label>
                             }
                             {props.errors[field.name] ? (
-                                <div className={styles.error}>
+                                <div className={styles.messages}>
                                     <span>{props.errors[field.name]}</span>
                                 </div>
                             ) : (

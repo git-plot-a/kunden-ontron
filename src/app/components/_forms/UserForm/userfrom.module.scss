@@ -50,12 +50,13 @@
   }
 }
 
-.error {
+.messages {
   color: var(--error);
   font-size: 16px;
   line-height: 24px;
   font-weight: 300;
   padding-top: 12px;
+  white-space: wrap;
 }
 
 .eyes {
