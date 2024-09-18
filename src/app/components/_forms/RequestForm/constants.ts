@@ -35,9 +35,12 @@ const DEFAULT_DESCRIPTION = 'Beschreiben Sie Ihre Anfrage '
 
 const BUTTON_TEXT = 'Senden'
 
+const TITLE = 'Wie können wir Ihnen heute helfen?'
+
 export default {
     REQUEST_TYPES,
     CATEGORIES,
     DEFAULT_DESCRIPTION,
-    BUTTON_TEXT
+    BUTTON_TEXT,
+    TITLE
 }

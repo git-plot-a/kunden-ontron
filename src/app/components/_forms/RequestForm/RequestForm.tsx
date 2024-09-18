@@ -10,11 +10,15 @@ import { sendRequestFormSchems } from "../../../schemes"
 import styles from "./request.form.module.scss"
 import constants from "./constants"
 
-const RequestForm: React.FC = () => {
-    // const [currentType, setCurrentType] = useState(constants.REQUEST_TYPES[0].value)
-    // const [currentCategory, setCurrentCategory] = useState(constants.CATEGORIES[0].value)
+type Props = {
+    handler: (res: boolean) => void
+}
 
-    const handler = () => { }
+const RequestForm: React.FC<Props> = ({ handler }) => {
+    const submitHandler = () => {
+        const res_code = 200;
+        handler(res_code == 200)
+    }
 
     return <div className={styles.formContainer}>
         <Formik
@@ -24,7 +28,7 @@ const RequestForm: React.FC = () => {
                 description: ''
             }}
             validationSchema={sendRequestFormSchems}
-            onSubmit={handler}
+            onSubmit={submitHandler}
         >{(props) => {
             return <Form>
                 <Row>

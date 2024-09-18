@@ -22,6 +22,12 @@ declare global {
         [key: string]: string | number
      }
 
+     interface formSendResult {
+        success: boolean,
+        text: string,
+        img?: string 
+     }
+
   }
   
 

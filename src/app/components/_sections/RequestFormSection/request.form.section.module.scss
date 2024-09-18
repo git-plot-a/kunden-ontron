@@ -25,13 +25,47 @@
       margin-top: auto;
       margin-bottom: auto;
       width: calc(41.6% - 88px);
-      max-width: calc(41.6% - 88px);
-      min-width: calc(41.6% - 88px);
+      // max-width: calc(41.6% - 88px);
+      // min-width: calc(41.6% - 88px);
       height: max-content;
+      &.fullSize {
+        width: -webkit-fill-available;
+        width: -moz-available;
+        position: relative;
+        left: 0;
+        .formTitleImage {
+          margin-top: 38px;
+        }
+        .formTitle {
+          margin-top: 43px;
+        }
+      }
     }
     &Image {
       text-align: center;
       margin-top: 40px;
     }
+  }
+}
+
+.aditionalInfo {
+  font-size: 16px;
+  line-height: 32px;
+  text-align: center;
+  font-weight: 400;
+  color: var(--most-light);
+  margin-top: 78px;
+  margin-bottom: 60px;
+  span {
+    background-color: #ff9c51;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 6px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  a {
+    color: var(--most-light);
+    text-decoration: underline;
   }
 }
