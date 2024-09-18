@@ -1,0 +1,60 @@
+.form {
+  &Container {
+    padding: 81.5px 56px 82.5px 57px;
+    border-radius: 32px;
+    background-color: var(--most-light);
+  }
+}
+
+.field {
+  &Text {
+    display: block;
+    padding: 12px 10px 12px 24px;
+    border-radius: 32px;
+    border: 1px solid var(--color-border);
+    transition: borderColor 0.2s;
+    width: -webkit-fill-available;
+    width: -moz-available;
+    margin-bottom: 24px;
+    font-size: 16px;
+    line-height: 30px;
+    font-weight: 400;
+    color: var(--dark-text);
+    outline: none;
+    &:active,
+    &:focus {
+      border-color: var(--active-text-color);
+    }
+  }
+}
+textarea {
+  &.fieldText {
+    height: 220px;
+  }
+}
+.hidden {
+  display: none;
+}
+
+.send {
+  &Button {
+    width: max-content;
+    min-width: 237px;
+  }
+  &Conatiner {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.messages {
+  color: var(--error);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 300;
+  padding-bottom: 12px;
+  margin-top: -12px;
+  white-space: wrap;
+  padding-left: 24px;
+  padding-right: 24px;
+}

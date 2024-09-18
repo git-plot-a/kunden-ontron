@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import RequestFormSection from "../../_sections/RequestFormSection/RequestFormSection"
 import utils from "@/app/utils"
 import styles from "./homePage.client.module.scss"
 
@@ -14,6 +15,7 @@ const HomePageClientPart: React.FC<ClientPartComponentProps> = () => {
     const [showContent, setShowContent] = useState(false)
 
     useEffect(() => {
+        // handleClick();
         if (!utils.user.getToken()) {
             router.push('/login')
         } else {
@@ -23,9 +25,8 @@ const HomePageClientPart: React.FC<ClientPartComponentProps> = () => {
 
 
     return <>{showContent && (
-        <div className={styles.mainCover}
-        >
-            <h1>Welcome to the page with authorized access</h1>
+        <div className={styles.mainCover}>
+            <RequestFormSection/>
         </div>
     )}</>
 }

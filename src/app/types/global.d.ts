@@ -15,6 +15,14 @@ declare global {
     
      type FiledList = Array<FormField | PassWordField>
 
+     interface DropDownList {
+        title: string,
+        value: string | number,
+        description?: string,
+        [key: string]: string | number
+     }
+
   }
   
+
   export {};

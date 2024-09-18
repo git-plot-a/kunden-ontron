@@ -115,6 +115,12 @@ export const editUserFromSchems = yup.object().shape({
   email: yup.string().email(constants.EMAIL).required(constants.REQUIRED_FIELD),
 })
 
+export const sendRequestFormSchems = yup.object().shape({
+  requestTypeId: yup.number().integer().required(constants.REQUIRED_FIELD),
+  summary: yup.string().max(30, constants.MAX_LENGTH),
+  description: yup.string().max(250, constants.MAX_LENGTH).required(constants.REQUIRED_FIELD)
+})
+
 // export const addCommentFormSchems = yup.object().shape({
 //   post: yup
 //     .number()

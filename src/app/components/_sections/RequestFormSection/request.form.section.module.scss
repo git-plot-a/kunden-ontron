@@ -1,0 +1,37 @@
+.form {
+  &Container {
+    background: linear-gradient(
+      to right,
+      var(--start-back-gradient),
+      var(--finish-back-gradient)
+    );
+    padding: 93px 101px;
+    border-radius: 32px;
+    position: relative;
+  }
+  &Title {
+    font-size: 44px;
+    line-height: 68px;
+    font-weight: 600;
+    color: var(--most-light);
+    text-align: center;
+    &Block {
+      position: absolute;
+      width: -webkit-fill-available;
+      width: -moz-available;
+      top: 0;
+      bottom: 0;
+      left: 93px;
+      margin-top: auto;
+      margin-bottom: auto;
+      width: calc(41.6% - 88px);
+      max-width: calc(41.6% - 88px);
+      min-width: calc(41.6% - 88px);
+      height: max-content;
+    }
+    &Image {
+      text-align: center;
+      margin-top: 40px;
+    }
+  }
+}
