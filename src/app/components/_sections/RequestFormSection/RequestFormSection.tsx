@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react";
+import clsx from "clsx";
 import Container from "../../_layout/Container/Container";
 import Row from "../../_layout/Row/Row";
 import Col from "../../_layout/Col/Col";
@@ -8,14 +9,13 @@ import RequestForm from "../../_forms/RequestForm/RequestForm";
 import Image from "next/image";
 import constants from "./constants";
 import styles from "./request.form.section.module.scss"
-import clsx from "clsx";
 
 
 const RequestFormSection = () => {
-    const [result, setResult] = useState<null | formSendResult>(null)
+    const [result, setResult] = useState<formSendResult | null>(null)
 
-    const handler = (result: boolean) => {
-        const res: null | formSendResult = constants.RESULTS.reduce((status: null | formSendResult, item) => (item.success == result ? item : status), null);
+    const handler = async (result: boolean) => {
+        const res = constants.RESULTS.reduce((r: formSendResult | null, item)=>(item.success == result ? item : r), null)
         setResult(res)
     }
 

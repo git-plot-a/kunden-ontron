@@ -7,7 +7,7 @@ import clsx from 'clsx';
 
 type Props = {
     items: Array<DropDownList>,
-    handler: () => void
+    handler: (newVal: string) => void
 }
 
 const DropDownList: React.FC<Props> = ({ items, handler }) => {
@@ -18,7 +18,7 @@ const DropDownList: React.FC<Props> = ({ items, handler }) => {
     const itemClick = (key: number) => {
         changeOpening()
         setcurrentChoice(key)
-        handler()
+        handler(items[key].value)
     }
 
     const changeOpening = () => {

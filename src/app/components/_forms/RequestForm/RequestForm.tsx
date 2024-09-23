@@ -7,23 +7,46 @@ import Row from "../../_layout/Row/Row"
 import Col from "../../_layout/Col/Col"
 import DropDownList from "../../DropDownList/DropDownList"
 import { sendRequestFormSchems } from "../../../schemes"
-import styles from "./request.form.module.scss"
 import constants from "./constants"
+import utils from "@/app/utils"
+import styles from "./request.form.module.scss"
 
 type Props = {
     handler: (res: boolean) => void
 }
 
 const RequestForm: React.FC<Props> = ({ handler }) => {
-    const submitHandler = () => {
-        const res_code = 200;
-        handler(res_code == 200)
+    //values: object
+    const submitHandler = async (values: { requestTypeId: string, summary: string, description: string }) => {
+        const user = utils.user.getUserData();
+        console.log(user)
+        if (user) {
+            const requestData = {
+                "type": String(values.requestTypeId),
+                "summary": values.summary, // parse from the form
+                "description": values.description, // parse from the form,
+                "userEmail": user.user_email // we need to parse the email of the user
+            }
+            console.log(requestData)
+            const result: Response | unknown = await utils.jira.apiRequest(requestData)
+            if ((result as Response)?.ok) {
+                handler(true)
+                return
+            }
+
+            handler(false)
+        } else {
+            handler(false)
+            return
+        }
     }
+
+
 
     return <div className={styles.formContainer}>
         <Formik
             initialValues={{
-                requestTypeId: 6,
+                requestTypeId: "8",
                 summary: '',
                 description: ''
             }}
@@ -33,8 +56,8 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
             return <Form>
                 <Row>
                     <Col span={24}>
-                        <Field type="number" name="requestTypeId" id="requestTypeId" className={styles.hidden} />
-                        <DropDownList items={constants.REQUEST_TYPES} handler={() => { }}></DropDownList>
+                        <Field type="string" name="requestTypeId" id="requestTypeId" className={styles.hidden} />
+                        <DropDownList items={constants.REQUEST_TYPES} handler={(newVal: string) => { props.setFieldValue("requestTypeId", newVal) }}></DropDownList>
                         {typeof props.errors["requestTypeId"] != "undefined" && (
                             <div className={styles.messages}>
                                 <span>{props.errors["requestTypeId"]}</span>
