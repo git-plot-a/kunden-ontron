@@ -6,6 +6,8 @@ const DEFAULT_META_KEYWORDS = ''
 
 const DEFAULT_META_IMAGE = ''
 
+
+
 export default {
     DEFAULT_META_DESCRIPTION,
     DEFAULT_META_KEYWORDS,
