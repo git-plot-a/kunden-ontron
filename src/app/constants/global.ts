@@ -9,6 +9,36 @@ const JIRA_TOCKEN = process.env.NEXT_PUBLIC_API_TOKEN as string
 
 const JIRA_SERVER_RESPONCE = "Antwort des Servers: "
 
+const REQUEST_TYPES: Array<DropDownList> = [
+  {
+      title: 'Eine Frage stellen',
+      value: "8",
+      description: 'Haben Sie eine Frage? Reichen Sie sie hier ein.'
+  },
+  // {
+  //     title: 'Einreichen einer Anfrage oder eines Vorfalls',
+  //     value: 6,
+  //     description: 'Reichen Sie eine Anfrage ein oder melden Sie ein Problem.'
+  // },
+  {
+      title: 'Anfrage per E-Mail',
+      value: "10",
+      description: 'Anfrage über Ihren E-Mail-Supportkanal erhalten.'
+  },
+  {
+      title: 'Serviceanfrage',
+      value: "15",
+  },
+  {
+      title: 'Vorfall',
+      value: "14",
+  },
+  {
+      title: 'Feedback oder Anregung',
+      value: "13",
+  }
+]
+
 export default {
   URL_STANDART,
   URL_CUSTOM,
@@ -17,5 +47,6 @@ export default {
   JIRA_URL,
   JIRA_USER,
   JIRA_TOCKEN,
-  JIRA_SERVER_RESPONCE
+  JIRA_SERVER_RESPONCE,
+  REQUEST_TYPES
 };

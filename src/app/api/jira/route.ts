@@ -20,13 +20,14 @@ export async function POST(req: Request) {
 
   const { type, summary, description, userEmail } = requestBody;
 
+  if(userEmail){
   const body = {
     serviceDeskId: "2",
     requestTypeId: type,
     requestFieldValues: {
-      summary: summary || "Default Summary",
-      description: description || "Default Description",
-      customfield_10244: userEmail || "defaultemail@domain.com",
+      summary: summary || global.REQUEST_TYPES[2].title,
+      description: description || "",
+      customfield_10244: userEmail ,
     },
   };
 
@@ -50,4 +51,5 @@ export async function POST(req: Request) {
   } catch (error) {
     return NextResponse.json({ message: errors.JIRA_ERROR_MISTAKE + error }, { status: 500 });
   }
+} 
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { useRouter } from "next/navigation"
 import { Formik, Form, Field } from "formik"
 import { SubmitFormButton } from "../../_buttons/SubmitFormButton/SubmitFormButton"
 import Row from "../../_layout/Row/Row"
@@ -12,10 +13,12 @@ import utils from "@/app/utils"
 import styles from "./request.form.module.scss"
 
 type Props = {
-    handler: (res: boolean) => void
+    handler: (res: boolean) => void,
+    resultingText?: string | null
 }
 
-const RequestForm: React.FC<Props> = ({ handler }) => {
+const RequestForm: React.FC<Props> = ({ handler, resultingText = null }) => {
+    const router = useRouter()
     //values: object
     const submitHandler = async (values: { requestTypeId: string, summary: string, description: string }) => {
         const user = utils.user.getUserData();
@@ -30,13 +33,17 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
             console.log(requestData)
             const result: Response | unknown = await utils.jira.apiRequest(requestData)
             if ((result as Response)?.ok) {
+                console.log(result)
                 handler(true)
                 return
             }
-
+            console.log(result)
             handler(false)
         } else {
             handler(false)
+            console.log('logged out')
+            utils.user.resetAllData();
+            router.push('/login')
             return
         }
     }
@@ -46,7 +53,7 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
     return <div className={styles.formContainer}>
         <Formik
             initialValues={{
-                requestTypeId: "8",
+                requestTypeId: "15",
                 summary: '',
                 description: ''
             }}
@@ -98,6 +105,13 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                             <SubmitFormButton title={constants.BUTTON_TEXT} classes={styles.sendButton} />
                         </div>
                     </Col>
+                    {resultingText && (
+                        <Col span={24}>
+                            <div className={styles.messages}>
+                                {resultingText}
+                            </div>
+                        </Col>
+                    )}
                 </Row>
             </Form>
         }}</Formik>

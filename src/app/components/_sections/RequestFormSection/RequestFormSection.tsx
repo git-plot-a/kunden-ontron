@@ -15,23 +15,26 @@ const RequestFormSection = () => {
     const [result, setResult] = useState<formSendResult | null>(null)
 
     const handler = async (result: boolean) => {
-        const res = constants.RESULTS.reduce((r: formSendResult | null, item)=>(item.success == result ? item : r), null)
+        const res = constants.RESULTS.reduce((r: formSendResult | null, item) => (item.success === result ? item : r), null)
         setResult(res)
     }
 
     return <Container>
+             {/* {JSON.stringify(result)} */}
         <div className={styles.formContainer}>
             <Row>
-                {result ?
-                    <Col span={24}>
-                        <div className={clsx(styles.formTitleBlock, styles.fullSize)}>
-                            <div className={styles.formTitleImage}>
-                                <Image src={result.img as string} alt={'result image'} height={103} width={500}/>
+                {result && result?.success ?
+                    (
+                        <Col span={24}>
+                            <div className={clsx(styles.formTitleBlock, styles.fullSize)}>
+                                <div className={styles.formTitleImage}>
+                                    <Image src={result.img as string} alt={'result image'} height={103} width={500} />
+                                </div>
+                                <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: result.text }} />
+                                <div className={styles.aditionalInfo} dangerouslySetInnerHTML={{ __html: constants.ADITIONAL_INFO }} />
                             </div>
-                            <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: result.text }} />
-                            <div className={styles.aditionalInfo} dangerouslySetInnerHTML={{__html: constants.ADITIONAL_INFO}}/>
-                        </div>
-                    </Col>
+                        </Col>
+                    )
                     : (
                         <>
                             <Col span={10}>
@@ -45,7 +48,7 @@ const RequestFormSection = () => {
                                 </div>
                             </Col>
                             <Col span={14}>
-                                <RequestForm handler={handler} />
+                                <RequestForm handler={handler} resultingText={result?.text}/>
                             </Col>
                         </>
                     )}
