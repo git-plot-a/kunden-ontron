@@ -20,15 +20,14 @@ const RequestFormSection = () => {
     }
 
     return <Container>
-             {/* {JSON.stringify(result)} */}
-        <div className={styles.formContainer}>
+        <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack)}>
             <Row>
-                {result && result?.success ?
+                {result ?
                     (
                         <Col span={24}>
                             <div className={clsx(styles.formTitleBlock, styles.fullSize)}>
                                 <div className={styles.formTitleImage}>
-                                    <Image src={result.img as string} alt={'result image'} height={103} width={500} />
+                                    <Image src={result.img as string} alt={'result image'} height={340} width={560} />
                                 </div>
                                 <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: result.text }} />
                                 <div className={styles.aditionalInfo} dangerouslySetInnerHTML={{ __html: constants.ADITIONAL_INFO }} />
@@ -38,17 +37,25 @@ const RequestFormSection = () => {
                     : (
                         <>
                             <Col span={10}>
+                                <div className={clsx(styles.decoreElement, styles.small)}>
+                                    <Image src={'/img/big_romb_1.svg'} alt={'Decore romb 1'} width={39.2} height={45} />
+                                </div>
+                                <div className={clsx(styles.decoreElement, styles.big)}>
+                                    <Image src={'/img/big_romb_1.svg'} alt={'Decore romb 2'} width={53.7} height={61} />
+                                </div>
                                 <div className={styles.formTitleBlock}>
-                                    <div className={styles.formTitle}>
-                                        {constants.TITLE}
-                                    </div>
-                                    <div className={styles.formTitleImage}>
-                                        <Image src={'/img/firts_stage_request_image.svg'} alt="send a request" width={145} height={62} />
+                                    <div className={styles.formTitleContiner}>
+                                        <div className={styles.formTitle}>
+                                            {constants.TITLE}
+                                        </div>
+                                        <div className={styles.formTitleImage}>
+                                            <Image src={'/img/decore1.svg'} alt="send a request" width={426} height={351} />
+                                        </div>
                                     </div>
                                 </div>
                             </Col>
                             <Col span={14}>
-                                <RequestForm handler={handler} resultingText={result?.text}/>
+                                <RequestForm handler={handler}  />
                             </Col>
                         </>
                     )}

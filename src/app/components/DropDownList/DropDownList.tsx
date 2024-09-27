@@ -39,17 +39,18 @@ const DropDownList: React.FC<Props> = ({ items, handler }) => {
     }, [])
 
     return <div className={styles.dropDownContainer} ref={ref}>
-        <div onClick={changeOpening} className={styles.dropDownSelectedItem}>
-            <span>{items[currentChoice].title}</span>
-            <Image src={'/img/drop_down_arrow.svg'} alt={'arrow'} width={24} height={24} className={clsx(styles.dropDownArrow, openedList && styles.opened)} /></div>
-        <div className={clsx(!openedList && styles.closed, styles.dropDownList)}>
-            {items.map((item, key) => (
-                <div key={key} onClick={() => { itemClick(key) }} className={styles.dropDownItem}>
-                    <div>{item.title}</div>
-                </div>
-            ))}
+        <div className={clsx(styles.dropDownElements, !openedList && styles.closed)}>
+            <div onClick={changeOpening} className={styles.dropDownSelectedItem}>
+                <span>{items[currentChoice].title}</span>
+                <Image src={'/img/drop_down_arrow.svg'} alt={'arrow'} width={24} height={24} className={clsx(styles.dropDownArrow, openedList && styles.opened)} /></div>
+            <div className={styles.dropDownList}>
+                {items.map((item, key) => (
+                    <div key={key} onClick={() => { itemClick(key) }} className={styles.dropDownItem}>
+                        <div>{item.title}</div>
+                    </div>
+                ))}
+            </div>
         </div>
-
     </div>
 }
 

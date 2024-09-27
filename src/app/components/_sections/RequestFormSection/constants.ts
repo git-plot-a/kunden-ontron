@@ -4,13 +4,13 @@ const RESULTS: Array<formSendResult> = [
     {
         success: true,
         text: 'Vielen Dank für Ihre Anfrage.<br>Wir werden sie bearbeiten und uns innerhalb von 4 Stunden zurückmelden',
-        img: '/img/succes_result_image.svg'
+        img: '/img/decore2.svg'
 
     },
     {
         success: false,
         text: 'Leider ging etwas schief.... später erneut versuchen',
-        img: '/img/succes_result_image.svg'
+        img: '/img/decore3.svg'
     }
 ]
 

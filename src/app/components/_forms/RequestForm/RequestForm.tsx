@@ -14,21 +14,19 @@ import styles from "./request.form.module.scss"
 
 type Props = {
     handler: (res: boolean) => void,
-    resultingText?: string | null
 }
 
-const RequestForm: React.FC<Props> = ({ handler, resultingText = null }) => {
+const RequestForm: React.FC<Props> = ({ handler }) => {
     const router = useRouter()
-    //values: object
     const submitHandler = async (values: { requestTypeId: string, summary: string, description: string }) => {
         const user = utils.user.getUserData();
         console.log(user)
         if (user) {
             const requestData = {
                 "type": String(values.requestTypeId),
-                "summary": values.summary, // parse from the form
-                "description": values.description, // parse from the form,
-                "userEmail": user.user_email // we need to parse the email of the user
+                "summary": values.summary,
+                "description": values.description, 
+                "userEmail": user.user_email 
             }
             console.log(requestData)
             const result: Response | unknown = await utils.jira.apiRequest(requestData)
@@ -105,13 +103,6 @@ const RequestForm: React.FC<Props> = ({ handler, resultingText = null }) => {
                             <SubmitFormButton title={constants.BUTTON_TEXT} classes={styles.sendButton} />
                         </div>
                     </Col>
-                    {resultingText && (
-                        <Col span={24}>
-                            <div className={styles.messages}>
-                                {resultingText}
-                            </div>
-                        </Col>
-                    )}
                 </Row>
             </Form>
         }}</Formik>

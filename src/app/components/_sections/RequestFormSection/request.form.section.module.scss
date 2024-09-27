@@ -8,6 +8,19 @@
     padding: 93px 101px;
     border-radius: 32px;
     position: relative;
+    &.resultingBack {
+      background: linear-gradient(
+        0deg,
+        #079fe4 0.94%,
+        #12a6e4 15.16%,
+        #2fb7e5 40.14%,
+        #5ed4e5 72.68%,
+        #7ce6e6 91.05%
+      );
+    }
+    &.usualBlack {
+      background: linear-gradient(90.05deg, #07a1e4 14.68%, #56bfec 85.09%);
+    }
   }
   &Title {
     font-size: 44px;
@@ -15,6 +28,7 @@
     font-weight: 600;
     color: var(--most-light);
     text-align: center;
+    margin-top: 122px;
     &Block {
       position: absolute;
       width: -webkit-fill-available;
@@ -34,16 +48,16 @@
         position: relative;
         left: 0;
         .formTitleImage {
-          margin-top: 38px;
+          margin-top: -93px;
         }
         .formTitle {
-          margin-top: 43px;
+          margin-top: 0px;
         }
       }
     }
     &Image {
       text-align: center;
-      margin-top: 40px;
+      // margin-top: 28px;
     }
   }
 }
@@ -67,5 +81,32 @@
   a {
     color: var(--most-light);
     text-decoration: underline;
+  }
+}
+
+.formTitleContiner {
+  max-height: 620px;
+  position: relative;
+}
+.decoreElement {
+  position: absolute;
+  animation: sparklin 3s linear infinite alternate;
+  &.small {
+    top: 67px;
+    left: 173px;
+  }
+  &.big {
+    top: 111px;
+    left: 231px;
+    animation-direction: alternate-reverse;
+  }
+}
+
+@keyframes sparklin {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
