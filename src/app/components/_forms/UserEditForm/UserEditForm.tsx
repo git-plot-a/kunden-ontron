@@ -1,7 +1,8 @@
 "use client"
 
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
+import clsx from 'clsx';
 import { SubmitFormButton } from '../../_buttons/SubmitFormButton/SubmitFormButton';
 import Container from '../../_layout/Container/Container';
 import Row from '../../_layout/Row/Row';
@@ -11,8 +12,9 @@ import { editUserFromSchems, resetPasswordSchems } from "@/app/schemes"
 import useLoadContent from "../../../hooks/loadContent/loadContent";
 import global from '@/app/constants/global';
 import constants from "./constants"
+import utils from '@/app/utils';
 import styles from "./userEditForm.module.scss"
-import clsx from 'clsx';
+
 
 type Props = {
   [key: string]: string
@@ -22,6 +24,8 @@ const UserEditForm: React.FC<Props> = () => {
   const [avatar, setAvatar] = useState('/img/avatar.png');
   const [oldPassOpened, setOldPassOpened] = useState(false);
   const [newPassOpened, setNewPassOpened] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true)
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [resetPassOpened, setResetNewPassOpened] = useState(false);
 
   const updateUserData = (values: { [key: string]: string }) => {
@@ -57,11 +61,20 @@ const UserEditForm: React.FC<Props> = () => {
   }
 
 
+  useEffect(() => {
+
+    if (typeof window !== 'undefined') {
+      // console.log(localStorage)
+      setCurrentUser(utils.user.getUserData())
+      setLoading(false)
+    }
+  }, [])
+
   const changeEye = (val: boolean, func: (str: boolean) => void) => {
     func(val)
   }
 
-  return <div className={styles.container}>
+  return <>{!loading && (<div className={styles.container}>
     <Container>
       <Row>
         <Col span={8}>
@@ -69,12 +82,13 @@ const UserEditForm: React.FC<Props> = () => {
           <div>
             <Formik
               initialValues={{
-                username: '',
-                email: ''
+                username: currentUser?.user_display_name ? currentUser?.user_display_name : '',
+                email: currentUser?.user_email ? currentUser?.user_email : ''
               }}
               validationSchema={editUserFromSchems}
               onSubmit={updateUserData}>
               {(props) => {
+                console.log(props)
                 return <Form>
                   <div className={styles.field}>
                     <Image
@@ -102,6 +116,7 @@ const UserEditForm: React.FC<Props> = () => {
                       className={styles.invisible}
                     />
                   </div>
+                  {utils.user.getUserData()?.company ? (<div className={styles.field}>{`${constants.COMPANY_TITLE} ${currentUser?.company}`}</div>) : (<></>)}
                   <div className={styles.field}>
                     <Field
                       type="text"
@@ -154,14 +169,14 @@ const UserEditForm: React.FC<Props> = () => {
                       alt={"closed eye"} height={20}
                       width={20}
                       className={clsx(oldPassOpened ? styles.invisible : '')}
-                      onClick={() => { changeEye(true, setOldPassOpened, "oldPassword") }} />
+                      onClick={() => { changeEye(true, setOldPassOpened) }} />
                     <Image
                       src={"/img/eye_opened.svg"}
                       alt={"closed eye"}
                       height={20}
                       width={20}
                       className={clsx(!oldPassOpened ? styles.invisible : '')}
-                      onClick={() => { changeEye(false, setOldPassOpened, "oldPassword") }} />
+                      onClick={() => { changeEye(false, setOldPassOpened) }} />
                     {props.errors.oldPassword && (<div>
                       {props.errors.oldPassword}
                     </div>)}
@@ -178,14 +193,14 @@ const UserEditForm: React.FC<Props> = () => {
                       alt={"closed eye"} height={20}
                       width={20}
                       className={clsx(newPassOpened ? styles.invisible : '')}
-                      onClick={() => { changeEye(true, setNewPassOpened, "newPassword") }} />
+                      onClick={() => { changeEye(true, setNewPassOpened) }} />
                     <Image
                       src={"/img/eye_opened.svg"}
                       alt={"closed eye"}
                       height={20}
                       width={20}
                       className={clsx(!newPassOpened ? styles.invisible : '')}
-                      onClick={() => { changeEye(false, setNewPassOpened, "newPassword") }} />
+                      onClick={() => { changeEye(false, setNewPassOpened) }} />
                     {props.errors.newPassword && (<div>
                       {props.errors.newPassword}
                     </div>)}
@@ -202,14 +217,14 @@ const UserEditForm: React.FC<Props> = () => {
                       alt={"closed eye"} height={20}
                       width={20}
                       className={clsx(resetPassOpened ? styles.invisible : '')}
-                      onClick={() => { changeEye(true, setResetNewPassOpened, "repeatNewPassword") }} />
+                      onClick={() => { changeEye(true, setResetNewPassOpened) }} />
                     <Image
                       src={"/img/eye_opened.svg"}
                       alt={"closed eye"}
                       height={20}
                       width={20}
                       className={clsx(!resetPassOpened ? styles.invisible : '')}
-                      onClick={() => { changeEye(false, setResetNewPassOpened, "repeatNewPassword") }} />
+                      onClick={() => { changeEye(false, setResetNewPassOpened) }} />
                     {props.errors.repeatNewPassword && (<div>
                       {props.errors.repeatNewPassword}
                     </div>)}
@@ -225,7 +240,8 @@ const UserEditForm: React.FC<Props> = () => {
         </Col>
       </Row>
     </Container>
-  </div>
+  </div>)
+  }</>
 }
 
 export default UserEditForm

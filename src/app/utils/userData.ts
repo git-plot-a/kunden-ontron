@@ -113,7 +113,7 @@ const setUserData = (user: { [key: string]: string | object }) => {
 };
 
 const getUserData = () => {
-  if (localStorage.getItem(localStorageVariables.CURRENT_USER)) {
+  if (localStorage && localStorage.getItem(localStorageVariables.CURRENT_USER)) {
     return JSON.parse(
       localStorage.getItem(localStorageVariables.CURRENT_USER) as string
     );

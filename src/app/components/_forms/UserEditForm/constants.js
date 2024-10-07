@@ -63,6 +63,8 @@ const NEW_PASSWORD_FIELD = 'newPassword'
 
 const RESET_PASSWORD = 'repeatNewPassword'
 
+const COMPANY_TITLE = 'Unternehmen:'
+
 // const EYE_OPENED = {
 //     src: images.guidline.eye_opened_icon,
 //     alt: 'eye opened'
@@ -98,6 +100,7 @@ export default {
     OLD_PASSWORD_FIELD,
     NEW_PASSWORD_FIELD,
     RESET_PASSWORD,
+    COMPANY_TITLE
     // EYE_OPENED,
     // EYE_CLOSED,
     // USER_AVATAR

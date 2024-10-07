@@ -37,6 +37,15 @@ declare global {
     requestTypeId: string;
     requestFieldValues: jiraFields;
   }
+
+  interface user {
+    token: string,
+    user_display_name: string,
+    user_email: string,
+    user_nicename: string,
+    company?: string,
+    [key: string] : string
+  }
 }
 
 export {};
