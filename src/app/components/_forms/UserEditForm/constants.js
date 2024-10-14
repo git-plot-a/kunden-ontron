@@ -43,7 +43,7 @@ export const LOG_OUT_IN_ALL_DEVICES = "Abmelden auf allen Geräten"
 
 export const LOGOUT_SATUS = "Abmeldung erfolgreich. Die Seite wird in einer Minute neu geladen."
 
-export const PASSWORD_CHANGED_SUCCESSFUL = 'Passwort erfolgreich geändert'
+const SUCCESS_PASSWORD_CHANGE = 'Das Passwort wurde erfolgreich geändert. Der Benutzer wird danach automatisch abgemeldet:'
 
 export const PASWORD_NEW_PASS_NOT_EXIST = 'Das neue Passwort konnte nicht an den Server übermittelt werden.'
 
@@ -65,6 +65,11 @@ const RESET_PASSWORD = 'repeatNewPassword'
 
 const COMPANY_TITLE = 'Unternehmen:'
 
+const RESET_PASSWORD_FAIL = 'Das Passwort konnte nicht geändert werden, kontaktieren Sie den technischen Support'
+
+const RESET_USER_DATA_FAIL = 'Änderung der Benutzerdaten fehlgeschlagen. Wenden Sie sich an Ihren Administrator'
+
+const SUCESSFUL_USER_CHANGE = 'Die Daten wurden erfolgreich geändert'
 // const EYE_OPENED = {
 //     src: images.guidline.eye_opened_icon,
 //     alt: 'eye opened'
@@ -77,6 +82,7 @@ const COMPANY_TITLE = 'Unternehmen:'
 
 export default {
     DEFAULT_VALUE,
+    SUCCESS_PASSWORD_CHANGE,
     // DEFAULT_AVATAR,
     // PENCIL_ICON,
     USER_PLACEHOLDER,
@@ -90,7 +96,7 @@ export default {
     REPEAT_PASSWORD,
     LOG_OUT_IN_ALL_DEVICES,
     LOGOUT_SATUS,
-    PASSWORD_CHANGED_SUCCESSFUL,
+    // PASSWORD_CHANGED_SUCCESSFUL,
     PASWORD_NEW_PASS_NOT_EXIST,
     OLD_PASSWORD_IS_WRONG,
     OLD_PASS_NOT_EXIST,
@@ -100,7 +106,10 @@ export default {
     OLD_PASSWORD_FIELD,
     NEW_PASSWORD_FIELD,
     RESET_PASSWORD,
-    COMPANY_TITLE
+    COMPANY_TITLE,
+    RESET_PASSWORD_FAIL,
+    RESET_USER_DATA_FAIL,
+    SUCESSFUL_USER_CHANGE
     // EYE_OPENED,
     // EYE_CLOSED,
     // USER_AVATAR

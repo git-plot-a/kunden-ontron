@@ -17,7 +17,7 @@ const fetchData = async (
   body: BodyInit | null | undefined,
   authorised: boolean = true
 ) => {
-  const token = authorised ? JSON.parse(user.getUserData())?.token : false;
+  const token = authorised ? user.getUserData()?.token : false;
   if ((token && authorised) || !authorised) {
     try {
       const response = await fetch(address, {
@@ -29,16 +29,13 @@ const fetchData = async (
         //   "Pragma": "0"
         //   Pragma: "no-cache",
         //   Expires: "0",
-        //   ...(authorised && token ? { Authorization: `Bearer ${token}` } : {}),
+          ...(authorised && token ? { Authorization: `Bearer ${token}` } : {}),
         },
         body: body,
       });
-
-      return response.json();
-    
       return response.json();
     } catch (error) {
-      return error;
+      return {code: "error", message: error};
     }
   } else {
     throw new Error(errorConstants.NO_USER_TOKEN);

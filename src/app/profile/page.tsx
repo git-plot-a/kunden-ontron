@@ -7,7 +7,7 @@ const ProfilePage = async () => {
 
     return <>
         <Header />
-        <UserEditForm/>
+        <UserEditForm />
         <Footer />
     </>
 }

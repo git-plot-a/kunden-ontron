@@ -59,23 +59,23 @@ export const userLoginFormSchems = yup.object().shape({
   password: yup.string().required(constants.REQUIRED_FIELD),
 })
 
-export const userRegisterFormSchems = yup.object().shape({
-  username: yup
-    .string()
-    .min(3, constants.MIN_LENGTH)
-    .max(20, constants.MAX_LENGTH)
-    .matches(notOnlySymbols, constants.TITLE_NOT_ONLY_SYMBOLS)
-    .matches(excludedSymbols, constants.UNAVALIBLE_SYMBOLS)
-    .required(constants.REQUIRED_FIELD),
-  password: yup
-    .string()
-    .matches(passwordsregexp, constants.PASSWORD)
-    .required(constants.REQUIRED_FIELD),
-  repeatpassword: yup
-    .string()
-    .oneOf([yup.ref('password'), undefined], constants.PASSWORDS_DONT_MATCH),
-  email: yup.string().email(constants.EMAIL).required(),
-})
+// export const userRegisterFormSchems = yup.object().shape({
+//   username: yup
+//     .string()
+//     .min(3, constants.MIN_LENGTH)
+//     .max(20, constants.MAX_LENGTH)
+//     .matches(notOnlySymbols, constants.TITLE_NOT_ONLY_SYMBOLS)
+//     .matches(excludedSymbols, constants.UNAVALIBLE_SYMBOLS)
+//     .required(constants.REQUIRED_FIELD),
+//   password: yup
+//     .string()
+//     .matches(passwordsregexp, constants.PASSWORD)
+//     .required(constants.REQUIRED_FIELD),
+//   repeatpassword: yup
+//     .string()
+//     .oneOf([yup.ref('password'), undefined], constants.PASSWORDS_DONT_MATCH),
+//   email: yup.string().email(constants.EMAIL).required(),
+// })
 
 export const userResetPasswordFormSchems = yup.object().shape({
   username: yup
@@ -112,7 +112,7 @@ export const editUserFromSchems = yup.object().shape({
     .min(3, constants.MIN_LENGTH)
     .max(20, constants.MAX_LENGTH)
     .required(constants.REQUIRED_FIELD),
-  email: yup.string().email(constants.EMAIL).required(constants.REQUIRED_FIELD),
+  // email: yup.string().email(constants.EMAIL).required(constants.REQUIRED_FIELD),
 })
 
 export const sendRequestFormSchems = yup.object().shape({

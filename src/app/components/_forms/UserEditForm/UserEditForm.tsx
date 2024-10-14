@@ -1,6 +1,7 @@
 "use client"
 
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from "next/navigation"
 import { Formik, Form, Field } from 'formik';
 import clsx from 'clsx';
 import { SubmitFormButton } from '../../_buttons/SubmitFormButton/SubmitFormButton';
@@ -9,8 +10,9 @@ import Row from '../../_layout/Row/Row';
 import Col from '../../_layout/Col/Col';
 import Image from 'next/image';
 import { editUserFromSchems, resetPasswordSchems } from "@/app/schemes"
-import useLoadContent from "../../../hooks/loadContent/loadContent";
-import global from '@/app/constants/global';
+// import useLoadContent from "../../../hooks/loadContent/loadContent";
+import api from '@/app/api/crud';
+// import global from '@/app/constants/global';
 import constants from "./constants"
 import utils from '@/app/utils';
 import styles from "./userEditForm.module.scss"
@@ -18,54 +20,119 @@ import styles from "./userEditForm.module.scss"
 
 type Props = {
   [key: string]: string
+  // resetPassword: (callback: (result: object) => void, errorHandler: (error: object) => void) => void,
+  // updateUser: (callback: (result: object) => void, errorHandler: (error: object) => void) => void
 }
 
 const UserEditForm: React.FC<Props> = () => {
-  const [avatar, setAvatar] = useState('/img/avatar.png');
+  const router = useRouter()
+  // const [resetPasswdCounter, setResetPassCounter] = useState(3)
+  // const [avatar, setAvatar] = useState('/img/avatar.png');
   const [oldPassOpened, setOldPassOpened] = useState(false);
   const [newPassOpened, setNewPassOpened] = useState(false);
   const [loading, setLoading] = useState<boolean>(true)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [resetPassOpened, setResetNewPassOpened] = useState(false);
+  const [generalResultPasswdForm, setGeneralResultPasswdForm] = useState<string>('')
+  const [generalResultChangeUserData, setGeneralResultChangeUserData] = useState<string>('')
 
-  const updateUserData = (values: { [key: string]: string }) => {
-    console.log(values)
-  }
+  // const errorHandler = (resetErrorFucntion: ()=>{}, errorText?: string) => {
+  //  resetErrorFucntion()
 
-  const updateUserPasswd = (values: { [key: string]: string }) => {
-    console.log(values)
-  }
+  // }
 
-  const { prossessFileLoading, generalError: AvatarError } = useLoadContent();
-
-  const avatarClick: () => void = () => {
-    if (document) {
-      const inputFile = document?.getElementById("avatar-image")
-      inputFile?.click()
+  const updateUserData = async (values: { [key: string]: string }) => {
+    const { username } = values;
+    const userID = utils.user.getUserID();
+    const callback = () => {
+      // console.log(result)
+      // utils.user.setUserData(result as User);
+      setGeneralResultChangeUserData(constants.SUCESSFUL_USER_CHANGE)
+    }
+    try {
+      const dataArray = JSON.stringify({
+        "id": userID,
+        // "user_email": email,
+        "display_name": username,
+      });
+      const result = await utils.api.fetchData(api.custom.USER_CHANGE, "POST", dataArray, true);
+      if (result?.code == "success") {
+        callback()
+      } else {
+        setGeneralResultChangeUserData(result?.data?.message)
+      }
+    } catch (error) {
+      setGeneralResultChangeUserData(constants.RESET_USER_DATA_FAIL)
     }
   }
 
-  const changeAvatarHandler = (e: ChangeEvent) => {
-    if (e.target && (e.target as HTMLInputElement).files && (e.target as HTMLInputElement).files?.length) {
-      const imageFile = ((e.target as HTMLInputElement)?.files as FileList)[0];
-      const callback = (e: Event) => {
-        console.log(e.target)
-        if ((e.target as FileReader)?.result) {
-          console.log(e.target)
-          setAvatar((e.target as FileReader)?.result as string);
+  const updateUserPasswd = async (values: { [key: string]: string }) => {
+    const { oldPassword, newPassword } = values;
+    const userID = utils.user.getUserID();
+
+    const callback = () => {
+      let counter = 5;
+      const func = function () {
+        setGeneralResultPasswdForm(`${constants.SUCCESS_PASSWORD_CHANGE} ${counter}`);
+        if (counter > 0) {
+          counter--
+          setTimeout(func, 1000)
+        } else {
+          utils.user.resetAllData();
+          router.push('/login')
         }
-      };
-      prossessFileLoading(imageFile, callback);
+      }
+      setTimeout(func, 1000)
     }
+    try {
 
+      const dataArray = JSON.stringify({
+        "id": userID,
+        "old_pass": oldPassword,
+        "new_pass": newPassword,
+      });
+      const result = await utils.api.fetchData(api.custom.USER_NEW_PASSWORD, "POST", dataArray, true);
+      if (result?.code == "success") {
+        console.log(result)
+        callback()
+      } else {
+        setGeneralResultPasswdForm(result?.data?.message)
+      }
+    } catch (error) {
+      setGeneralResultPasswdForm(constants.RESET_PASSWORD_FAIL)
+    }
   }
+
+  // const { prossessFileLoading, generalError: AvatarError } = useLoadContent();
+
+  // const avatarClick: () => void = () => {
+  //   if (document) {
+  //     const inputFile = document?.getElementById("avatar-image")
+  //     inputFile?.click()
+  //   }
+  // }
+
+  //TEMPORARY
+  // const changeAvatarHandler = (e: ChangeEvent) => {
+  //   if (e.target && (e.target as HTMLInputElement).files && (e.target as HTMLInputElement).files?.length) {
+  //     const imageFile = ((e.target as HTMLInputElement)?.files as FileList)[0];
+  //     const callback = (e: Event) => {
+  //       if ((e.target as FileReader)?.result) {
+  //         setAvatar((e.target as FileReader)?.result as string);
+  //       }
+  //     };
+  //     prossessFileLoading(imageFile, callback);
+  //   }
+
+  // }
 
 
   useEffect(() => {
 
     if (typeof window !== 'undefined') {
-      // console.log(localStorage)
       setCurrentUser(utils.user.getUserData())
+      // if (utils.user.getUserData()?.avatar)
+      //   setAvatar(utils.user.getUserData()?.avatar)
       setLoading(false)
     }
   }, [])
@@ -83,14 +150,13 @@ const UserEditForm: React.FC<Props> = () => {
             <Formik
               initialValues={{
                 username: currentUser?.user_display_name ? currentUser?.user_display_name : '',
-                email: currentUser?.user_email ? currentUser?.user_email : ''
+                // email: currentUser?.user_email ? currentUser?.user_email : ''
               }}
               validationSchema={editUserFromSchems}
               onSubmit={updateUserData}>
               {(props) => {
-                console.log(props)
                 return <Form>
-                  <div className={styles.field}>
+                  {/* <div className={styles.field}>
                     <Image
                       // className="avatar"
                       src={avatar}
@@ -115,8 +181,23 @@ const UserEditForm: React.FC<Props> = () => {
                       onChange={changeAvatarHandler}
                       className={styles.invisible}
                     />
-                  </div>
+                  </div> */}
+                  <div className={styles.field}>
                   {utils.user.getUserData()?.company ? (<div className={styles.field}>{`${constants.COMPANY_TITLE} ${currentUser?.company}`}</div>) : (<></>)}
+                  </div>
+                  <div className={styles.field}>
+                      {`Email: ${currentUser?.user_email ? currentUser?.user_email : ''}`}
+                    {/* <Field
+                      type="text"
+                      id="email"
+                      name={"email"}
+                      placeholder={constants.EMAIL_PLACEHOLDER}
+                    />
+                    {props.errors.email && (<div>
+                      {props.errors.email}
+                    </div>)} */}
+                  </div>
+                  {"Username:"}
                   <div className={styles.field}>
                     <Field
                       type="text"
@@ -129,18 +210,8 @@ const UserEditForm: React.FC<Props> = () => {
                         {props.errors.username}
                       </div>)}
                   </div>
-                  <div className={styles.field}>
-                    <Field
-                      type="text"
-                      id="email"
-                      name={"email"}
-                      placeholder={constants.EMAIL_PLACEHOLDER}
-                    />
-                    {props.errors.email && (<div>
-                      {props.errors.email}
-                    </div>)}
-                  </div>
                   <SubmitFormButton title={constants.SAVE_BUTTON} />
+                  {generalResultChangeUserData}
                 </Form>
               }}
             </Formik>
@@ -230,6 +301,7 @@ const UserEditForm: React.FC<Props> = () => {
                     </div>)}
                   </div>
                   <SubmitFormButton title={constants.FORM_TITLE} />
+                  {generalResultPasswdForm}
                 </Form>
               }}
             </Formik>
@@ -241,6 +313,7 @@ const UserEditForm: React.FC<Props> = () => {
       </Row>
     </Container>
   </div>)
+
   }</>
 }
 

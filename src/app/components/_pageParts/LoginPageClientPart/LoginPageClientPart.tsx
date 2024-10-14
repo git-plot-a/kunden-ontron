@@ -23,7 +23,6 @@ const LoginPageClientPart = () => {
 
         try {
             const result = await utils.api.fetchData(api.custom.LOGIN, "POST", dataArray, false);
-            console.log(result)
             if (result?.data?.status && result?.data?.status != "200") {
                 let errorText: React.ReactNode = <></>
                 console.log(result?.data?.status)
@@ -41,7 +40,6 @@ const LoginPageClientPart = () => {
                 return
             }
             if (result?.token) {
-                console.log(result)
                 utils.user.setUserData(result)
                 if (props.rememberme) {
                     utils.user.setEnterData(props.username as string, props.password as string)

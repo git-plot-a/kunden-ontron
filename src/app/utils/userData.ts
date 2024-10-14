@@ -100,7 +100,10 @@ const resetAvatar = () => {
 };
 
 const getUserID = () => {
-  return localStorage.getItem(localStorageVariables.USER_ID_VARIABLE);
+  const usr: string | null=  localStorage.getItem(localStorageVariables.CURRENT_USER);
+  if(usr){
+    return JSON.parse(usr as string).id;
+  }
 };
 
 const setUserData = (user: { [key: string]: string | object }) => {

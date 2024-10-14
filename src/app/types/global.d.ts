@@ -38,13 +38,20 @@ declare global {
     requestFieldValues: jiraFields;
   }
 
-  interface user {
+  interface User {
     token: string,
     user_display_name: string,
     user_email: string,
     user_nicename: string,
     company?: string,
+    id: string,
     [key: string] : string
+  }
+
+  interface FromError {
+    code : string,
+    message: string ,
+    [key: string]: string
   }
 }
 
