@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 // import { useEffect, useState } from 'react';
-// import lottie from 'lottie-web';
+import lottie from 'lottie-web';
 // import Lottie from 'lottie-react';
 import animation from "./Robo_email.json"
 import Image from 'next/image';
@@ -16,22 +16,20 @@ const LottieAnimation = () => {
         setIsClient(true);
     }, []);
 
-    // useEffect(() => {
-    //     console.log(animation)
-    //     // Запускаем анимацию только на клиенте
-    //     if (isClient && lottieContainer.current) {
-    //         lottie.loadAnimation({
-    //             container: lottieContainer.current, // указание контейнера через useRef
-    //             animationData: animation, // путь к JSON
-    //             renderer: 'svg',
-    //             loop: true,
-    //             autoplay: true,
-    //         });
-    //     }
-    // }, [isClient]); // Данный хук сработает только на клиенте
+    useEffect(() => {
+        console.log(animation)
+        // Запускаем анимацию только на клиенте
+        if (isClient && lottieContainer.current) {
+            lottie.loadAnimation({
+                container: lottieContainer.current, // указание контейнера через useRef
+                animationData: animation, // путь к JSON
+                loop: true,
+                autoplay: true,
+            });
+        }
+    }, [isClient]); 
 
     if (!isClient) {
-        // Пока компонент рендерится на сервере, возвращаем null или пустой div
         return null;
     }
 
