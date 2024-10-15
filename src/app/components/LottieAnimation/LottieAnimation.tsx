@@ -36,13 +36,8 @@ const LottieAnimation = () => {
     }
 
     return <div style={{ paddingTop: 100 }}>
-        {/* <Lottie
-            animationData={animation}// Путь относительно папки public
-            // path={"/animation/Robo_email.json"}
-            loop={true}
-            style={{ width: 300, height: 300 }}
-        /> */}
-        {console.log(animation)}
+     
+        {JSON.stringify(animation)}
         <Image width={500} height={300} src="/animation/Robo_email_v001.gif" alt="ttt" />
         {/* <div ref={lottieContainer} style={{ width: 300, height: 300 }}></div> */}
     </div>;
