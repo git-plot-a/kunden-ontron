@@ -3,8 +3,8 @@
 // import { useEffect, useRef, useState } from 'react';
 import { useEffect, useState } from 'react';
 // import lottie from 'lottie-web';
-// import Lottie from 'lottie-react';
-// import animation from "../../../../public/animation/Robo_email.json"
+import Lottie from 'lottie-react';
+import animation from "../../../../public/animation/Robo_email.json"
 import Image from 'next/image';
 
 const LottieAnimation = () => {
@@ -36,11 +36,11 @@ const LottieAnimation = () => {
     }
 
     return <div style={{ paddingTop: 100 }}>
-        {/* <Lottie
+        <Lottie
             animationData={animation}// Путь относительно папки public
             loop={true}
             style={{ width: 300, height: 300 }}
-        /> */}
+        />
         <Image width={500} height={300} src="/animation/Robo_email_v001.gif" alt="ttt" />
         {/* <div ref={lottieContainer} style={{ width: 300, height: 300 }}></div> */}
     </div>;
