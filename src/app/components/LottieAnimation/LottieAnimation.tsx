@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import lottie from 'lottie-web';
-// import Lottie from 'lottie-react';
+import Lottie from 'lottie-react';
 import animation from "../../../../public/animation/Robo_email.json"
 import Image from 'next/image';
 
@@ -21,7 +21,7 @@ const LottieAnimation = () => {
     if (isClient && lottieContainer.current) {
       lottie.loadAnimation({
         container: lottieContainer.current, // указание контейнера через useRef
-        animationData: animation, // путь к JSON
+        animationData: '/animation/Robo_email.json', // путь к JSON
         renderer: 'svg',
         loop: true,
         autoplay: true,
@@ -35,11 +35,11 @@ const LottieAnimation = () => {
   }
 
   return <div style={{paddingTop: 100}}>
-  {/* <Lottie 
-        animationData="/animation/Robo_email.json"// Путь относительно папки public
+  <Lottie 
+        animationData={'/animation/Robo_email.json'}// Путь относительно папки public
         loop={true}
         style={{ width: 300, height: 300 }}
-      /> */}
+      />
       <Image width={500} height={300} src="/animation/Robo_email_v001.gif" alt="ttt"/>
     <div ref={lottieContainer} style={{ width: 300, height: 300 }}></div>
   </div>;
