@@ -21,7 +21,7 @@ const LottieAnimation = () => {
     if (isClient && lottieContainer.current) {
       lottie.loadAnimation({
         container: lottieContainer.current, // указание контейнера через useRef
-        animationData: '/animation/Robo_email.json', // путь к JSON
+        animationData: animation, // путь к JSON
         renderer: 'svg',
         loop: true,
         autoplay: true,
@@ -36,7 +36,7 @@ const LottieAnimation = () => {
 
   return <div style={{paddingTop: 100}}>
   <Lottie 
-        animationData={'/animation/Robo_email.json'}// Путь относительно папки public
+        animationData={animation}// Путь относительно папки public
         loop={true}
         style={{ width: 300, height: 300 }}
       />
