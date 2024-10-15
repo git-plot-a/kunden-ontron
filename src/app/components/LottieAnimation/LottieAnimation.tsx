@@ -1,14 +1,14 @@
 "use client"
 
-// import { useEffect, useRef, useState } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+// import { useEffect, useState } from 'react';
 // import lottie from 'lottie-web';
 // import Lottie from 'lottie-react';
 import animation from "./Robo_email.json"
 import Image from 'next/image';
 
 const LottieAnimation = () => {
-    // const lottieContainer = useRef(null);
+    const lottieContainer = useRef(null);
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const LottieAnimation = () => {
      
         {JSON.stringify(animation)}
         <Image width={500} height={300} src="/animation/Robo_email_v001.gif" alt="ttt" />
-        {/* <div ref={lottieContainer} style={{ width: 300, height: 300 }}></div> */}
+        <div ref={lottieContainer} style={{ width: 300, height: 300 }}></div>
     </div>;
 };
 
