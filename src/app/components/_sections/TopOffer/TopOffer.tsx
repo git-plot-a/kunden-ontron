@@ -16,7 +16,7 @@ const TopOffer = () => {
                     </h1>
                 </Col>
                 <Col span={14}>
-                    <Image src={'/img/topoffer.svg'} alt="top-offer" width={669} height={317} />
+                    <Image src={'/img/topOffer.svg'} alt="top-offer" width={669} height={317} />
                 </Col>
             </Row>
         </Container>
