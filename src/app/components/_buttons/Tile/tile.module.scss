@@ -1,0 +1,29 @@
+.container{
+    background-color: var(--card-back);
+    height: 266px;
+    width: 266px;
+    border-radius: 24px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.icon{
+    height: 78px;
+    width: 78px;
+}
+.title{
+    font-size: 25px;
+    line-height: 32px;
+    color: var(--most-light);
+    font-weight: 500;
+    vertical-align: bottom;
+    margin-bottom: 0;
+}
+
+.noImage{
+    height: 100%;
+    width: 100%;
+    border: 1px solid var(--granze);
+    border-radius: 12px;
+}

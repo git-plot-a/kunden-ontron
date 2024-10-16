@@ -4,18 +4,21 @@ import actions from "@/app/actions";
 import styles from "./standartButton.module.scss"
 import Link from "next/link";
 import { Url } from "next/dist/shared/lib/router/router";
+import Image from "next/image";
 
 
 type Props = {
     classes?: string,
     link?: string | null,
     title: string,
-    callback?: (args: unknown) => void | null | undefined
+    callback?: (args: unknown) => void | null | undefined,
+    active: boolean,
+    image?: string
 }
 
 
 
-const StandartButton: FC<Props> = ({ title, classes = "", link = null, callback = null }) => {
+const StandartButton: FC<Props> = ({ title, classes = "", link = null, callback = null, active = false, image = '' }) => {
 
     const buttonClick: (e: React.MouseEvent<HTMLDivElement>) => void | null = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -23,7 +26,6 @@ const StandartButton: FC<Props> = ({ title, classes = "", link = null, callback 
             callback(e)
         } else {
             if (link) {
-                // scrollToTop()
                 actions.navigate(link)
             }
         }
@@ -32,12 +34,14 @@ const StandartButton: FC<Props> = ({ title, classes = "", link = null, callback 
 
     return <>
         {!link ? (
-            <div className={clsx(styles.container, classes)} onClick={buttonClick}>
-                {(<span>{title}</span>)}
+            <div className={clsx(styles.container, active ? styles.active : '', classes)} onClick={buttonClick}>
+                <Image src={image} alt={title} width={24} height={24}/>
+                <span>{title}</span>
             </div>
 
         ) : (
-            <Link className={clsx(styles.container, classes)} href={link as Url}>
+            <Link className={clsx(styles.container,  active ? styles.active : '',   classes)} href={link as Url}>
+                 <Image src={image} alt={title} width={24} height={24}/>
                 <span>{title}</span>
             </Link>
         )}

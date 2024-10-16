@@ -13,8 +13,11 @@ import utils from "../../../utils"
 import styles from "./header.module.scss"
 
 
+type Props = {
+    currentPage: string
+}
 
-const Header = () => {
+const Header:React.FC<Props> = ({currentPage = "home"}) => {
     const router = useRouter()
     const [menuList, setMenuList] = useState(constants.LIST_MENU)
     const [loading, setLoading] = useState(true)
@@ -40,7 +43,7 @@ const Header = () => {
                     <div className={styles.companyInfo}>
                         <div >
                             <Link href="/">
-                                <Image src={'/img/Logo_ontron.svg'} alt="ontron" width={132} height={21} className={styles.logo} />
+                                <Image src={'/img/logo.svg'} alt="ontron" width={133} height={36} className={styles.logo} />
                             </Link>
                         </div>
                         <div>
@@ -54,7 +57,7 @@ const Header = () => {
                     <ul className={styles.menuContainer}>
                         {menuList.length > 0 && menuList.map((item, key) => (
                             <li key={key}>
-                                <StandartButton title={item.title} link={item.link} callback={item?.callback ? item.callback : undefined} />
+                                <StandartButton title={item.title} link={item.link} callback={item?.callback ? item.callback : undefined} active={currentPage == item.id} image={item.img}/>
                             </li>
 
                         ))}

@@ -53,6 +53,23 @@ declare global {
     message: string ,
     [key: string]: string
   }
+
+  type ServiceAgreement = {
+    type: string,
+    value: string
+  }
+
+  type ServiceStatus = {
+    title : string,
+    denger_level: number
+  }
+  interface Service {
+    title: string,
+    icon?: string,
+    updateData: string,
+    serviceLevels: Array<ServiceAgreement>,
+    status?: ServiceStatus
+  }
 }
 
 export {};

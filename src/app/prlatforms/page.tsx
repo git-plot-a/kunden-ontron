@@ -9,7 +9,7 @@ const PlatformsPage = async () => {
     });
 
     return <>
-        <Header />
+        <Header currentPage={"platforms"}/>
         <LottieAnimation />
         <Footer />
     </>

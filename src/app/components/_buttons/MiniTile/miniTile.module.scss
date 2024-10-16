@@ -1,0 +1,65 @@
+.container {
+  width: 266px;
+  padding: 12px;
+  border-radius: 16px;
+  background-color: var(--light-gray);
+//   margin-right: 32px;
+}
+.status {
+  &Container {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &Item {
+    display: flex;
+    width: max-content;
+    background-color: var(--most-light);
+    border-radius: 12px;
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--semi-light-gray);
+    .indicator {
+        height: 8px;
+        width: 8px;
+        border-radius: 9px;
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 8px;
+      &.onAir {
+        background-color: var(--sucess-green);
+      }
+      &.paused {
+        background-color: var(--semi-denger-level);
+      }
+      &.off {
+        background-color: var(--error);
+      }
+    }
+  }
+}
+
+.service{
+    &Container{
+        padding-top: 10px;
+        display: flex;
+        justify-content: flex-start;
+    }
+    &Icon{
+        margin-right: 16px;
+    }
+    &Text{
+        h5{
+            font-size: 14px;
+            line-height: 32px;
+            color: var(--dark-text);
+            font-weight: 600;
+            margin: 0;
+        }
+        .updated{
+            font-size: 12px;
+            line-height: 18px;
+            color: var(--light-gray-text);
+        }
+    }
+}

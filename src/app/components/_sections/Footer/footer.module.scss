@@ -1,7 +1,7 @@
 .container {
-  padding-top: 140px;
-  padding-bottom: 80px;
-  max-height: 400px;
+  padding-top: 271px;
+  padding-bottom: 48px;
+  // max-height: 400px;
 }
 .companyInfo {
   display: flex;
@@ -22,11 +22,12 @@
 .addressContainer {
   .addressRow {
     font-weight: 300;
-    margin: 32px 0;
+    // margin: 32px 0;
     line-height: 24px;
     font-size: 16px;
     display: flex;
-    justify-content: start;
+    justify-content: end;
+    text-align: right;
     &:first-child{
       margin-top: 12px;
     }
@@ -34,7 +35,7 @@
 }
 .textContainer {
   text-align: right;
-  margin-top: 163px;
+  // margin-top: 163px;
   .addressRow {
     justify-content: end;
   }
@@ -71,14 +72,14 @@
   .textContainer {
     margin-top: 68px;
   }
-  .mobileVersion{
-    width: calc(100% - 30px) !important;
-    max-width: calc(100% - 30px) !important;
-    min-width: calc(100% - 30px) !important;
-    .companyInfo{
-      justify-content: space-between;
-    }
-  }
+  // .mobileVersion{
+  //   width: calc(100% - 30px) !important;
+  //   max-width: calc(100% - 30px) !important;
+  //   min-width: calc(100% - 30px) !important;
+  //   .companyInfo{
+  //     justify-content: space-between;
+  //   }
+  // }
   .rowMobileVersion{
     justify-content: space-between;
   }

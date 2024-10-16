@@ -5,11 +5,15 @@ const LIST_MENU = [
   {
     title: "Homepage",
     link: "/",
+    id: "home",
+    img: '/img/home.svg'
   },  
   {
     title: "Abmelden",
     // link: `#feedback-section`,
-    callback: ()=>{}
+    callback: ()=>{},
+    id: "logout",
+    img: '/img/logout.svg'
   },
 ];
 
