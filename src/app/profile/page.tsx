@@ -6,7 +6,7 @@ const ProfilePage = async () => {
 
 
     return <>
-        <Header />
+        <Header currentPage={"profile"}/>
         <UserEditForm />
         <Footer />
     </>
