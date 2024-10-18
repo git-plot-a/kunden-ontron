@@ -1,9 +1,6 @@
 .container {
   width: 266px;
-  padding: 12px;
-  border-radius: 16px;
-  background-color: var(--light-gray);
-//   margin-right: 32px;
+  perspective: 1000px; 
 }
 .status {
   &Container {
@@ -20,12 +17,14 @@
     line-height: 18px;
     color: var(--semi-light-gray);
     .indicator {
-        height: 8px;
-        width: 8px;
-        border-radius: 9px;
-        margin-top: auto;
-        margin-bottom: auto;
-        margin-left: 8px;
+      height: 8px;
+      width: 8px;
+      border-radius: 9px;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: 8px;
+      animation: blink 4s infinite;
+      //TODO: добавить задержку, чтоб они мигали не одновременно
       &.onAir {
         background-color: var(--sucess-green);
       }
@@ -39,27 +38,123 @@
   }
 }
 
-.service{
-    &Container{
-        padding-top: 10px;
-        display: flex;
-        justify-content: flex-start;
+.service {
+  &Container {
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  &Icon {
+    margin-right: 16px;
+  }
+  &Text {
+    h5 {
+      font-size: 14px;
+      line-height: 32px;
+      color: var(--dark-text);
+      font-weight: 600;
+      margin: 0;
     }
-    &Icon{
-        margin-right: 16px;
+    .updated {
+      font-size: 12px;
+      line-height: 18px;
+      color: var(--light-gray-text);
     }
-    &Text{
-        h5{
-            font-size: 14px;
-            line-height: 32px;
-            color: var(--dark-text);
-            font-weight: 600;
-            margin: 0;
-        }
-        .updated{
-            font-size: 12px;
-            line-height: 18px;
-            color: var(--light-gray-text);
-        }
+  }
+}
+
+.flippInner {
+  position: relative;
+  width: 266px;
+  height: 114px;
+
+  &.flipped {
+    .frontSide {
+      transform: rotateY(180deg);
+      z-index: 1;
     }
+    .backSide {
+      transform: rotateY(0deg);
+      z-index: 2;
+    }
+  }
+
+  .frontSide,
+  .backSide {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    transform-style: preserve-3d;
+    transition: transform 0.4s linear, z-index 0.2s linear 0.1s;
+    &:hover, &:active, &:focus{
+      cursor: pointer;
+    }
+  }
+
+  .frontSide {
+    z-index: 2;
+    background-color: var(--light-gray);
+    padding: 12px;
+  }
+
+  .backSide {
+    z-index: 1;
+    transform: rotateY(180deg);
+    background-color: var(--most-light);
+    padding: 18px 17px;
+    border: 1px solid var(--dark-border);
+  }
+
+  .lvlContainer {
+    display: flex;
+  }
+
+  .lvlTitle {
+    font-size: 12px;
+    line-height: 22px;
+    min-width: 62px;
+  }
+
+  .lvlValue {
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    color: var(--most-light);
+    min-width: 57px;
+    text-align: center;
+    border-radius: 2px;
+
+    &.Gold {
+      background-color: var(--gold-service-level);
+    }
+
+    &.Silver {
+      background-color: var(--silver-service-level);
+    }
+
+    &.Bronze {
+      background-color: var(--bronze-service-level);
+    }
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

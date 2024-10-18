@@ -4,6 +4,7 @@ import clsx from "clsx"
 import { Suspense } from "react";
 import { poppins } from "./fonts"
 import { useScrollManager } from "@/app/hooks/ScrollManager"
+import useAnimation from '@/app/hooks/Animation/Animation';
 import "./globals.scss";
 
 
@@ -15,6 +16,7 @@ export default function RootLayout({
 }>) {
 
   useScrollManager()
+  useAnimation()
 
   return (
     <html lang="de">

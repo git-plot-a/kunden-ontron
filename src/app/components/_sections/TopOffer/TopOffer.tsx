@@ -1,4 +1,5 @@
 import Container from "../../_layout/Container/Container"
+import clsx from "clsx"
 import Row from "../../_layout/Row/Row"
 import Col from "../../_layout/Col/Col"
 import Image from "next/image"
@@ -9,7 +10,7 @@ const TopOffer = () => {
         <Container classes={styles.container}>
             <Row>
                 <Col span={10}>
-                    <h1 className={styles.title}>
+                    <h1 className={clsx(styles.title, "animation-fade-in animation-fade-in-top middle-duration")} style={{transitionDelay: '0.4s'}}>
                         <span>Willkommen,</span>
                         <br/>
                             Erzgebirgsklinikum!

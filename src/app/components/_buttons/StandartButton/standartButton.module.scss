@@ -7,14 +7,15 @@
   line-height: 24px;
   color: var(--active-text-color);
   border-radius: 8px;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s ease;
   cursor: pointer;
   font-weight: 400;
   &:hover {
     background-color: var(--hover-light);
   }
-  &:active {
+  &:active, &:focus {
     color: var(--active-text-color);
+    transform: scale(0.96);
   }
   span {
     font-weight: 400;

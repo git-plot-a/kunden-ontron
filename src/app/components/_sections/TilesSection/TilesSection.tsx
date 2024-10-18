@@ -6,7 +6,7 @@ const TilesSection = () => {
     return <div className={styles.container}>
         {constants.TILES_LIST.map((item, key) => (
             <div key={key} className={styles.itemContainer}>
-                <Tile title={item.title} icon={item.icon} />
+                <Tile title={item.title} icon={item.icon} classes={`${styles[`tile-${key+1}`]} animation-fade-in-bottom tile-${key+1}`}/>
             </div>
         ))}
     </div>

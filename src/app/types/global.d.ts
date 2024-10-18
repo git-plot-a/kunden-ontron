@@ -39,36 +39,48 @@ declare global {
   }
 
   interface User {
-    token: string,
-    user_display_name: string,
-    user_email: string,
-    user_nicename: string,
-    company?: string,
-    id: string,
-    [key: string] : string
+    token: string;
+    user_display_name: string;
+    user_email: string;
+    user_nicename: string;
+    company?: string;
+    id: string;
+    [key: string]: string;
   }
 
   interface FromError {
-    code : string,
-    message: string ,
-    [key: string]: string
+    code: string;
+    message: string;
+    [key: string]: string;
   }
 
   type ServiceAgreement = {
-    type: string,
-    value: string
-  }
+    type: string;
+    value: string;
+  };
 
   type ServiceStatus = {
-    title : string,
-    denger_level: number
-  }
+    title: string;
+    denger_level: number;
+  };
+
+  type ServiceLevel = {
+    type: {
+      value: string;
+      label: string;
+    };
+    level: {
+      value: string;
+      label: string;
+    };
+  };
   interface Service {
-    title: string,
-    icon?: string,
-    updateData: string,
-    serviceLevels: Array<ServiceAgreement>,
-    status?: ServiceStatus
+    title: string;
+    icon?: string;
+    updateData: string;
+    serviceLevels: Array<ServiceAgreement>;
+    serviceLevels: Array<ServiceLevel>;
+    status?: ServiceStatus;
   }
 }
 

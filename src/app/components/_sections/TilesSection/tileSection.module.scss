@@ -1,10 +1,45 @@
-.container{
-    display: flex;
-    justify-content: flex-start;
-    padding-top: 43px;
-    flex-wrap: wrap;
-    margin-left: -32px;
+.container {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 43px;
+  flex-wrap: wrap;
+  margin-left: -32px;
 }
-.itemContainer{
-    margin-left: 32px;
+.itemContainer {
+  margin-left: 32px;
+}
+
+.tile- {
+  &1 {
+    transition-delay: 0 !important;
+    transition-duration: 0.9s;
+    &::before {
+      animation-delay: 0;
+      animation-duration: 15s;
+    }
+  }
+  &2 {
+    transition-delay: 0.1s !important;
+    transition-duration: 0.9s;
+    &::before {
+      animation-direction: reverse;
+      animation-delay: 0.4s ;
+    }
+  }
+  &3 {
+    transition-delay: 0.2s !important;
+    transition-duration: 0.9s;
+    &::before {
+      animation-duration: 8s;
+      transition-delay: 0.3;
+    }
+  }
+  &4 {
+    transition-delay: 0.3s !important;
+    transition-duration: 0.5s;
+    &::before {
+      animation-duration: 8s;
+      transition-delay: 0.3;
+    }
+  }
 }

@@ -15,13 +15,13 @@ const Footer = () => {
             <Row classes={styles.rowMobileVersion}>
                 <Col span={18} classes={styles.mobileVersion}>
                     <div className={styles.addressContainer}>
-                        <div className={styles.addressRow}>
+                        <div className={clsx(styles.addressRow, "animation-fade-in")}>
                             <Link className={styles.impressiumLinks} href={"/impressum"}>Impressum & Datenschutz</Link>
                         </div>
                     </div>
                 </Col>
                 <Col span={6} classes={styles.mobileVersion}>
-                    <div className={clsx(styles.addressContainer, styles.textContainer)}>
+                    <div className={clsx(styles.addressContainer, styles.textContainer, "animation-fade-in")} style={{transitionDelay: `0.2s`}}>
                         <div
                             className={styles.addressRow}
                             dangerouslySetInnerHTML={{ __html: constants.COPYRIGHT }}
