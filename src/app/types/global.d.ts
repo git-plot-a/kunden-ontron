@@ -64,22 +64,21 @@ declare global {
     denger_level: number;
   };
 
-  type ServiceLevel = {
-    type: {
-      value: string;
-      label: string;
-    };
-    level: {
-      value: string;
-      label: string;
-    };
-  };
+  // type ServiceLevel = {
+  //   type: {
+  //     value: string;
+  //     label: string;
+  //   };
+  //   level: {
+  //     value: string;
+  //     label: string;
+  //   };
+  // };
   interface Service {
     title: string;
     icon?: string;
-    updateData: string;
+    updateData?: string;
     serviceLevels: Array<ServiceAgreement>;
-    serviceLevels: Array<ServiceLevel>;
     status?: ServiceStatus;
   }
 }

@@ -10,7 +10,7 @@ type ClientPartComponentProps = {
     [key: string]: string
 }
 
-const HomePageClientPart: React.FC<ClientPartComponentProps> = () => {
+const FeedbackPageClientPart: React.FC<ClientPartComponentProps> = () => {
     const router = useRouter()
     const [showContent, setShowContent] = useState(false)
 
@@ -31,4 +31,4 @@ const HomePageClientPart: React.FC<ClientPartComponentProps> = () => {
     )}</>
 }
 
-export default HomePageClientPart
+export default FeedbackPageClientPart

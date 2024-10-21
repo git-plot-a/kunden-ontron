@@ -7,10 +7,8 @@ const useAnimation = () => {
     const checkVisibility = () => {
         constants.CLASS_LIST.forEach((animationClass)=>{
             const elements = document.querySelectorAll(`.${animationClass}`);
-            console.log(elements)
             elements.forEach((element) => {
                 const rect = element.getBoundingClientRect();
-                console.log(element.classList)
                 if ((rect.top < window.innerHeight && rect.bottom >= 0 || element.classList.contains(constants.IMMIDIATE_SHOW)) && !element.classList.contains(constants.VISIBILITY_CLASS)) {
                   element.classList.add(constants.VISIBILITY_CLASS); // Добавляем класс, когда элемент в зоне видимости
                 }

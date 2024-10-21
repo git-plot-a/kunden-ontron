@@ -31,8 +31,9 @@ const fetchData = async (
         //   Expires: "0",
           ...(authorised && token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: body,
+        body: body ? body : ''
       });
+
       return response.json();
     } catch (error) {
       return {code: "error", message: error};

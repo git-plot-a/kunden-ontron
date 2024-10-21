@@ -19,7 +19,6 @@ const MiniTile: React.FC<Props> = ({ service, currentStyle = {} }) => {
         setIsFlipped(!isFlipped); // Переключаем состояние при клике
     };
 
-
     return <div className={clsx(styles.container, "animation-fade-in-bottom")} onClick={handleFlip} style={currentStyle}>
         <div className={clsx(styles.flippInner, isFlipped ? styles.flipped : '')}>
             <div className={styles.frontSide}>
