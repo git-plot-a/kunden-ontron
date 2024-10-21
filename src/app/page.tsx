@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import { useRouter } from "next/navigation"
 import Container from './components/_layout/Container/Container';
 import Footer from './components/_sections/Footer/Footer';
 import Header from "./components/_sections/Header/Header"
@@ -12,6 +13,7 @@ import utils from './utils';
 
 
 const HomePage = () => {
+  const router = useRouter()
   const [services, setServices] = useState<Array<Service>>([])
   const [loading, setLoading] = useState(true)
 
@@ -42,6 +44,17 @@ const HomePage = () => {
       setLoading(false)
     }
   }, [services])
+
+
+  useEffect(() => {
+    // handleClick();
+    if (!utils.user.getToken()) {
+        router.push('/login')
+    } else {
+        setLoading(true)
+    }
+}, [])
+
 
   return <>{!loading && (
     <>
