@@ -23,7 +23,7 @@ const HomePage = () => {
       const servicesRes = await fetch(api.custom.SERVICE_PREVIEWS, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
           'Authorization': `Bearer ${tocken}`
         },
       });
