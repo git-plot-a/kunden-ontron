@@ -17,11 +17,20 @@ const HomePage = () => {
   const [services, setServices] = useState<Array<Service>>([])
   const [loading, setLoading] = useState(true)
 
-  // const services = await getPreviewServices();
+
+
+   useEffect(() => {
+    // handleClick();
+    if (!utils.user.getToken()) {
+        router.push('/login')
+    } else {
+        setLoading(false)
+    }
+}, [])
 
   useEffect(()=>{
+    const tocken = utils.user.getToken()
     const getPreviewServices = async () => {
-      const tocken = utils.user.getToken()
       const servicesRes = await fetch(api.custom.SERVICE_PREVIEWS, {
         method: 'GET',
         headers: {
@@ -36,7 +45,11 @@ const HomePage = () => {
       setServices(services)
     }
 
+    if(tocken){
     getPreviewServices()
+    }else{
+      router.push('/login')
+    }
   }, [])
 
   useEffect(()=>{
@@ -45,15 +58,6 @@ const HomePage = () => {
     }
   }, [services])
 
-
-  useEffect(() => {
-    // handleClick();
-    if (!utils.user.getToken()) {
-        router.push('/login')
-    } else {
-        setLoading(true)
-    }
-}, [])
 
 
   return <>{!loading && (
