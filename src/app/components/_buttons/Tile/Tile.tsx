@@ -13,7 +13,19 @@ type Props = {
 }
 
 const Tile: React.FC<Props> = ({ title, icon, classes = '', callback = () => {} }) => {
-    return <div className={clsx(styles.container, classes)} onClick={callback}>
+    const click = (e: React.MouseEvent<HTMLElement>) => {
+        const target = e.currentTarget as HTMLElement;
+        target.classList.add(styles.noTransitionDelay);
+        target.classList.add(styles.active);
+        setTimeout(() => {
+            target.classList.remove(styles.active);
+        }, 200);
+        setTimeout(() => {
+            target.classList.remove(styles.noTransitionDelay);
+        }, 400);
+        callback();
+    }
+    return <div className={clsx(styles.container, classes)} onClick={click}>
         <div className={styles.icon}>
             {icon ? (
                 <Image src={icon} alt={title} width={78} height={78} />

@@ -12,9 +12,12 @@
     z-index: 1;
     background-color: transparent;
     cursor: pointer;
-    transition: transform 0.2s;
-    &:active, &:focus{
-        transform: scale(0.9);
+    transition: transform 0.1s;
+    &.active{
+        transform: scale(0.95);
+    }
+    &.noTransitionDelay{
+        transition-delay: 0s !important;
     }
     &::before {
         content: "";
