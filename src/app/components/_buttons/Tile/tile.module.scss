@@ -14,7 +14,7 @@
     cursor: pointer;
     transition: transform 0.2s;
     &:active, &:focus{
-        transform: scale(0.98);
+        transform: scale(0.9);
     }
     &::before {
         content: "";
