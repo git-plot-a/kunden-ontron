@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import RequestFormSection from "../../_sections/RequestFormSection/RequestFormSection"
 import utils from "@/app/utils"
-import styles from "./homePage.client.module.scss"
+import styles from "./feedbackPage.client.module.scss"
 
 type ClientPartComponentProps = {
     [key: string]: string
