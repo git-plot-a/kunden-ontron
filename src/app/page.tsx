@@ -22,6 +22,7 @@ const HomePage = () => {
   useEffect(() => {
     console.log(utils.user.getToken())
     if (!utils.user.getToken()) {
+      utils.user.resetAllData()
       router.push('/login')
     } else {
       setLoading(false)
@@ -38,16 +39,23 @@ const HomePage = () => {
           'Authorization': `Bearer ${tocken}`
         },
       });
+
+      if (servicesRes.status === 403) {
+        utils.user.resetAllData()
+        router.push('/login')
+      }
+
       if (!servicesRes.ok) {
         throw new Error('Failed to fetch services');
       }
-      const services = await servicesRes.json();
+      const services = await servicesRes.json()
       setServices(services)
     }
 
     if (tocken) {
       getPreviewServices()
     } else {
+      utils.user.resetAllData()
       router.push('/login')
     }
   }, [])

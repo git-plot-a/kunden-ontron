@@ -17,6 +17,7 @@ const FeedbackPageClientPart: React.FC<ClientPartComponentProps> = () => {
     useEffect(() => {
         // handleClick();
         if (!utils.user.getToken()) {
+            utils.user.resetAllData()
             router.push('/login')
         } else {
             setShowContent(true)
