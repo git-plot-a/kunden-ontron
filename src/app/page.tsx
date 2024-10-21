@@ -19,16 +19,16 @@ const HomePage = () => {
 
 
 
-   useEffect(() => {
-    // handleClick();
+  useEffect(() => {
+    console.log(utils.user.getToken())
     if (!utils.user.getToken()) {
-        router.push('/login')
+      router.push('/login')
     } else {
-        setLoading(false)
+      setLoading(false)
     }
-}, [])
+  }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     const tocken = utils.user.getToken()
     const getPreviewServices = async () => {
       const servicesRes = await fetch(api.custom.SERVICE_PREVIEWS, {
@@ -45,15 +45,15 @@ const HomePage = () => {
       setServices(services)
     }
 
-    if(tocken){
-    getPreviewServices()
-    }else{
+    if (tocken) {
+      getPreviewServices()
+    } else {
       router.push('/login')
     }
   }, [])
 
-  useEffect(()=>{
-    if(services.length > 0) {
+  useEffect(() => {
+    if (services.length > 0) {
       setLoading(false)
     }
   }, [services])
