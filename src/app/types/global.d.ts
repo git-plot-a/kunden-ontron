@@ -77,7 +77,7 @@ declare global {
   interface Service {
     title: string;
     icon?: string;
-    updateData?: string;
+    contractEndData?: string;
     serviceLevels: Array<ServiceAgreement>;
     status?: ServiceStatus;
   }

@@ -22,19 +22,25 @@ const MiniTile: React.FC<Props> = ({ service, currentStyle = {} }) => {
     return <div className={clsx(styles.container, "animation-fade-in-bottom")} onClick={handleFlip} style={currentStyle}>
         <div className={clsx(styles.flippInner, isFlipped ? styles.flipped : '')}>
             <div className={styles.frontSide}>
+
                 <div className={styles.statusContainer}>
-                    <div className={styles.statusItem}>
-                        <div>{service.status?.title}</div>
-                        <div className={clsx(styles[constants.DENGER_LVL[typeof service.status?.denger_level !== "undefined" ? service.status?.denger_level : 2]], styles.indicator)}></div>
-                    </div>
+                    {service.status && service.status?.title && (
+                        <div className={styles.statusItem}>
+                            <div>{service.status?.title}</div>
+                            <div className={clsx(styles[constants.DENGER_LVL[typeof service.status?.denger_level !== "undefined" ? service.status?.denger_level : 2]], styles.indicator)}></div>
+                        </div>
+                    )}
                 </div>
                 <div className={styles.serviceContainer}>
                     <div className={styles.serviceIcon}>
                         {service.icon && (<Image src={service.icon} alt={service.title} width={48} height={48} />)}
                     </div>
+
                     <div className={styles.serviceText}>
                         <h5>{service.title}</h5>
-                        <div className={styles.updated}>{service.updateData}</div>
+                        {service.contractEndData && typeof service.contractEndData == 'string' && (
+                            <div className={styles.updated}>{service.contractEndData}</div>
+                        )}
                     </div>
                 </div>
             </div>

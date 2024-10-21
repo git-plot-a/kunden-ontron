@@ -6,6 +6,7 @@
   &Container {
     display: flex;
     justify-content: flex-end;
+    min-height: 26px;
   }
   &Item {
     display: flex;
@@ -131,7 +132,7 @@
       background-color: var(--gold-service-level);
     }
 
-    &.Silver {
+    &.Silber {
       background-color: var(--silver-service-level);
     }
 
