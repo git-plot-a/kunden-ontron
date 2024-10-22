@@ -10,7 +10,7 @@ import constants from "./constants"
 import styles from "./footer.module.scss"
 
 const Footer = () => {
-    return <section id="feedback-section">
+    return <section id="footer">
         <Container classes={styles.container}>
             <Row classes={styles.rowMobileVersion}>
                 <Col span={18} classes={styles.mobileVersion}>

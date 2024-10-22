@@ -78,7 +78,7 @@ declare global {
     title: string;
     icon?: string;
     contractEndData?: string;
-    serviceLevels: Array<ServiceAgreement>;
+    serviceLevels?: Array<ServiceAgreement>;
     status?: ServiceStatus;
   }
 }

@@ -1,0 +1,10 @@
+.container {
+  padding-top: 80px;
+  .servicesList{
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-right: 18px;
+  }
+}
+

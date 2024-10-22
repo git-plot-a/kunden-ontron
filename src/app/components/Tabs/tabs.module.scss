@@ -1,0 +1,105 @@
+.tabsContainer {
+  position: relative;
+  // max-width: calc(100% - 50px);
+  .tabLinks {
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    margin-bottom: 48px;
+    // margin-right: 50px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    .ItemName {
+      padding: 18px 0;
+      font-size: 16px;
+      line-height: 24px;
+      white-space: nowrap;
+      margin-left: 48px;
+      cursor: pointer;
+      color: var(--pale-text);
+      transform: color 0.1s;
+      &:first-child {
+        margin-left: 0;
+      }
+      &.active {
+        color: var(--dark-text);
+      }
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      right: 0;
+      left: 0;
+      border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+      bottom: 0;
+    }
+    .underline {
+      position: absolute;
+      bottom: 0;
+      background-color: var(--active-text-color);
+      height: 2px;
+      left: 0;
+      transition: left 0.3s, width 0.3s;
+    }
+    &::-webkit-scrollbar, &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track, &::-webkit-scrollbar-butto {
+      width: 0;
+      height: 0;
+      display: none;
+      background: transparent;
+    }
+
+  }
+  .arrow {
+    position: absolute;
+    right: -45px;
+    height: 27px;
+    width: 8px;
+    top: 8px;
+    right: 5px; 
+    cursor: pointer;
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      border: 6px solid transparent;
+      height: 10px;
+      width: 10px;
+      top: 2px;
+      left: 2px;
+      border-left: 6px solid var(--light-blue-color);
+      transform: border-left-color 0.3s, border-right-color 0.3s;
+    }
+    &:after {
+      left: 0;
+      border-left: 6px solid var(--backlog);
+    }
+    &:hover{
+        &:before{
+            border-left-color: var(--permanent-dark-blue);
+        }
+    }
+    &.arrowStart{
+        z-index: 99;
+        left: 0px;
+        background-color: var(--backlog);
+      
+        &:before,
+        &:after {
+            left: 2px;
+            border: 6px solid transparent;
+            border-right: 6px solid var(--light-blue-color);
+        }
+        &:after {
+            left: 4px;
+            border-right: 6px solid var(--backlog);
+        }
+        &:hover{
+            &::before{
+                border-left-color: var(--backlog);
+                border-right-color: var(--permanent-dark-blue);
+            }
+        }   
+    }
+  }
+}

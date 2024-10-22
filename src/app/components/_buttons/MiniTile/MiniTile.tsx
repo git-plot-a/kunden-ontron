@@ -47,7 +47,7 @@ const MiniTile: React.FC<Props> = ({ service, currentStyle = {} }) => {
             <div className={styles.backSide}>
                 <div className={styles.serviceText}>
                     <h5>{constants.SERVICE_LEVEL_TEXT}</h5>
-                    {service.serviceLevels.length > 0 && service.serviceLevels.map((service, key) => (
+                    {service.serviceLevels && service.serviceLevels.length && service?.serviceLevels?.map((service, key) => (
                         <div className={styles.lvlContainer} key={key}>
                             <div className={styles.lvlTitle}>{`${service.type}: `}</div>
                             <div className={clsx(styles.lvlValue, styles[service.value])}>{service.value}</div>
