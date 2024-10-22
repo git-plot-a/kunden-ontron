@@ -10,9 +10,8 @@ import Row from '../../_layout/Row/Row';
 import Col from '../../_layout/Col/Col';
 import Image from 'next/image';
 import { editUserFromSchems, resetPasswordSchems } from "@/app/schemes"
-// import useLoadContent from "../../../hooks/loadContent/loadContent";
+import useSendQuery from '@/app/hooks/sendQuery/sendQuery';
 import api from '@/app/api/crud';
-// import global from '@/app/constants/global';
 import constants from "./constants"
 import utils from '@/app/utils';
 import styles from "./userEditForm.module.scss"
@@ -20,14 +19,11 @@ import styles from "./userEditForm.module.scss"
 
 type Props = {
   [key: string]: string
-  // resetPassword: (callback: (result: object) => void, errorHandler: (error: object) => void) => void,
-  // updateUser: (callback: (result: object) => void, errorHandler: (error: object) => void) => void
 }
 
 const UserEditForm: React.FC<Props> = () => {
   const router = useRouter()
-  // const [resetPasswdCounter, setResetPassCounter] = useState(3)
-  // const [avatar, setAvatar] = useState('/img/avatar.png');
+  const {fetchData} = useSendQuery()
   const [oldPassOpened, setOldPassOpened] = useState(false);
   const [newPassOpened, setNewPassOpened] = useState(false);
   const [loading, setLoading] = useState<boolean>(true)
@@ -36,26 +32,19 @@ const UserEditForm: React.FC<Props> = () => {
   const [generalResultPasswdForm, setGeneralResultPasswdForm] = useState<string>('')
   const [generalResultChangeUserData, setGeneralResultChangeUserData] = useState<string>('')
 
-  // const errorHandler = (resetErrorFucntion: ()=>{}, errorText?: string) => {
-  //  resetErrorFucntion()
-
-  // }
 
   const updateUserData = async (values: { [key: string]: string }) => {
     const { username } = values;
     const userID = utils.user.getUserID();
     const callback = () => {
-      // console.log(result)
-      // utils.user.setUserData(result as User);
       setGeneralResultChangeUserData(constants.SUCESSFUL_USER_CHANGE)
     }
     try {
       const dataArray = JSON.stringify({
         "id": userID,
-        // "user_email": email,
         "display_name": username,
       });
-      const result = await utils.api.fetchData(api.custom.USER_CHANGE, "POST", dataArray, true);
+      const result = await fetchData(api.custom.USER_CHANGE, "POST", { "Content-Type": "application/json" }, dataArray, true);
       if (result?.code == "success") {
         callback()
       } else {
@@ -91,7 +80,7 @@ const UserEditForm: React.FC<Props> = () => {
         "old_pass": oldPassword,
         "new_pass": newPassword,
       });
-      const result = await utils.api.fetchData(api.custom.USER_NEW_PASSWORD, "POST", dataArray, true);
+      const result = await fetchData(api.custom.USER_NEW_PASSWORD, "POST", { "Content-Type": "application/json"}, dataArray, true);
       if (result?.code == "success") {
         console.log(result)
         callback()
@@ -183,10 +172,10 @@ const UserEditForm: React.FC<Props> = () => {
                     />
                   </div> */}
                   <div className={styles.field}>
-                  {utils.user.getUserData()?.company ? (<div className={styles.field}>{`${constants.COMPANY_TITLE} ${currentUser?.company}`}</div>) : (<></>)}
+                    {utils.user.getUserData()?.company ? (<div className={styles.field}>{`${constants.COMPANY_TITLE} ${currentUser?.company}`}</div>) : (<></>)}
                   </div>
                   <div className={styles.field}>
-                      {`Email: ${currentUser?.user_email ? currentUser?.user_email : ''}`}
+                    {`Email: ${currentUser?.user_email ? currentUser?.user_email : ''}`}
                     {/* <Field
                       type="text"
                       id="email"

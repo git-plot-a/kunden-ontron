@@ -1,11 +1,15 @@
 .container{
-    // padding-top: 136px;
+    min-height: 296px;
+    position: relative;
 }
 .title{
     font-size: 44px;
     line-height: 64px;
     font-weight: 600;
-    color: var(--dark-text);
+    padding-left: 47px;
+    margin: 0;
+    padding-top: 40px;
+    color: var(--most-light);
     cursor: default;
     span{
         font-weight: 600;
@@ -14,4 +18,11 @@
         background-clip: text;
         color: transparent;
     }
+}
+
+.backContainer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }

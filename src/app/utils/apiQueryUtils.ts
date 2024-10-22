@@ -14,25 +14,28 @@ const defaultErrorHandler = (err: Errors) => {
 const fetchData = async (
   address: string,
   method: queryMethods,
+  header: object = {},
   body: BodyInit | null | undefined,
   authorised: boolean = true
 ) => {
   const token = authorised ? user.getUserData()?.token : false;
   if ((token && authorised) || !authorised) {
     try {
-      const response = await fetch(address, {
+      console.log({
+        ...header,
+        ...(authorised && token ? { Authorization: `Bearer ${token}` } : {}),
+      })
+      const params: {[key: string]: unknown} = {
         method: method,
-        cache: "no-store",
         headers: {
-          "Content-Type": "application/json",
-        //   "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-        //   "Pragma": "0"
-        //   Pragma: "no-cache",
-        //   Expires: "0",
+          ...header,
           ...(authorised && token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: body ? body : ''
-      });
+        }
+      }
+      if(body && method == "POST"){
+        params.body = body ? body : ''
+      }
+      const response = await fetch(address, params);
 
       return response.json();
     } catch (error) {

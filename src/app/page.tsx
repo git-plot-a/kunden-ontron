@@ -8,6 +8,7 @@ import Header from "./components/_sections/Header/Header"
 import ProductList from './components/_sections/ProductList/ProductList';
 import TilesSection from './components/_sections/TilesSection/TilesSection';
 import TopOffer from './components/_sections/TopOffer/TopOffer';
+import useSendQuery from './hooks/sendQuery/sendQuery';
 import api from '@/app/api/crud';
 import utils from './utils';
 
@@ -16,6 +17,7 @@ const HomePage = () => {
   const router = useRouter()
   const [services, setServices] = useState<Array<Service>>([])
   const [loading, setLoading] = useState(true)
+  const { fetchData } = useSendQuery()
 
 
 
@@ -32,24 +34,8 @@ const HomePage = () => {
   useEffect(() => {
     const tocken = utils.user.getToken()
     const getPreviewServices = async () => {
-      const servicesRes = await fetch(api.custom.SERVICE_PREVIEWS, {
-        method: 'GET',
-        headers: {
-          // 'Content-Type': 'application/json',
-          'Authorization': `Bearer ${tocken}`
-        },
-      });
-
-      if (servicesRes.status === 403) {
-        utils.user.resetAllData()
-        router.push('/login')
-      }
-
-      if (!servicesRes.ok) {
-        throw new Error('Failed to fetch services');
-      }
-      const services = await servicesRes.json()
-      setServices(services)
+      const servicesRes: Array<Service>  =  await fetchData(api.custom.SERVICE_PREVIEWS, "GET", {}, null, true)    
+      setServices(servicesRes)
     }
 
     if (tocken) {
