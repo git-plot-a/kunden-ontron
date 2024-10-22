@@ -2,15 +2,18 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
+import UserFormSection from "../../_sections/UserFromSection/UserFromSection";
+import useSendQuery from "@/app/hooks/sendQuery/sendQuery";
+import { userLoginFormSchems } from "../../../schemes"
 import utils from "@/app/utils";
 import api from "../../../api/crud";
 import constants from "./constants";
-import { userLoginFormSchems } from "../../../schemes"
-import UserFormSection from "../../_sections/UserFromSection/UserFromSection";
+
 
 
 const LoginPageClientPart = () => {
     const router = useRouter();
+    const { fetchData } = useSendQuery()
     const [loading, setLoading] = useState(true)
     const [startFields, setStartFields] = useState<FiledList>(constants.FIELDS)
     const [resultingText, setResultinText] = useState<React.ReactNode | undefined>(undefined)
@@ -22,7 +25,7 @@ const LoginPageClientPart = () => {
         });
 
         try {
-            const result = await utils.api.fetchData(api.custom.LOGIN, "POST", dataArray, false);
+            const result = await fetchData(api.custom.LOGIN, "POST",  { "Content-Type": "application/json"}, dataArray, false);
             if (result?.data?.status && result?.data?.status != "200") {
                 let errorText: React.ReactNode = <></>
                 console.log(result?.data?.status)
