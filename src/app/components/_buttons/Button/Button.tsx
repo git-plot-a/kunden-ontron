@@ -1,9 +1,5 @@
 import React, { FC } from "react";
 import clsx from "clsx";
-import actions from "@/app/actions";
-import Link from "next/link";
-import { Url } from "next/dist/shared/lib/router/router";
-import Image from "next/image";
 import styles from "./button.module.scss"
 
 type Props = {

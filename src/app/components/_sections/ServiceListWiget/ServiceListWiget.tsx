@@ -8,7 +8,6 @@ import Container from "../../_layout/Container/Container"
 import Row from "../../_layout/Row/Row"
 import { Tabs } from '../../Tabs/Tabs';
 import { Button } from '../../_buttons/Button/Button';
-import Image from 'next/image';
 import ServiceTile from '../../_buttons/ServiceTile/ServiceTile';
 import constants from './constants';
 import styles from "./servicelistwigets.module.scss"
