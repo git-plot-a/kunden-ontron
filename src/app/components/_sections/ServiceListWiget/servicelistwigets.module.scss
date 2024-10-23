@@ -1,6 +1,6 @@
 .container {
   padding-top: 80px;
-  .servicesList{
+  .servicesList {
     max-height: 500px;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -8,3 +8,130 @@
   }
 }
 
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  border: none;
+  background-color: transparent;
+
+  .row {
+    display: table-row;
+    &:nth-child(2n) {
+      background-color: var(--table-dark-back);
+    }
+
+    .column {
+      display: table-cell;
+      padding: 16px;
+      line-height: 28px;
+      border: 0.5px solid var(--color-border);
+      vertical-align: top;
+      &.middleVertical{
+        vertical-align: middle;
+      }
+      &.header {
+        font-weight: 600;
+        text-align: left;
+        &.notBordered {
+          border: none;
+        }
+      }
+      .text {
+        margin-top: auto;
+        margin-bottom: auto;
+        text-align: center;
+        color: var(--light-gray-text);
+        font-size: 16px;
+        line-height: 28px;
+        &.leftSide {
+          text-align: left;
+        }
+        b {
+          vertical-align: middle;
+          font-weight: 600;
+          color:  var(--dark-text);
+        }
+        .selection{
+          color: var(--dark-text);
+          background-color: var(--light-selection);
+          line-height: 34px;
+          padding-right: 25px;
+          padding-left: 25px;
+          border-radius: 32px;
+          font-weight: 600;
+          width: max-content;
+          margin: 0;
+          margin-right: auto;
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}
+
+.level {
+  .title {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+  }
+  .activeStatus {
+    line-height: 15px;
+    font-size: 12px;
+    font-weight: 200;
+    color: var(--active-text-color);
+    min-height: 15px;
+    margin-top: 4px;
+    margin-bottom: 9px;
+  }
+  &Indicator {
+    background-color: var(--indicators-back);
+    height: 7.95px;
+    width: 57px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    &:before {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+    &.bronze {
+      &:before {
+        background: linear-gradient(
+          to right,
+          #08a0e5 0%,
+          #08a0e5 25%,
+          #ececec 50%
+        );
+      }
+    }
+    &.silber {
+      &:before {
+        background: linear-gradient(
+          to right,
+          #08a0e5 0%,
+          #08a0e5 50%,
+          #ececec 75%
+        );
+      }
+    }
+    &.gold {
+      &:before {
+        background: linear-gradient(to right, #08a0e5 0%, #7ce6e6 100%);
+      }
+    }
+  }
+}
+.mainTitle {
+  .column {
+    padding: 27px 16px 29.5px 16px !important;
+  }
+}

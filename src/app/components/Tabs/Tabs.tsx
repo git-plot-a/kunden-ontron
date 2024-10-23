@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { useRef } from "react";
 import constants from "./contants";
@@ -7,14 +7,20 @@ import styles from "./tabs.module.scss";
 
 type Props = {
   classes?: string,
-  children: React.ReactNode
+  children: React.ReactNode,
+  tabsPrefix: string,
+  activeTab: string,
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>
 }
 
 export const Tabs: React.FC<Props> = ({
   classes,
-  children
+  children,
+  tabsPrefix = '',
+  activeTab,
+  setActiveTab
 }) => {
-  const [currentTab, setCurrentTab] = useState<string>('tab-1');
+  // const [currentTab, setCurrentTab] = useState<string>(`${tabsPrefix}1`);
   const underline = useRef<HTMLDivElement | null>(null);
 
   const getActiveWidth = () => {
@@ -22,7 +28,7 @@ export const Tabs: React.FC<Props> = ({
       const getAllTabs = document.querySelectorAll(`.${styles.ItemName}`);
       let paddingLeft = 0,
         i = 0;
-      while (!getAllTabs[i].classList.contains(styles.active)) {
+      while (!getAllTabs[i]?.classList.contains(styles.active)) {
         paddingLeft += getAllTabs[i].getBoundingClientRect().width + constants.TAB_PADDING;
         i++;
       }
@@ -39,8 +45,8 @@ export const Tabs: React.FC<Props> = ({
   const onClickTab = (e: React.MouseEvent<HTMLDivElement>) => {
 
     const element = e.currentTarget as HTMLElement
-    const elementNumber = element ?  element.getAttribute("id") : 'tab-1';
-    setCurrentTab(elementNumber as string);
+    const elementNumber = element ?  element.getAttribute("id") : `${tabsPrefix}1`;
+    setActiveTab(elementNumber as string);
   };
 
   useEffect(() => {
@@ -52,7 +58,7 @@ export const Tabs: React.FC<Props> = ({
 
   useEffect(() => {
     getActiveWidth();
-  }, [currentTab]);
+  }, [activeTab]);
 
   return (
     <div
@@ -64,11 +70,11 @@ export const Tabs: React.FC<Props> = ({
           constants.TAB_NAMES.map((item, key) => (
             <div
               key={key}
-              id={`tab-${key+1}`}
+              id={`${tabsPrefix}${key+1}`}
               onClick={onClickTab}
               className={clsx(
                 styles.ItemName,
-                `tab-${key+1}` == currentTab ? styles.active : ""
+                `${tabsPrefix}${key+1}` == activeTab ? styles.active : ""
               )}
             >
               {item}
