@@ -27,7 +27,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
     const router = useRouter()
     const [activeTab, setActiveTab] = useState<string>(`${constants.TABS_ID_PREFIX}1`)
 
-    const redirectCallback = (e: React.MouseEvent<HTMLElement>) => {
+    const redirectCallback = () => {
         router.push('/support')
     }
 
