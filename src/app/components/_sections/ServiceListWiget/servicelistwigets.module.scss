@@ -15,20 +15,21 @@
   margin: 20px 0;
   border: none;
   background-color: transparent;
+  margin-top: 101px;
 
   .row {
     display: table-row;
-    &:nth-child(2n) {
-      background-color: var(--table-dark-back);
-    }
 
+    &.acsentLine{
+      background-color: var(--button-hover-gray) !important;
+    }
     .column {
       display: table-cell;
       padding: 16px;
       line-height: 28px;
       border: 0.5px solid var(--color-border);
       vertical-align: top;
-      &.middleVertical{
+      &.middleVertical {
         vertical-align: middle;
       }
       &.header {
@@ -36,6 +37,29 @@
         text-align: left;
         &.notBordered {
           border: none;
+        }
+      }
+      &.bestChoice {
+        position: relative;
+        &Cells {
+          border-left: 1px solid var(--active-text-color);
+          border-right: 1px solid var(--active-text-color);
+          &.last{
+            border-bottom: 1px solid var(--active-text-color);
+          }
+        }
+        &:before {
+          content: 'Beste Auswahl';
+          position: absolute;
+          background-color: var(--active-text-color);
+          width: calc(100% + 2px);
+          left: -1px;
+          color: var(--most-light);
+          line-height: 42px;
+          font-size: 16px;
+          top: -42px;
+          border-top-right-radius: 10px;
+          border-top-left-radius: 10px;
         }
       }
       .text {
@@ -51,9 +75,9 @@
         b {
           vertical-align: middle;
           font-weight: 600;
-          color:  var(--dark-text);
+          color: var(--dark-text);
         }
-        .selection{
+        .selection {
           color: var(--dark-text);
           background-color: var(--light-selection);
           line-height: 34px;
@@ -66,6 +90,14 @@
           margin-right: auto;
           margin-left: auto;
         }
+      }
+    }
+  }
+
+  tbody {
+    .row{
+      &:nth-child(2n+1) {
+        background-color: var(--table-dark-back);
       }
     }
   }
@@ -128,6 +160,9 @@
         background: linear-gradient(to right, #08a0e5 0%, #7ce6e6 100%);
       }
     }
+  }
+  .image{
+    max-height: 36px;
   }
 }
 .mainTitle {
