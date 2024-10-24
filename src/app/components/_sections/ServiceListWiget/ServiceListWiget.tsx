@@ -10,8 +10,10 @@ import { Tabs } from '../../Tabs/Tabs';
 import { Button } from '../../_buttons/Button/Button';
 import ServiceTile from '../../_buttons/ServiceTile/ServiceTile';
 import Image from 'next/image';
+import Link from 'next/link';
 import constants from './constants';
 import styles from "./servicelistwigets.module.scss"
+import ServiceTarif from '../../ServiceTarif/ServiceTarif';
 
 
 interface ExtendedService extends Service {
@@ -37,7 +39,48 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
     const renderTabContent = () => {
         switch (activeTab) {
             case `${constants.TABS_ID_PREFIX}1`:
-                return <div>Description</div>;
+                return <div className={styles.descriptionSection}>
+                    <div className={styles.titleSection}>
+                        <div className={styles.title}>
+                            Atlassian Jira
+                        </div>
+                        <div className={styles.button}><Button title={"Erhalten"} callback={redirectCallback} /></div>
+                    </div>
+                    <div className={styles.tariffsSection}>
+                        <div className={styles.title}>Unterstützungsstufe</div>
+                        <div className={styles.tariffsSectionContainer}>
+                            <ServiceTarif serviceLevels={[{ type: 'Platform', value: 'Silber' }, { type: 'Inhalt', value: 'Gold' }]} />
+                        </div>
+                    </div>
+                    <div className={styles.text}>
+                        <h4>
+                            Zweck
+                        </h4>
+                        <p>Confluence ist ein Kollaborationswerkzeug, das unsere Teams bei der Erstellung, Genehmigung und gemeinsamen Bearbeitung von Projekten und Dokumentationen unterstützt. Es dient als zentrale Wissensdatenbank und Content-Management-System für ontron.</p>
+                        <h4>
+                            Key Features
+                        </h4>
+                        <p>
+                            <ul>
+                                <li>
+                                    Erstellung von Inhalten: Bietet Rich-Text-Bearbeitungsfunktionen für die Erstellung von Seiten, Wikis und Blogs
+                                </li>
+                                <li>Zusammenarbeit im Team: Ermöglicht es mehreren Benutzern, in Echtzeit an Dokumenten zusammenzuarbeiten</li>
+                                <li>Vorlagen: Bietet eine Vielzahl von Vorlagen für die Erstellung von konsistenter Dokumentation, Besprechungsnotizen, Produktanforderungen und mehr</li>
+                                <li>Seitenhierarchien: Organisiert Inhalte in einer hierarchischen Struktur, die das Navigieren und Verwalten erleichtert</li>
+                                <li>Integrationsmöglichkeiten: Nahtlose Integration mit anderen Atlassian-Produkten wie Jira und externen Tools wie O365 und Miro</li>
+                                <li>Suche und Archivierung: Leistungsstarke Suchfunktionen zum schnellen Auffinden von Inhalten und die Möglichkeit, veraltete Seiten zu archivieren
+                                </li>
+                            </ul>
+                        </p>
+                        <h4>Hosting Standort</h4>
+                        <p>Europäische Union</p>
+                        <h4>Support Standort</h4>
+                        <p>Australien</p>
+                        <h4>Support Standort</h4>
+                        <p><Link href={'/'}>Confluence Cloud resources | Confluence Cloud | Atlassian Support</Link></p>
+                    </div>
+                </div>;
 
             case `${constants.TABS_ID_PREFIX}2`:
                 return (<div>

@@ -1,0 +1,32 @@
+.lvlContainer {
+    display: flex;
+  }
+
+  .lvlTitle {
+    font-size: 12px;
+    line-height: 22px;
+    min-width: 85px;
+  }
+
+  .lvlValue {
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    color: var(--most-light);
+    min-width: 57px;
+    text-align: center;
+    border-radius: 2px;
+
+    &.Gold {
+      background-color: var(--gold-service-level);
+    }
+
+    &.Silber {
+      background-color: var(--silver-service-level);
+    }
+
+    &.Bronze {
+      background-color: var(--bronze-service-level);
+    }
+  }
