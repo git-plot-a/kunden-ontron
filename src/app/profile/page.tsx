@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation"
 import Header from "../components/_sections/Header/Header"
 import Footer from "../components/_sections/Footer/Footer"
 import UserEditForm from "../components/_forms/UserEditForm/UserEditForm"
-import useSendQuery from "../hooks/sendQuery/sendQuery"
-import api from "@/app/api/crud"
+// import useSendQuery from "../hooks/sendQuery/sendQuery"
+// import api from "@/app/api/crud"
 import utils from "../utils"
 
 const ProfilePage = async () => {

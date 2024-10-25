@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import clsx from 'clsx';
+// import clsx from 'clsx';
 import Col from "../../_layout/Col/Col"
 import Container from "../../_layout/Container/Container"
 import Row from "../../_layout/Row/Row"
 import { Tabs } from '../../Tabs/Tabs';
 import { Button } from '../../_buttons/Button/Button';
 import ServiceTile from '../../_buttons/ServiceTile/ServiceTile';
-import Image from 'next/image';
+// import Image from 'next/image';
 import constants from './constants';
 import useAnimation from '@/app/hooks/Animation/Animation';
 import styles from "./servicelistwigets.module.scss"
@@ -50,7 +50,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
         if(tocken && !service?.content && !service?.platform && service?.id){
             const servicesRes: object  =  await fetchData(`${api.custom.SERVICE_AGREEMENTS}${service?.id}`, "GET", {}, null, true)
             updatedService = {...service, ...servicesRes}
-            const newServiceList: Array<ExtendedService> = serviceList.reduce((res, serv, key) => { 
+            const newServiceList: Array<ExtendedService> = serviceList.reduce((res, serv) => { 
                 if(serv.id == service.id){
                     res.push(updatedService)
                 }
@@ -432,7 +432,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
         <Row>
             <Col span={6}>
                 <div className={styles.servicesList}>
-                    {services.length > 0 && services.map((service, key) => (
+                    {serviceList.length > 0 && serviceList.map((service, key) => (
                         <div key={key} onClick={() => { serviceClick(service.id) }}>
                             <ServiceTile service={service} subtitle={service.serviceLevels ? constants.SUBSCRIBTION_TITLE : undefined} />
                         </div>))}
