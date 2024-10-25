@@ -6,16 +6,16 @@ import Image from "next/image"
 import styles from "./servicetile.module.scss"
 
 interface ExtendedService extends Service {
-    subtitle?: string,
     id: string | number
 }
 
 type Props = {
-    service: ExtendedService
+    service: ExtendedService,
+    subtitle?: string | undefined
 }
 
-const ServiceTile: React.FC<Props> = ({ service }) => {
-
+const ServiceTile: React.FC<Props> = ({ service, subtitle = undefined }) => {
+    
     const callback = (e: React.MouseEvent<HTMLElement>) => {
         const target = e.currentTarget as HTMLElement;
         target.classList.add(styles.noTransitionDelay);
@@ -33,8 +33,8 @@ const ServiceTile: React.FC<Props> = ({ service }) => {
             <div className={styles.Image}><Image src={service.icon as string} alt={service.title} width={40} height={40} /></div>
             <div className={styles.text}>
                 <div className={styles.title}>{service.title}</div>
-                {service.subtitle && (<div className={styles.subtitle}>
-                    {service.subtitle}
+                {subtitle && (<div className={styles.subtitle}>
+                    {subtitle}
                 </div>)}
             </div>
         </div>

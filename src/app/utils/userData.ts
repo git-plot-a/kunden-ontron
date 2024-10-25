@@ -48,7 +48,6 @@ const getAvatar = () => {
       localStorage.getItem(localStorageVariables.USER_AVATAR_VARIABLE) as string
     );
   } catch (e) {
-    console.log(e);
     return localStorage.getItem(localStorageVariables.USER_AVATAR_VARIABLE);
   }
 };

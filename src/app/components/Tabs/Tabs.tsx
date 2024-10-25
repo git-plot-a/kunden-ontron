@@ -10,7 +10,8 @@ type Props = {
   children: React.ReactNode,
   tabsPrefix: string,
   activeTab: string,
-  setActiveTab: React.Dispatch<React.SetStateAction<string>>
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>,
+  tabNames: Array<string>
 }
 
 export const Tabs: React.FC<Props> = ({
@@ -18,7 +19,8 @@ export const Tabs: React.FC<Props> = ({
   children,
   tabsPrefix = '',
   activeTab,
-  setActiveTab
+  setActiveTab,
+  tabNames
 }) => {
   // const [currentTab, setCurrentTab] = useState<string>(`${tabsPrefix}1`);
   const underline = useRef<HTMLDivElement | null>(null);
@@ -66,8 +68,8 @@ export const Tabs: React.FC<Props> = ({
       className={clsx(styles.tabsContainer, classes)}
     >
       <div className={clsx(styles.tabLinks, "tabs-container")}>
-        {constants.TAB_NAMES.length > 0 &&
-          constants.TAB_NAMES.map((item, key) => (
+        {tabNames.length > 0 &&
+          tabNames.map((item, key) => (
             <div
               key={key}
               id={`${tabsPrefix}${key+1}`}
