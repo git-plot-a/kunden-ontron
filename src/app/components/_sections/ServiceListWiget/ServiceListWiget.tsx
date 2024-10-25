@@ -113,6 +113,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
             }, tabsList)
             setTabNames(constants.TAB_NAMES)
         }
+        setTabNames(tabsList)
         setActiveTab(`${constants.TABS_ID_PREFIX}1`)
         loadContent(chosen)
         console.log(chosen)
