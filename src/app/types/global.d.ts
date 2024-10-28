@@ -81,6 +81,15 @@ declare global {
     serviceLevels?: Array<ServiceAgreement>;
     status?: ServiceStatus;
   }
+
+  interface ExtendedService extends Service {
+    id: string | number;
+    description?: string;
+    content?: string;
+    platform?: string;
+    best_choice_content?: string | undefined;
+    best_choice_platform?: string | undefined;
+  }
 }
 
 export {};

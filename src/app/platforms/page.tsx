@@ -12,15 +12,9 @@ import api from "@/app/api/crud"
 
 // import LottieAnimation from "../components/LottieAnimation/LottieAnimation"
 // import dynamic from "next/dynamic"
-interface ExtendedService extends Service {
-    id: string | number,
-    description?: string,
-    content?: string,
-    platform?: string
 
-}
 
-const PlatformsPage = async () => {
+const PlatformsPage = () => {
     const router = useRouter()
     const [services, setServices] = useState<Array<ExtendedService>>([])
     const [loading, setLoading] = useState(true)
@@ -44,7 +38,7 @@ const PlatformsPage = async () => {
       useEffect(() => {
         const tocken = utils.user.getToken()
         const getPreviewServices = async () => {
-          const servicesRes: Array<ExtendedService>  =  await fetchData(api.custom.SERVICE_PREVIEWS, "GET", {}, null, true)    
+          const servicesRes: Array<ExtendedService>  =  await fetchData(`${api.custom.SERVICE_PREVIEWS}/all`, "GET", {}, null, true)    
           setServices(servicesRes)
         }
     
