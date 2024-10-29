@@ -1,3 +1,5 @@
+
+
 import React, { FC } from "react";
 import clsx from "clsx";
 import actions from "@/app/actions";
@@ -10,7 +12,7 @@ import Image from "next/image";
 type Props = {
     classes?: string,
     link?: string | null,
-    title: string,
+    title: string | React.ReactNode,
     callback?: (args: unknown) => void | null | undefined,
     active: boolean,
     image?: string
@@ -35,13 +37,13 @@ const StandartButton: FC<Props> = ({ title, classes = "", link = null, callback 
     return <>
         {!link ? (
             <div className={clsx(styles.container, active ? styles.active : '', classes)} onClick={buttonClick}>
-                <Image src={image} alt={title} width={24} height={24}/>
+                <Image src={image} alt={title as string} width={24} height={24} />
                 <span>{title}</span>
             </div>
 
         ) : (
-            <Link className={clsx(styles.container,  active ? styles.active : '',   classes)} href={link as Url}>
-                 <Image src={image} alt={title} width={24} height={24}/>
+            <Link className={clsx(styles.container, active ? styles.active : '', classes)} href={link as Url} >
+                <Image src={image} alt={title as string} width={24} height={24} />
                 <span>{title}</span>
             </Link>
         )}

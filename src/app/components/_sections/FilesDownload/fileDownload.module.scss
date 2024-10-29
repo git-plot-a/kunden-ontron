@@ -1,0 +1,73 @@
+.container{
+    margin-top: 58px;
+    .serviceInfo{
+        display: flex;
+        justify-content: flex-start;
+        padding-bottom: 48px;
+        img{
+            height: 44px;
+            width: 44px;
+        }
+        .serviceTitle{
+            margin-top: auto;
+            margin-bottom: auto;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 32px;
+            padding-left: 22px;
+        }
+    }
+    .file
+    {
+        &Container{
+        }
+        &Item{
+            display: flex;
+            justify-content: flex-start;
+            height: 64px;
+            margin-bottom: 8px;
+            background-color: var(--light-gray);
+            padding-right: 20px;
+            padding-left: 20px;
+            border-radius: 12px;
+            cursor: default;
+            .text{
+                margin-top: auto;
+                margin-bottom: auto;
+                font-size: 16px;
+                line-height: 24px;
+                font-weight: 300;
+                color: var(--most-dark);
+                white-space: nowrap;
+                flex-grow: 1;
+            }
+            .data{
+                margin-top: auto;
+                margin-bottom: auto;
+                white-space: nowrap;
+            }
+            .loadButton{
+                margin-top: auto;
+                margin-bottom: auto;
+                margin-left: 12px;
+                .button{
+                    padding: 2px 14px;
+                    background-color: var(--placeholder-light-gray);
+                    border-radius: 32px;
+                    span{
+                        line-height: 32px;
+                        font-size: 16px;
+                        color: var(--pale-text);
+                        opacity: 0.6;
+                        font-weight: 300;
+                    }
+                    img{
+                        height: 18px !important;
+                        width: 18px !important;
+                        margin-right: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -10,6 +10,12 @@ const TilesSection = () => {
     tiles[1].callback = () =>{
         router.push('/platforms')
     }
+    tiles[0].callback = () =>{
+        router.push('/support')
+    }
+    tiles[2].callback = () =>{
+        router.push('/downloads')
+    }
 
     return <div className={styles.container}>
         {constants.TILES_LIST.map((item, key) => (

@@ -61,29 +61,6 @@
             border: none;
           }
         }
-        &.bestChoice {
-          position: relative;
-          &Cells {
-            border-left: 1px solid var(--active-text-color);
-            border-right: 1px solid var(--active-text-color);
-            &.last {
-              border-bottom: 1px solid var(--active-text-color);
-            }
-          }
-          &:before {
-            content: 'Beste Auswahl';
-            position: absolute;
-            background-color: var(--active-text-color);
-            width: calc(100% + 2px);
-            left: -1px;
-            color: var(--most-light);
-            line-height: 42px;
-            font-size: 16px;
-            top: -42px;
-            border-top-right-radius: 10px;
-            border-top-left-radius: 10px;
-          }
-        }
         .text {
           margin-top: auto;
           margin-bottom: auto;
