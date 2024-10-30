@@ -37,7 +37,7 @@ const DownloadsPage = () => {
     useEffect(() => {
         const tocken = utils.user.getToken()
         const getPreviewServices = async () => {
-          const servicesRes: Array<FileList>  =  await fetchData(`${api.custom.DOCUMENTATION_LIST}`, "GET", {}, null, true)    
+          const servicesRes: Array<FileListCustom>  =  await fetchData(`${api.custom.DOCUMENTATION_LIST}`, "GET", {}, null, true)    
           setFileLists(servicesRes)
         }
     
