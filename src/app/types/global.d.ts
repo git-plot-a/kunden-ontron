@@ -90,6 +90,17 @@ declare global {
     best_choice_content?: string | undefined;
     best_choice_platform?: string | undefined;
   }
+
+  type FileItem = {
+    title: string;
+    link: string;
+    data: string;
+  };
+
+  interface FileListCustom {
+    item: Service;
+    files: Array<FileItem>;
+  }
 }
 
 export {};
