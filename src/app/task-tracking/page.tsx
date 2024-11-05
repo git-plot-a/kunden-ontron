@@ -14,7 +14,7 @@ import utils from "../utils"
 const TaskTrackingPage = () => {
     const router = useRouter()
     const [loading, setLoading] = useState(true)
-    const [tickets, setTickets] = useState<Array<object>>([])
+    const [tickets, setTickets] = useState<Array<Ticket>>([])
 
     useEffect(() => {
         console.log(utils.user.getToken())

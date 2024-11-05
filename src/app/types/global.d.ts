@@ -101,6 +101,22 @@ declare global {
     item: Service;
     files: Array<FileItem>;
   }
+  type Ticket = {
+    key: string;
+    fields: {
+      summary: string;
+      status: {
+        name: string;
+      };
+      resolutiondate: string | null;
+      created: string | null;
+      priority: {
+        iconUrl: string | null;
+        name: string;
+      };
+      timetracking: Array<object>;
+    };
+  };
 }
 
 export {};
