@@ -1,21 +1,37 @@
 import constants from "../constants/global";
 import errors from "../constants/errors";
 
-const apiRequest = async (data: object) => {
+
+interface ApiRequestData {
+  type?: string;
+  summary?: string;
+  description?: string;
+  userEmail?: string;
+}
+
+
+
+const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
+  const headers = {
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+  };
 
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      'X-Requested-With': 'XMLHttpRequest',
+    let url = "/api/jira";
+    const options: RequestInit = {
+      method,
+      headers,
     };
-    console.log(data)
 
-    const response = await fetch('/api/jira', {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(data),
-    });
+    if (method === "POST") {
+      options.body = JSON.stringify(data);
+    } else if (method === "GET" && data.userEmail) {
+      url += `?userEmail=${encodeURIComponent(data.userEmail)}`;
+    }
 
+    const response = await fetch(url, options);
+    // return response;
     if (!response.ok) {
       console.error(`${errors.JIRA_ERROR_MISTAKE}${response.statusText}`);
       return {
@@ -24,7 +40,7 @@ const apiRequest = async (data: object) => {
       };
     }
 
-    const result = await response;
+    const result = await response.json();
     console.log(constants.JIRA_SERVER_RESPONCE, result);
     return result;
   } catch (error) {

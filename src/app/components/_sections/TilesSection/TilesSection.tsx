@@ -16,6 +16,9 @@ const TilesSection = () => {
     tiles[2].callback = () =>{
         router.push('/downloads')
     }
+    tiles[3].callback = () =>{
+        router.push('/task-tracking')
+    }
 
     return <div className={styles.container}>
         {constants.TILES_LIST.map((item, key) => (

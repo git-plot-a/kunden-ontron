@@ -55,7 +55,7 @@ const PlatformsPage = () => {
         <>
             <Header currentPage={"platforms"} />
             <section id="top-offer">
-                <TopOfferSubPages title={<>Produkte verwalten</>} imageUrl={'/img/offer_product.svg'} />
+                <TopOfferSubPages title={<>Produkte verwalten</>} imageUrl={'/img/top_offer.png'} />
             </section>
             <section id="user-services">
                 <ServiceListWiget services={services} />
