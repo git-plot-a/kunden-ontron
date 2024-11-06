@@ -5,7 +5,7 @@ import styles from "./submitButton.module.scss"
 type Props = {
     title: string,
     classes?: string,
-    blocked: boolean
+    blocked?: boolean
 }
 
 const SubmitFormButton: FC<Props> = ({title, classes, blocked=false})=>{
