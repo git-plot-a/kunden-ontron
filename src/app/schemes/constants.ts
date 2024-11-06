@@ -31,6 +31,7 @@ const NOT_ALLOWED_IMAGE_TYPES =
   'Es werden nur die folgenden Formate akzeptiert: .jpeg, .jpg, .png'
 const LOGIN_INCORRECT_FORM = 'Die von Ihnen eingegebene Anmeldung hat ein falsches Format'
 
+const UNKNOWN_PRIORITY = 'Die Priorität der Aufgabe wurde nicht erkannt'
 
 export default {
   SEARCH_VALIDATION,
@@ -53,5 +54,6 @@ export default {
   INCORRECT_COMMENT_PARENT,
   MAX_LOADING_SIZE_IN_MEGABITES,
   NOT_ALLOWED_IMAGE_TYPES,
-  LOGIN_INCORRECT_FORM 
+  LOGIN_INCORRECT_FORM,
+  UNKNOWN_PRIORITY
 }

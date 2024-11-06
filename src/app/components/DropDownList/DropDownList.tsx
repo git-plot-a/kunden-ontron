@@ -7,13 +7,14 @@ import clsx from 'clsx';
 
 type Props = {
     items: Array<DropDownList>,
-    handler: (newVal: string) => void
+    handler: (newVal: string) => void,
+    def?: number
 }
 
-const DropDownList: React.FC<Props> = ({ items, handler }) => {
+const DropDownList: React.FC<Props> = ({ items, handler, def = undefined}) => {
     const ref = useRef<HTMLDivElement | null>(null);
     const [openedList, setListOpened] = useState(false)
-    const [currentChoice, setcurrentChoice] = useState(0)
+    const [currentChoice, setcurrentChoice] = useState(def ? def: 0)
 
     const itemClick = (key: number) => {
         changeOpening()

@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
   const requestBody = await req.json();
 
-  const { type, summary, description, userEmail } = requestBody;
+  const { type, summary, description, userEmail, priority } = requestBody;
 
   if (userEmail) {
     const body = {
@@ -32,6 +32,7 @@ export async function POST(req: Request) {
         summary: summary || global.REQUEST_TYPES[2].title,
         description: description || "",
         customfield_10244: userEmail,
+        priority: priority
       },
     };
 
@@ -45,12 +46,14 @@ export async function POST(req: Request) {
         },
         body: JSON.stringify(body),
       });
-
+      //return response
       if (!response.ok) {
         throw new Error(`${errors.JIRA_ERROR_RESPONSE} ${response.statusText}`);
       }
 
       const data = await response.json();
+      // return response;
+      // return data;
       return NextResponse.json(data);
     } catch (error) {
       return NextResponse.json(

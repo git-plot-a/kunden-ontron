@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Formik, Form, Field } from "formik"
 import { SubmitFormButton } from "../../_buttons/SubmitFormButton/SubmitFormButton"
@@ -18,19 +18,23 @@ type Props = {
 
 const RequestForm: React.FC<Props> = ({ handler }) => {
     const router = useRouter()
-    const submitHandler = async (values: { requestTypeId: string, summary: string, description: string }) => {
+    const [loading, setLoading] = useState(false)
+
+    const submitHandler = async (values: { requestTypeId: string, summary: string, description: string, priority: string }) => {
+        setLoading(true)
         const user = utils.user.getUserData();
-        console.log(user)
         if (user) {
             const requestData = {
                 "type": String(values.requestTypeId),
                 "summary": values.summary,
-                "description": values.description, 
-                "userEmail": user.user_email 
+                "description": values.description,
+                "userEmail": user.user_email,
+                "priority": { "id": String(values.priority) }
             }
             console.log(requestData)
-            const result: Response | unknown = await utils.jira.apiRequest(requestData)
-            if ((result as Response)?.ok) {
+            const result: {[key:string] : string} = await utils.jira.apiRequest(requestData)
+            setLoading(false)
+            if (result?.issueId) {
                 console.log(result)
                 handler(true)
                 return
@@ -53,7 +57,8 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
             initialValues={{
                 requestTypeId: "15",
                 summary: '',
-                description: ''
+                description: '',
+                priority: "3"
             }}
             validationSchema={sendRequestFormSchems}
             onSubmit={submitHandler}
@@ -89,6 +94,15 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                         )}
                     </Col>
                     <Col span={24}>
+                        <Field type="number" name="priority" id="priority" className={styles.hidden} />
+                        <DropDownList items={constants.PRORITIES as Array<DropDownList>} handler={(newVal: string) => { props.setFieldValue("priority", newVal) }} def={2}></DropDownList>
+                        {typeof props.errors["requestTypeId"] != "undefined" && (
+                            <div className={styles.messages}>
+                                <span>{props.errors["requestTypeId"]}</span>
+                            </div>
+                        )}
+                    </Col>
+                    <Col span={24}>
                         <Field name="description" id="description" placeholder="Description*" as="textarea" className={styles.fieldText} />
                         {typeof props.errors["description"] != "undefined" && (
                             <div className={styles.messages}>
@@ -100,7 +114,7 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                 <Row>
                     <Col span={24}>
                         <div className={styles.sendConatiner}>
-                            <SubmitFormButton title={constants.BUTTON_TEXT} classes={styles.sendButton} />
+                            <SubmitFormButton title={constants.BUTTON_TEXT} classes={styles.sendButton} blocked={loading} />
                         </div>
                     </Col>
                 </Row>

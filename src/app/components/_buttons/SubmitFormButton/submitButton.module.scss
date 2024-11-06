@@ -17,4 +17,7 @@
   &:active{
     background-color: var(--theme-active);
   }
+  &.blocked{
+    background-color: var(--color-border);
+  }
 }

@@ -40,6 +40,7 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
       };
     }
 
+    console.log(constants.JIRA_SERVER_RESPONCE, response.body)
     const result = await response.json();
     console.log(constants.JIRA_SERVER_RESPONCE, result);
     return result;
