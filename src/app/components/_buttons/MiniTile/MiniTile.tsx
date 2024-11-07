@@ -16,11 +16,14 @@ type Props = {
 const MiniTile: React.FC<Props> = ({ service, currentStyle = {} }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
-    const handleFlip = () => {
-        setIsFlipped(!isFlipped); // Переключаем состояние при клике
+    const onMouseOver = () => {
+        setIsFlipped(true); // Переключаем состояние при клике
     };
+    const onMouseLeave = () => {
+        setIsFlipped(false);
+    }
 
-    return <div className={clsx(styles.container, "animation-fade-in-bottom")} onClick={handleFlip} style={currentStyle}>
+    return <div className={clsx(styles.container, "animation-fade-in-bottom")} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} style={currentStyle}>
         <div className={clsx(styles.flippInner, isFlipped ? styles.flipped : '')}>
             <div className={styles.frontSide}>
 
