@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useRef } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -14,7 +14,6 @@ type Props = {
 }
 
 const Tile: React.FC<Props> = ({ title, icon, classes = '', callback = () => { } }) => {
-    // const [hovered, setHovered] = useState(false)
     const tile = useRef<HTMLDivElement | null>(null)
 
     const click = (e: React.MouseEvent<HTMLElement>) => {
