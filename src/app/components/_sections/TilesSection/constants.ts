@@ -6,6 +6,7 @@ const TILES_LIST = [
     },
     {
         title: "Dienstleistungs-anfragen",
+        icon: "/img/tile4.svg",
         callback: () =>{}
     },
     {
@@ -14,7 +15,7 @@ const TILES_LIST = [
         callback: () =>{}
     },
     {
-        title: "Download Area",
+        title: "Download-Bereich",
         icon: "/img/tile3.svg",
         callback: () =>{}
     }

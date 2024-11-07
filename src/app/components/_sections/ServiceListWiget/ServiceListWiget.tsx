@@ -133,7 +133,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
                             <div className={styles.tariffsSection}>
                                 <div className={styles.title}>Unterstützungsstufe</div>
                                 <div className={styles.tariffsSectionContainer}>
-                                    <ServiceTarif serviceLevels={currentService?.serviceLevels as Array<ServiceAgreement>} />
+                                    <ServiceTarif serviceLevels={currentService?.serviceLevels as Array<ServiceAgreement>} size={"medium"}/>
                                 </div>
                             </div>
                         ) : <></>}

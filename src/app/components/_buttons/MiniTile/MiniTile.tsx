@@ -25,16 +25,16 @@ const MiniTile: React.FC<Props> = ({ service, currentStyle = {} }) => {
             <div className={styles.frontSide}>
 
                 <div className={styles.statusContainer}>
-                    {service.status && service.status?.title && (
+                    {/* {service.status && service.status?.title && ( */}
                         <div className={styles.statusItem}>
-                            <div>{service.status?.title}</div>
-                            <div className={clsx(styles[constants.DENGER_LVL[typeof service.status?.denger_level !== "undefined" ? service.status?.denger_level : 2]], styles.indicator)}></div>
+                            <div>{constants.DENGER_LVL[0]}</div>
+                            <div className={clsx(styles[constants.DENGER_LVL[0].toLowerCase()], styles.indicator)}></div>
                         </div>
-                    )}
+                    {/* )} */}
                 </div>
                 <div className={styles.serviceContainer}>
                     <div className={styles.serviceIcon}>
-                        {service.icon && (<Image src={service.icon} alt={service.title} width={48} height={48} />)}
+                        {service.icon && (<Image src={service.icon} alt={service.title} width={70} height={70} />)}
                     </div>
 
                     <div className={styles.serviceText}>

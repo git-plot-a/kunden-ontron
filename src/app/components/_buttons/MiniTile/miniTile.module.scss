@@ -6,16 +6,19 @@
   &Container {
     display: flex;
     justify-content: flex-end;
-    min-height: 26px;
+    min-height: 17px;
+    position: absolute;
+    right: 15px;
+    top: 12px
   }
   &Item {
     display: flex;
     width: max-content;
     background-color: var(--most-light);
     border-radius: 12px;
-    padding: 4px 8px;
-    font-size: 12px;
-    line-height: 18px;
+    padding: 1px 6px;
+    font-size: 10px;
+    line-height: 15px;
     color: var(--semi-light-gray);
     .indicator {
       height: 8px;
@@ -26,7 +29,7 @@
       margin-left: 8px;
       animation: blink 4s infinite;
       //TODO: добавить задержку, чтоб они мигали не одновременно
-      &.onAir {
+      &.live {
         background-color: var(--sucess-green);
       }
       &.paused {
@@ -41,20 +44,29 @@
 
 .service {
   &Container {
-    padding-top: 10px;
     display: flex;
     justify-content: flex-start;
   }
   &Icon {
     margin-right: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 70px;
+    width: 70px;
   }
   &Text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     h5 {
       font-size: 14px;
       line-height: 32px;
       color: var(--dark-text);
       font-weight: 600;
       margin: 0;
+      margin-bottom: auto;
+      margin-top: auto;
+      display: block;
     }
     .updated {
       font-size: 12px;
@@ -67,7 +79,7 @@
 .flippInner {
   position: relative;
   width: 266px;
-  height: 114px;
+  height: 94px;
 
   &.flipped {
     .frontSide {
@@ -104,7 +116,7 @@
     z-index: 1;
     transform: rotateY(180deg);
     background-color: var(--most-light);
-    padding: 18px 17px;
+    padding: 2.5px 18px 13px 18px;
     border: 1px solid var(--dark-border);
   }
 

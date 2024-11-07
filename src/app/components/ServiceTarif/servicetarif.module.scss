@@ -1,32 +1,58 @@
 .lvlContainer {
-    display: flex;
-  }
-
-  .lvlTitle {
-    font-size: 12px;
-    line-height: 22px;
-    min-width: 85px;
-  }
-
-  .lvlValue {
-    font-size: 12px;
-    line-height: 16px;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    color: var(--most-light);
-    min-width: 57px;
-    text-align: center;
-    border-radius: 2px;
-
-    &.Gold {
-      background-color: var(--gold-service-level);
+  display: flex;
+  &.medium {
+    .lvlTitle {
+      font-size: 16px;
+      line-height: 32px;
+      min-width: 84px;
     }
-
-    &.Silber {
-      background-color: var(--silver-service-level);
+    .lvlValue{
+      font-size: 16px;
+      line-height: 24px;
+      height: 24px;
+      border-radius: 4px;
+      min-width: 75px;
     }
-
-    &.Bronze {
-      background-color: var(--bronze-service-level);
+    .data{
+      font-size: 16px;
+      line-height: 32px;
+      margin-left: 10px;
     }
   }
+}
+
+.lvlTitle {
+  font-size: 12px;
+  line-height: 24px;
+  min-width: 67px;
+  font-weight: 300;
+}
+
+.lvlValue {
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  color: var(--most-light);
+  min-width: 64px;
+  text-align: center;
+  border-radius: 2px;
+  height: 18px;
+  font-weight: 400;
+  &.Gold {
+    background-color: var(--gold-service-level);
+  }
+
+  &.Silber {
+    background-color: var(--silver-service-level);
+  }
+
+  &.Bronze {
+    background-color: var(--bronze-service-level);
+  }
+}
+.data {
+  font-size: 12px;
+  line-height: 24px;
+  margin-left: 4px;
+}

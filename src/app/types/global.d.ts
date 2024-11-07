@@ -57,6 +57,7 @@ declare global {
   type ServiceAgreement = {
     type: string;
     value: string;
+    contractEndData?: string;
   };
 
   type ServiceStatus = {
