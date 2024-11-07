@@ -53,9 +53,9 @@ const TicketItem: React.FC<Props> = ({ticket}) => {
         setIsOpened(!isOpened);
     }
 
-    const showPopup = () => {
-        setPopupVisible(!popUpVisible)
-    }
+    // const showPopup = () => {
+    //     setPopupVisible(!popUpVisible)
+    // }
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
