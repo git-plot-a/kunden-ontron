@@ -3,7 +3,7 @@
 
 const LIST_MENU = [
   {
-    title: "Homepage",
+    title: "Startseite",
     link: "/",
     id: "home",
     img: '/img/home.svg'
