@@ -5,6 +5,10 @@ const TILES_LIST = [
         callback: () =>{}
     },
     {
+        title: "Dienstleistungs-anfragen",
+        callback: () =>{}
+    },
+    {
         title: "Produkte verwalten",
         icon: "/img/tile2.svg",
         callback: () =>{}
@@ -12,10 +16,6 @@ const TILES_LIST = [
     {
         title: "Download Area",
         icon: "/img/tile3.svg",
-        callback: () =>{}
-    },
-    {
-        title: "Dienstleistungs-anfragen",
         callback: () =>{}
     }
 ]

@@ -7,17 +7,17 @@ const TilesSection = () => {
     const router = useRouter()
 
     const tiles = constants.TILES_LIST
-    tiles[1].callback = () =>{
-        router.push('/platforms')
-    }
     tiles[0].callback = () =>{
         router.push('/support')
     }
+    tiles[1].callback = () =>{
+        router.push('/task-tracking')
+    }
     tiles[2].callback = () =>{
-        router.push('/downloads')
+        router.push('/platforms')
     }
     tiles[3].callback = () =>{
-        router.push('/task-tracking')
+        router.push('/downloads')
     }
 
     return <div className={styles.container}>

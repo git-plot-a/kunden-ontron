@@ -120,7 +120,7 @@ const TicketItem: React.FC<Props> = ({ticket}) => {
                     </div>
                 )}
             </div>
-            {/* <div className={styles.contentBottomContainer}>
+            <div className={styles.contentBottomContainer}>
                 <div className={styles.title}>
                     {"Tracking Details:"}
                 </div>
@@ -142,7 +142,7 @@ const TicketItem: React.FC<Props> = ({ticket}) => {
                         <div className={styles.dexcription}>{"Ticket update description"}</div>
                     </div>
                 </div>
-            </div> */}
+            </div>
             {/* {Array.isArray(task.fields?.timetracking) && task.fields?.timetracking.length > 0 &&  */}
 
             {/* } */}

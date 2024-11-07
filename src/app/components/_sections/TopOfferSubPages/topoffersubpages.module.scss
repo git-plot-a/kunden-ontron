@@ -25,8 +25,10 @@
   top: 0;
   left: 0;
   z-index: -1;
-  background: linear-gradient(85.29deg, #009EE3 36.06%, #67C5EE 122.68%),
+  background: linear-gradient(85.29deg, #009ee3 36.06%, #67c5ee 122.68%),
     linear-gradient(0deg, #000000, #000000),
     linear-gradient(90deg, #009ee3 0%, #67c5ee 100%);
-    border-radius: 24px;
+  border-radius: 24px;
+  overflow: hidden;
+  height: 100%;
 }
