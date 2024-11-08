@@ -21,7 +21,7 @@ const DownloadsPage = () => {
     const [loading, setLoading] = useState(true)
     const [fileLists, setFileLists] = useState(Array<FileListCustom>)
     const { fetchData } = useSendQuery()
-    const acticateAnimation  = useAnimation();
+    const acticateAnimation = useAnimation();
 
     useEffect(() => {
         console.log(utils.user.getToken())
@@ -37,23 +37,23 @@ const DownloadsPage = () => {
     useEffect(() => {
         const tocken = utils.user.getToken()
         const getPreviewServices = async () => {
-          const servicesRes: Array<FileListCustom>  =  await fetchData(`${api.custom.DOCUMENTATION_LIST}`, "GET", {}, null, true)    
-          setFileLists(servicesRes)
+            const servicesRes: Array<FileListCustom> = await fetchData(`${api.custom.DOCUMENTATION_LIST}`, "GET", {}, null, true)
+            setFileLists(servicesRes)
         }
-    
+
         if (tocken) {
-          getPreviewServices()
+            getPreviewServices()
         } else {
-          utils.user.resetAllData()
-          router.push('/login')
+            utils.user.resetAllData()
+            router.push('/login')
         }
-      }, [])
+    }, [])
 
-      useEffect(()=>{
+    useEffect(() => {
         acticateAnimation();
-      }, [fileLists])
+    }, [fileLists])
 
-    
+
     return <>
         {!loading && (
             <>
