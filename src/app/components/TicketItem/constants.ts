@@ -1,5 +1,3 @@
-import { string } from "yup"
-
 const TITLE = 'Verfolgungsdetails:'
 
 const STYLES : {[key: string] : string} = {
