@@ -65,7 +65,7 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
         >{(props) => {
             return <Form>
                 <Row>
-                    <Col span={24}>
+                    <Col span={24} classes="animation-fade-in-top">
                         <Field type="string" name="requestTypeId" id="requestTypeId" className={styles.hidden} />
                         <DropDownList items={constants.REQUEST_TYPES} handler={(newVal: string) => { props.setFieldValue("requestTypeId", newVal) }}></DropDownList>
                         {typeof props.errors["requestTypeId"] != "undefined" && (
@@ -85,7 +85,7 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                     </Col> */}
                 </Row>
                 <Row>
-                    <Col span={24}>
+                    <Col span={24} classes="animation-fade-in-top" style={{transitionDelay: '0.2s'}}>
                         <Field name="summary" id="summary" placeholder="Problembezeichnung" className={styles.fieldText} />
                         {typeof props.errors["summary"] != "undefined" && (
                             <div className={styles.messages}>
@@ -93,7 +93,7 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                             </div>
                         )}
                     </Col>
-                    <Col span={24}>
+                    <Col span={24} classes="animation-fade-in-top" style={{transitionDelay: '0.4s'}}>
                         <Field type="number" name="priority" id="priority" className={styles.hidden} />
                         <DropDownList items={constants.PRORITIES as Array<DropDownList>} handler={(newVal: string) => { props.setFieldValue("priority", newVal) }} def={2}></DropDownList>
                         {typeof props.errors["requestTypeId"] != "undefined" && (
@@ -102,7 +102,7 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                             </div>
                         )}
                     </Col>
-                    <Col span={24}>
+                    <Col span={24} classes="animation-fade-in-top" style={{transitionDelay: '0.6s'}}>
                         <Field name="description" id="description" placeholder="Beschreibung*" as="textarea" className={styles.fieldText} />
                         {typeof props.errors["description"] != "undefined" && (
                             <div className={styles.messages}>
@@ -112,7 +112,7 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={24}>
+                    <Col span={24} classes="animation-fade-in-top" style={{transitionDelay: '0.8s'}}>
                         <div className={styles.sendConatiner}>
                             <SubmitFormButton title={constants.BUTTON_TEXT} classes={styles.sendButton} blocked={loading} />
                         </div>

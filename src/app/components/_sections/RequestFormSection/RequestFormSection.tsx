@@ -26,7 +26,7 @@ const RequestFormSection = () => {
     }
 
     return <Container>
-        <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack)}>
+        <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack, "animation-fade-in-top")}>
         {/* <div className={clsx(styles.formContainer, !result ? styles.resultingBack : styles.usualBlack)}> */}
             <Row>
                 {result ?
@@ -56,10 +56,10 @@ const RequestFormSection = () => {
                                 <div className={clsx(styles.decoreElement, styles.big)}>
                                     <Image src={'/img/big_romb_1.svg'} alt={'Decore romb 2'} width={53.7} height={61} />
                                 </div>
-                                <div className={styles.formTitleBlock}>
+                                <div className={styles.formTitleBlock} >
                                     <div className={styles.formTitleContiner}>
-                                        <div className={styles.formTitle} dangerouslySetInnerHTML={{__html: constants.TITLE}}/>
-                                        <div className={styles.formTitleImage}>
+                                        <div className={clsx(styles.formTitle, "animation-fade-in long-duration")} dangerouslySetInnerHTML={{__html: constants.TITLE}} style={{transitionDelay: '0.2s'}}/>
+                                        <div className={clsx(styles.formTitleImage, "animation-fade-in long-duration")} style={{transitionDelay: '0.4s'}}>
                                             <Image src={'/img/decore1.svg'} alt="send a request" width={426} height={351} />
                                         </div>
                                     </div>
