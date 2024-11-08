@@ -86,7 +86,7 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                 </Row>
                 <Row>
                     <Col span={24}>
-                        <Field name="summary" id="summary" placeholder="Problem Title" className={styles.fieldText} />
+                        <Field name="summary" id="summary" placeholder="Problembezeichnung" className={styles.fieldText} />
                         {typeof props.errors["summary"] != "undefined" && (
                             <div className={styles.messages}>
                                 <span>{props.errors["summary"]}</span>
@@ -103,7 +103,7 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                         )}
                     </Col>
                     <Col span={24}>
-                        <Field name="description" id="description" placeholder="Description*" as="textarea" className={styles.fieldText} />
+                        <Field name="description" id="description" placeholder="Beschreibung*" as="textarea" className={styles.fieldText} />
                         {typeof props.errors["description"] != "undefined" && (
                             <div className={styles.messages}>
                                 <span>{props.errors["description"]}</span>

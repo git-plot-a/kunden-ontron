@@ -1,9 +1,9 @@
-const TITLE = 'Wie können wir Ihnen heute helfen?'
+const TITLE = 'Wie können<br/>wir Ihnen heute helfen?'
 
 const RESULTS: Array<formSendResult> = [
     {
         success: true,
-        text: 'Vielen Dank für Ihre Anfrage.<br>Wir werden sie bearbeiten und uns innerhalb von 4 Stunden zurückmelden',
+        text: 'Vielen Dank für Ihre Anfrage.<br/>Wir werden diese bearbeiten und uns<br/>innerhalb von 4 Stunden bei Ihnen melden.',
         img: '/img/decore2.svg'
 
     },
@@ -14,7 +14,8 @@ const RESULTS: Array<formSendResult> = [
     }
 ]
 
-const ADITIONAL_INFO = 'Ihr aktueller Support-Level ist <span>Bronze</span> Um schneller Lösungen zu erhalten, sollten Sie ein Upgrade auf einen höheren Support-Level. <a href="/">Mehr erfahren </a>'
+const ADITIONAL_INFO = 'Ihr aktuelles Support-Level ist   <span>Bronze</span>   Um schneller Lösungen zu erhalten, erwägen Sie ein Upgrade auf<br/>ein höheres Support-Level. Mehr erfahren >'
+
 
 export default {
     TITLE,

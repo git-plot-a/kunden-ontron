@@ -7,8 +7,14 @@ import Row from "../../_layout/Row/Row";
 import Col from "../../_layout/Col/Col";
 import RequestForm from "../../_forms/RequestForm/RequestForm";
 import Image from "next/image";
+import LottieAnimation from "../../LottieAnimation/LottieAnimation";
+import sentAnimation from "./animations/Robo_email_v002.json"
+import questionAnimation from "./animations/Robo_question_v002.json"
+import technicalAnimation from "./animations/Robo_technical_v002.json"
+import errorAnimation from "./animations/Robo_error_v002.json"
 import constants from "./constants";
 import styles from "./request.form.section.module.scss"
+
 
 
 const RequestFormSection = () => {
@@ -27,9 +33,15 @@ const RequestFormSection = () => {
                         <Col span={24}>
                             <div className={clsx(styles.formTitleBlock, styles.fullSize)}>
                                 <div className={styles.formTitleImage}>
+                                    {/* <LottieAnimation animation={sentAnimation}/>
+                                    <LottieAnimation animation={questionAnimation}/>
+                                    <LottieAnimation animation={technicalAnimation}/>
+                                    <LottieAnimation animation={errorAnimation}/> */}
+                                {/* <Image src={constants.RESULTS[0].img as string} alt={'result image'} height={340} width={560} /> */}
                                     <Image src={result.img as string} alt={'result image'} height={340} width={560} />
                                 </div>
                                 <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: result.text }} />
+                                {/* <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: constants.RESULTS[0].text }} /> */}
                                 <div className={styles.aditionalInfo} dangerouslySetInnerHTML={{ __html: constants.ADITIONAL_INFO }} />
                             </div>
                         </Col>
@@ -45,9 +57,7 @@ const RequestFormSection = () => {
                                 </div>
                                 <div className={styles.formTitleBlock}>
                                     <div className={styles.formTitleContiner}>
-                                        <div className={styles.formTitle}>
-                                            {constants.TITLE}
-                                        </div>
+                                        <div className={styles.formTitle} dangerouslySetInnerHTML={{__html: constants.TITLE}}/>
                                         <div className={styles.formTitleImage}>
                                             <Image src={'/img/decore1.svg'} alt="send a request" width={426} height={351} />
                                         </div>
