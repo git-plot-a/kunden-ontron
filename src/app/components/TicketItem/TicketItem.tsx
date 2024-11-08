@@ -1,14 +1,15 @@
-import React, {useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import { useRef } from "react"
 import clsx from "clsx"
 import Image from "next/image"
+import constants from "./constants"
 import styles from "./ticketItem.module.scss"
 
 type Props = {
     ticket: Ticket
 }
 
-const TicketItem: React.FC<Props> = ({ticket}) => {
+const TicketItem: React.FC<Props> = ({ ticket }) => {
     const [isOpened, setIsOpened] = useState(false)
     const [popUpVisible, setPopupVisible] = useState(false)
     const estimationLink = useRef<HTMLDivElement | null>(null)
@@ -17,14 +18,18 @@ const TicketItem: React.FC<Props> = ({ticket}) => {
         const date = new Date(dateString);
 
         const options: Intl.DateTimeFormatOptions = {
-            month: "short",    
-            day: "numeric",    
-            hour: "numeric",   
-            minute: "2-digit", 
-            hour12: true       
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true
         };
 
         return date.toLocaleString("en-US", options);
+    }
+
+    function removeSpaces(str: string): string {
+        return str.replace(/\s+/g, '');
     }
 
     const getStatusStyle = (status: string) => {
@@ -53,9 +58,9 @@ const TicketItem: React.FC<Props> = ({ticket}) => {
         setIsOpened(!isOpened);
     }
 
-    // const showPopup = () => {
-    //     setPopupVisible(!popUpVisible)
-    // }
+    const showPopup = () => {
+        setPopupVisible(!popUpVisible)
+    }
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -69,17 +74,18 @@ const TicketItem: React.FC<Props> = ({ticket}) => {
         }
     }, [])
 
-    return <div className={styles.tasksItem}>
-        <div className={styles.ticketTop} onClick={showInfo}>
+    return <div className={clsx(styles.tasksItem, isOpened ? styles.opened : '')}>
+        <div className={clsx(styles.ticketTop, isOpened ? styles.opened : '')} onClick={showInfo}>
             <div className={styles.title}>
+                <div className={styles.arrow}><Image src={'/img/arrow_right.svg'} alt="arrow" height={36} width={36} /></div>
                 <div className={styles.key}>{ticket.key}</div>
                 <div className={styles.text}>{ticket.fields?.summary}</div>
             </div>
-            <div className={clsx(styles.status, getStatusStyle(ticket.fields?.status?.name))}>{ticket.fields?.status?.name}</div>
+            <div className={clsx(styles.status, getStatusStyle(ticket.fields?.status?.name))}>{constants.STYLES[removeSpaces(ticket.fields?.status?.name.toLowerCase())] ? constants.STYLES[removeSpaces(ticket.fields?.status?.name?.toLowerCase())] : constants.STYLES['todo'] }</div>
         </div>
         <div className={clsx(styles.ticketContentSection, isOpened ? styles.opened : '')}>
             <div className={styles.contentTopContainer}>
-                {/* <div className={styles.line}>
+                <div className={styles.line}>
                     <div className={styles.lineTitle}>{"Expected resolution time"}</div>
                     <div className={clsx(styles.lineData, styles.bold)}>
                         <div className={styles.value}>{"Oct 31, 11:30 AM"}</div>
@@ -97,7 +103,7 @@ const TicketItem: React.FC<Props> = ({ticket}) => {
                             )}
                         </div>
                     </div>
-                </div> */}
+                </div>
                 {/* {task.fields?.resolutiondate && (
                                 <div className={styles.line}>
                                     <div className={styles.lineTitle}>{"Expected resolution time"}</div>
@@ -122,7 +128,7 @@ const TicketItem: React.FC<Props> = ({ticket}) => {
             </div>
             <div className={styles.contentBottomContainer}>
                 <div className={styles.title}>
-                    {"Tracking Details:"}
+                    {constants.TITLE}
                 </div>
                 <div className={styles.eventList}>
                     <div className={styles.event}>
