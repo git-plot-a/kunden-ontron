@@ -17,7 +17,7 @@ const TaskList: React.FC<Props> = ({ tickets, loading = true }) => {
         <div className={styles.tasksContainer}>
             {
                 tickets.length > 0 ? tickets.map((ticket, key) => (
-                    <TicketItem key={key} ticket={ticket}/> 
+                    <TicketItem key={key} ticket={ticket} classes="animation-fade-in-top" style={{transitionDelay: `${key * 0.2}s`}}/> 
                 ))
 
                     : (loading ? <div>{"Laden..."}</div> : <div>{constants.NO_TICKETS_TASK}</div>)

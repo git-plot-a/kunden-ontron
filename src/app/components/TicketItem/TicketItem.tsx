@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react"
 import { useRef } from "react"
 import clsx from "clsx"
 import Image from "next/image"
+import useAnimation from "@/app/hooks/Animation/Animation"
 import constants from "./constants"
 import styles from "./ticketItem.module.scss"
 
 type Props = {
-    ticket: Ticket
+    ticket: Ticket,
+    classes?: string,
+    style?: object
 }
 
-const TicketItem: React.FC<Props> = ({ ticket }) => {
+const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
+    const activateAnimation = useAnimation()
     const [isOpened, setIsOpened] = useState(false)
     const [popUpVisible, setPopupVisible] = useState(false)
     const estimationLink = useRef<HTMLDivElement | null>(null)
@@ -74,14 +78,20 @@ const TicketItem: React.FC<Props> = ({ ticket }) => {
         }
     }, [])
 
-    return <div className={clsx(styles.tasksItem, isOpened ? styles.opened : '')}>
+    useEffect(() => {
+        setTimeout(() => {
+            activateAnimation()
+        }, 300)
+    }, [])
+
+    return <div className={clsx(styles.tasksItem, isOpened ? styles.opened : '', classes)} style={style}>
         <div className={clsx(styles.ticketTop, isOpened ? styles.opened : '')} onClick={showInfo}>
             <div className={styles.title}>
                 <div className={styles.arrow}><Image src={'/img/arrow_right.svg'} alt="arrow" height={36} width={36} /></div>
                 <div className={styles.key}>{ticket.key}</div>
                 <div className={styles.text}>{ticket.fields?.summary}</div>
             </div>
-            <div className={clsx(styles.status, getStatusStyle(ticket.fields?.status?.name))}>{constants.STYLES[removeSpaces(ticket.fields?.status?.name.toLowerCase())] ? constants.STYLES[removeSpaces(ticket.fields?.status?.name?.toLowerCase())] : constants.STYLES['todo'] }</div>
+            <div className={clsx(styles.status, getStatusStyle(ticket.fields?.status?.name))}>{constants.STYLES[removeSpaces(ticket.fields?.status?.name.toLowerCase())] ? constants.STYLES[removeSpaces(ticket.fields?.status?.name?.toLowerCase())] : constants.STYLES['todo']}</div>
         </div>
         <div className={clsx(styles.ticketContentSection, isOpened ? styles.opened : '')}>
             <div className={styles.contentTopContainer}>
