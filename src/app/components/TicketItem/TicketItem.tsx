@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import { useRef } from "react"
 import clsx from "clsx"
 import Image from "next/image"
-import useAnimation from "@/app/hooks/Animation/Animation"
 import constants from "./constants"
 import styles from "./ticketItem.module.scss"
 
@@ -13,7 +12,6 @@ type Props = {
 }
 
 const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
-    const activateAnimation = useAnimation()
     const [isOpened, setIsOpened] = useState(false)
     const [popUpVisible, setPopupVisible] = useState(false)
     const estimationLink = useRef<HTMLDivElement | null>(null)
