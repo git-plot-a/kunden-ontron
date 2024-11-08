@@ -41,6 +41,9 @@ const LoginPageClientPart = () => {
                 }
                 setResultinText(errorText)
                 return
+            }else{
+                const errorText: React.ReactNode = <div className={"error"}>{constants.INCORRECT_LOGON_OR_PASSWORD}</div>
+                setResultinText(errorText)
             }
             if (result?.token) {
                 utils.user.setUserData(result)

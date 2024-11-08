@@ -37,9 +37,15 @@ const fetchData = async (
       }
       const response = await fetch(address, params);
 
+      if(!response.ok){
+        const errorData = await response.json();
+        console.log('sss')
+        return { code: response.status, message: errorData.message || "An error occurred" };
+      }
       return response.json();
     } catch (error) {
-      return {code: "error", message: error};
+      console.log('sss')
+      // return {code: "error", message: error};
     }
   } else {
     throw new Error(errorConstants.NO_USER_TOKEN);

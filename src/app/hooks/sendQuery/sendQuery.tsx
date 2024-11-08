@@ -23,31 +23,37 @@ const useSendQuery = () => {
     authorised: boolean = true
   ) => {
     const token = authorised ? utils.user.getUserData()?.token : false;
+    console.log(authorised)
     if ((token && authorised) || !authorised) {
       try {
-        const params: { [key: string]: unknown } = {
+        const params: RequestInit = {
           method: method,
           headers: {
             ...header,
             ...(authorised && token ? { Authorization: `Bearer ${token}` } : {}),
-          }
-        }
-        if (body && method == "POST") {
-          params.body = body ? body : ''
-        }
+          },
+          ...(body && method === "POST" ? { body } : {})
+        };
+        
+        console.log(params);
+        console.log(address)
         const response = await fetch(address, params);
-
+  
         if (response.status === 403) {
-          utils.user.resetAllData()
-          router.push('/login')
+          utils.user.resetAllData();
+          router.push('/login');
+          return; // Останавливаем выполнение после редиректа
         }
   
         if (!response.ok) {
-          throw new Error('Failed to fetch services');
+          throw new Error(`Failed to fetch services: ${response.statusText}`);
         }
+  
         return response.json();
-      } catch (error) {
-        return { code: "error", message: error };
+      } catch (error: {[key: string] :string} | unknown) {
+        // Выбрасываем ошибку вместо возврата, чтобы внешние блоки могли обработать её
+        // throw error;
+        return {code: "error", "message": (error as {[key: string] :string}).message}
       }
     } else {
       throw new Error(errorConstants.NO_USER_TOKEN);
