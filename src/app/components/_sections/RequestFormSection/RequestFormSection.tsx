@@ -7,11 +7,11 @@ import Row from "../../_layout/Row/Row";
 import Col from "../../_layout/Col/Col";
 import RequestForm from "../../_forms/RequestForm/RequestForm";
 import Image from "next/image";
-import LottieAnimation from "../../LottieAnimation/LottieAnimation";
-import sentAnimation from "./animations/Robo_email_v002.json"
-import questionAnimation from "./animations/Robo_question_v002.json"
-import technicalAnimation from "./animations/Robo_technical_v002.json"
-import errorAnimation from "./animations/Robo_error_v002.json"
+// import LottieAnimation from "../../LottieAnimation/LottieAnimation";
+// import sentAnimation from "./animations/Robo_email_v002.json"
+// import questionAnimation from "./animations/Robo_question_v002.json"
+// import technicalAnimation from "./animations/Robo_technical_v002.json"
+// import errorAnimation from "./animations/Robo_error_v002.json"
 import constants from "./constants";
 import styles from "./request.form.section.module.scss"
 
