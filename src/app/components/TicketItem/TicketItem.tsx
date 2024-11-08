@@ -17,7 +17,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     const [isOpened, setIsOpened] = useState(false)
     const [popUpVisible, setPopupVisible] = useState(false)
     const estimationLink = useRef<HTMLDivElement | null>(null)
-    const animatedElement = useRef<HTMLDivElement | null>()
+    const animatedElement = useRef<HTMLDivElement | null>(null)
 
     function formatDate(dateString: string): string {
         const date = new Date(dateString);
