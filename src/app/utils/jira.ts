@@ -1,15 +1,12 @@
 import constants from "../constants/global";
 import errors from "../constants/errors";
 
-
 interface ApiRequestData {
   type?: string;
   summary?: string;
   description?: string;
-  userEmail?: string;
+  userEmails?: Array<string>;
 }
-
-
 
 const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
   const headers = {
@@ -26,8 +23,14 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
 
     if (method === "POST") {
       options.body = JSON.stringify(data);
-    } else if (method === "GET" && data.userEmail) {
-      url += `?userEmail=${encodeURIComponent(data.userEmail)}`;
+    } else if (
+      method === "GET" &&
+      data.userEmails &&
+      Array.isArray(data.userEmails) &&
+      data.userEmails.length > 0
+    ) {
+      // if(data.userEmails)
+      url += `?userEmails=${encodeURIComponent(data.userEmails.join(", "))}`;
     }
 
     const response = await fetch(url, options);
@@ -40,7 +43,7 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
       };
     }
 
-    console.log(constants.JIRA_SERVER_RESPONCE, response.body)
+    console.log(constants.JIRA_SERVER_RESPONCE, response.body);
     const result = await response.json();
     console.log(constants.JIRA_SERVER_RESPONCE, result);
     return result;
@@ -49,7 +52,6 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
     return error;
   }
 };
-
 
 export default {
   apiRequest,

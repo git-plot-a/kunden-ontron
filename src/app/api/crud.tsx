@@ -7,6 +7,7 @@ const USER_CHANGE = `${global.URL_CUSTOM}/wp-json/account/v1/chageuserdata`
 const SERVICE_PREVIEWS = `${global.URL_CUSTOM}/wp-json/platforms/v1/cards`
 const SERVICE_AGREEMENTS = `${global.URL_CUSTOM}/wp-json/platforms/v1/`
 const DOCUMENTATION_LIST = `${global.URL_CUSTOM}/wp-json/documentation/v1/list`
+const COMPANY_USERS  = `${global.URL_CUSTOM}/wp-json/company/v1/users`
 
 //default
 
@@ -17,7 +18,8 @@ const custom = {
     USER_CHANGE,
     SERVICE_PREVIEWS,
     SERVICE_AGREEMENTS,
-    DOCUMENTATION_LIST
+    DOCUMENTATION_LIST,
+    COMPANY_USERS
 }
 
 export default {

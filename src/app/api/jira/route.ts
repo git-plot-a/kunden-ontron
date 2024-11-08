@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         summary: summary || global.REQUEST_TYPES[2].title,
         description: description || "",
         customfield_10244: userEmail,
-        priority: priority
+        priority: priority,
       },
     };
 
@@ -69,49 +69,67 @@ export async function GET(req: Request) {
   const auth = `Basic ${btoa(`${global.JIRA_USER}:${global.JIRA_TOCKEN}`)}`;
 
   const url = new URL(req.url);
-  const userEmail = url.searchParams.get("userEmail");
+  const userEmails = url.searchParams.get("userEmails")?.split(", ");
 
-  // const isFetchRequest =
-  //   headers.get("x-requested-with") === "XMLHttpRequest" ||
-  //   headers.get("content-type") === "application/json";
+  if (Array.isArray(userEmails) && userEmails?.length > 1) {
+    const emailQueries = userEmails
+      .map(
+        (email) =>
+          `"Submitter Name[Short text]" ~ "${encodeURIComponent(email)}"`
+      )
+      .join(" OR ");
+  
+    const queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=OIT AND (${emailQueries})&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
 
-  // if (!isFetchRequest) {
-  //   return NextResponse.json(
-  //     { message: errors.JIRA_ERROR_FORBIDDEN },
-  //     { status: 403 }
-  //   );
-  // }
+    // return  NextResponse.json({url: queryUrl});
 
-  // if (!userEmail) {
-  //   return NextResponse.json(
-  //     { message: "userEmail is required" },
-  //     { status: 400 }
-  //   );
-  // }
+    // const isFetchRequest =
+    //   headers.get("x-requested-with") === "XMLHttpRequest" ||
+    //   headers.get("content-type") === "application/json";
 
-  const queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=OIT%20AND%20%22Submitter%20Name%5BShort%20text%5D%22%20~%20%22${encodeURIComponent(
-    (userEmail as string)
-  )}%22&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
+    // if (!isFetchRequest) {
+    //   return NextResponse.json(
+    //     { message: errors.JIRA_ERROR_FORBIDDEN },
+    //     { status: 403 }
+    //   );
+    // }
 
-  // return {ok: true, url: queryUrl }
-  try {
-    const response = await fetch(queryUrl, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: auth,
-      },
-    });
+    // if (!userEmail) {
+    //   return NextResponse.json(
+    //     { message: "userEmail is required" },
+    //     { status: 400 }
+    //   );
+    // }
 
-    if (!response.ok) {
-      throw new Error(`${errors.JIRA_ERROR_RESPONSE} ${response.statusText}`);
+    // const queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=OIT%20AND%20%22Submitter%20Name%5BShort%20text%5D%22%20~%20%22${encodeURIComponent(
+    //   userEmail as string
+    // )}%22&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
+
+    // return {ok: true, url: queryUrl }
+    try {
+      const response = await fetch(queryUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: auth,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`${errors.JIRA_ERROR_RESPONSE} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return NextResponse.json(data);
+    } catch (error) {
+      return NextResponse.json(
+        { message: errors.JIRA_ERROR_MISTAKE + error },
+        { status: 500 }
+      );
     }
-
-    const data = await response.json();
-    return NextResponse.json(data);
-  } catch (error) {
+  } else {
     return NextResponse.json(
-      { message: errors.JIRA_ERROR_MISTAKE + error },
+      { message: errors.INCORRECT_DATA },
       { status: 500 }
     );
   }

@@ -14,6 +14,8 @@ const JIRA_ERROR_RESPONSE = "Fehler beim Senden einer Anfrage: "
 
 const JIRA_ERROR_FORBIDDEN = 'Zugang verweigert'
 
+const INCORRECT_DATA = 'Falsch übermittelte Daten'
+
 export default {
   NETWORK_ERROR,
   SERVER_ERROR,
@@ -22,5 +24,6 @@ export default {
   JIRA_NOT_ENOUGH_DATA,
   JIRA_ERROR_MISTAKE,
   JIRA_ERROR_RESPONSE,
-  JIRA_ERROR_FORBIDDEN
+  JIRA_ERROR_FORBIDDEN,
+  INCORRECT_DATA
 };

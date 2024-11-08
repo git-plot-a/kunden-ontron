@@ -17,6 +17,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     const [isOpened, setIsOpened] = useState(false)
     const [popUpVisible, setPopupVisible] = useState(false)
     const estimationLink = useRef<HTMLDivElement | null>(null)
+    const animatedElement = useRef<HTMLDivElement | null>()
 
     function formatDate(dateString: string): string {
         const date = new Date(dateString);
@@ -63,7 +64,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     }
 
     const showPopup = () => {
-        setPopupVisible(!popUpVisible)
+        // setPopupVisible(!popUpVisible)
     }
 
     useEffect(() => {
@@ -79,12 +80,13 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     }, [])
 
     useEffect(() => {
-        setTimeout(() => {
-            activateAnimation()
-        }, 300)
-    }, [])
+        if(animatedElement.current){
+            animatedElement.current.classList.add("animation-visible")
+        }
+    }, [isOpened])
 
-    return <div className={clsx(styles.tasksItem, isOpened ? styles.opened : '', classes)} style={style}>
+
+    return <div className={clsx(styles.tasksItem, isOpened ? styles.opened : '', classes)} style={style} ref={animatedElement}>
         <div className={clsx(styles.ticketTop, isOpened ? styles.opened : '')} onClick={showInfo}>
             <div className={styles.title}>
                 <div className={styles.arrow}><Image src={'/img/arrow_right.svg'} alt="arrow" height={36} width={36} /></div>
