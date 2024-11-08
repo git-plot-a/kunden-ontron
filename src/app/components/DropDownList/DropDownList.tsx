@@ -8,10 +8,12 @@ import clsx from 'clsx';
 type Props = {
     items: Array<DropDownList>,
     handler: (newVal: string) => void,
-    def?: number
+    def?: number,
+    classes?: string,
+    style?: object
 }
 
-const DropDownList: React.FC<Props> = ({ items, handler, def = undefined}) => {
+const DropDownList: React.FC<Props> = ({ items, handler, def = undefined, classes = "", style = undefined}) => {
     const ref = useRef<HTMLDivElement | null>(null);
     const [openedList, setListOpened] = useState(false)
     const [currentChoice, setcurrentChoice] = useState(def ? def: 0)
@@ -39,7 +41,7 @@ const DropDownList: React.FC<Props> = ({ items, handler, def = undefined}) => {
         }
     }, [])
 
-    return <div className={styles.dropDownContainer} ref={ref}>
+    return <div className={clsx(styles.dropDownContainer, classes)} ref={ref} style={style}>
         <div className={clsx(styles.dropDownElements, !openedList && styles.closed)}>
             <div onClick={changeOpening} className={styles.dropDownSelectedItem}>
                 <span>{items[currentChoice].title}</span>
