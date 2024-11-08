@@ -26,10 +26,10 @@ const RequestFormSection = () => {
     }
 
     return <Container>
-        <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack, "animation-fade-in-top")}>
-        {/* <div className={clsx(styles.formContainer, !result ? styles.resultingBack : styles.usualBlack)}> */}
+        {/* <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack, "animation-fade-in-top")}> */}
+        <div className={clsx(styles.formContainer, !result ? styles.resultingBack : styles.usualBlack)}>
             <Row>
-                {result ?
+                {!result ?
                     (
                         <Col span={24}>
                             <div className={clsx(styles.formTitleBlock, styles.fullSize)}>
@@ -38,12 +38,12 @@ const RequestFormSection = () => {
                                     <LottieAnimation animation={questionAnimation}/>
                                     <LottieAnimation animation={technicalAnimation}/>
                                     <LottieAnimation animation={errorAnimation}/> */}
-                                {/* <Image src={constants.RESULTS[0].img as string} alt={'result image'} height={340} width={560} /> */}
-                                    <Image src={result.img as string} alt={'result image'} height={340} width={560} />
+                                <Image className={"animation-fade-in-top"} src={constants.RESULTS[0].img as string} alt={'result image'} height={340} width={560} />
+                                    {/* <Image src={result.img as string} alt={'result image'} height={340} width={560} /> */}
                                 </div>
-                                <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: result.text }} />
-                                {/* <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: constants.RESULTS[0].text }} /> */}
-                                <div className={styles.aditionalInfo} dangerouslySetInnerHTML={{ __html: constants.ADITIONAL_INFO }} />
+                                {/* <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: result.text }} /> */}
+                                <div className={clsx(styles.formTitle, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: constants.RESULTS[0].text }} />
+                                <div className={clsx(styles.aditionalInfo, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: constants.ADITIONAL_INFO }} />
                             </div>
                         </Col>
                     )

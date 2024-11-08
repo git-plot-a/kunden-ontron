@@ -9,6 +9,7 @@
     padding-bottom: 45px;
     border-radius: 32px;
     position: relative;
+    transition: background 0.2s;
     &.resultingBack {
       background: linear-gradient(
         0deg,
