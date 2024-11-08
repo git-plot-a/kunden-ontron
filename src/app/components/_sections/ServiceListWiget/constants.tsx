@@ -2,7 +2,7 @@ const TABS_ID_PREFIX = 'tab-'
 
 const SUBSCRIBTION_TITLE = 'Abonnement'
 
-const TAB_NAMES = ['Beschreibung', 'Inhaltliche Unterstützung', 'Unterstützungsgrad der Plattformen']
+const TAB_NAMES = ['Beschreibung', 'Inhalts-Support-Level', 'Plattformen-Support-Level']
 
 const COMING_SOON_TEXT = 'Demnächst...'
 
