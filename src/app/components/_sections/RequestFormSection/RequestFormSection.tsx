@@ -27,6 +27,7 @@ const RequestFormSection = () => {
 
     return <Container>
         <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack)}>
+        {/* <div className={clsx(styles.formContainer, !result ? styles.resultingBack : styles.usualBlack)}> */}
             <Row>
                 {result ?
                     (

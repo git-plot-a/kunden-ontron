@@ -5,7 +5,8 @@
       var(--start-back-gradient),
       var(--finish-back-gradient)
     );
-    padding: 93px 101px;
+    padding: 95px 101px;
+    padding-bottom: 45px;
     border-radius: 32px;
     position: relative;
     &.resultingBack {
@@ -51,7 +52,7 @@
           margin-top: -93px;
         }
         .formTitle {
-          margin-top: 0px;
+          margin-top: -30px;
         }
       }
     }
@@ -81,6 +82,7 @@
   a {
     color: var(--most-light);
     text-decoration: underline;
+    font-weight: 400;
   }
 }
 

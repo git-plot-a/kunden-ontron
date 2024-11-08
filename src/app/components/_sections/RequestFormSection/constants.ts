@@ -14,7 +14,7 @@ const RESULTS: Array<formSendResult> = [
     }
 ]
 
-const ADITIONAL_INFO = 'Ihr aktuelles Support-Level ist   <span>Bronze</span>   Um schneller Lösungen zu erhalten, erwägen Sie ein Upgrade auf<br/>ein höheres Support-Level. Mehr erfahren >'
+const ADITIONAL_INFO = 'Ihr aktuelles Support-Level ist   <span>Bronze</span>   Um schneller Lösungen zu erhalten, erwägen Sie ein Upgrade auf<br/>ein höheres Support-Level. <a href="/platforms">Mehr erfahren ></a>'
 
 
 export default {
