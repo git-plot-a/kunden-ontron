@@ -4,6 +4,7 @@ import clsx from "clsx"
 import Image from "next/image"
 import constants from "./constants"
 import styles from "./ticketItem.module.scss"
+import utils from "@/app/utils"
 
 type Props = {
     ticket: Ticket,
@@ -84,6 +85,16 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     }, [isOpened])
 
 
+    const AuthorProcess = (author: string)=>{
+        const curreUser = utils.user.getUserData();
+        return curreUser.user_email && curreUser.user_email == author ? "Sie" : author
+    }
+
+    const updatePriorityName = (priorityName: string) => {
+        let name = constants.PRIORITIES[priorityName.toLowerCase()] 
+        return name ? name : priorityName
+    }
+
     return <div className={clsx(styles.tasksItem, isOpened ? styles.opened : '', classes)} style={style} ref={animatedElement}>
         <div className={clsx(styles.ticketTop, isOpened ? styles.opened : '')} onClick={showInfo}>
             <div className={styles.title}>
@@ -126,12 +137,20 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                         <div className={styles.lineData}>{formatDate(ticket.fields?.created)}</div>
                     </div>
                 )}
+                {ticket.fields?.customfield_10244 && (
+                    <div className={styles.line}>
+                        <div className={styles.lineTitle}>{"Autor"}</div>
+                        <div className={clsx(styles.lineData)}>
+                            <span>{AuthorProcess(ticket.fields?.customfield_10244)}</span>
+                        </div>
+                    </div>
+                )}
                 {ticket.fields?.priority.name && (
                     <div className={styles.line}>
                         <div className={styles.lineTitle}>{"Priority"}</div>
                         <div className={clsx(styles.lineData, styles.bold)}>
                             {ticket.fields?.priority?.iconUrl && (<Image src={ticket.fields?.priority?.iconUrl} alt={"status"} height={32} width={12} />)}
-                            <span>{ticket.fields?.priority?.name}</span>
+                            <span>{updatePriorityName(ticket.fields?.priority?.name)}</span>
                         </div>
                     </div>
                 )}

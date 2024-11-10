@@ -7,7 +7,15 @@ const STYLES : {[key: string] : string} = {
     'blocked' : 'Gesperrt'
 }
 
+const PRIORITIES: {[key: string] : string} = {
+    highest: 'Notfall',
+    high: 'Hoch',
+    medium: 'Mittel',
+    low: 'Niedrig'
+}
+
 export default {
     TITLE,
-    STYLES
+    STYLES,
+    PRIORITIES
 }

@@ -105,6 +105,7 @@ declare global {
   type Ticket = {
     key: string;
     fields: {
+      customfield_10244: string,
       summary: string;
       status: {
         name: string;
