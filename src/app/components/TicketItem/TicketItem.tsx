@@ -91,7 +91,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     }
 
     const updatePriorityName = (priorityName: string) => {
-        let name = constants.PRIORITIES[priorityName.toLowerCase()] 
+        const name = constants.PRIORITIES[priorityName.toLowerCase()] 
         return name ? name : priorityName
     }
 
