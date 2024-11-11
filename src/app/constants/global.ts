@@ -47,6 +47,8 @@ const FILE_TYPES_FOR_IMAGES = [
   "image/webp",
 ];
 
+const TAB_NAMES = ['Beschreibung', 'Inhalts-Support-Level', 'Plattformen-Support-Level']
+
 export default {
   URL_STANDART,
   URL_CUSTOM,
@@ -57,5 +59,6 @@ export default {
   JIRA_TOCKEN,
   JIRA_SERVER_RESPONCE,
   REQUEST_TYPES,
-  FILE_TYPES_FOR_IMAGES
+  FILE_TYPES_FOR_IMAGES,
+  TAB_NAMES
 };

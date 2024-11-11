@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import clsx from "clsx";
 import { useRef } from "react";
 import constants from "./contants";
+import global from "@/app/constants/global";
 import styles from "./tabs.module.scss";
 
 type Props = {
@@ -36,7 +37,7 @@ export const Tabs: React.FC<Props> = ({
       }
       const currentWidth = document.querySelector(`.${styles.active}`)?.getBoundingClientRect().width;
       if (underline.current) {
-       underline?.current?.setAttribute(
+        underline?.current?.setAttribute(
           "style",
           `width: ${currentWidth}px; left: ${paddingLeft}px;`
         );
@@ -47,7 +48,7 @@ export const Tabs: React.FC<Props> = ({
   const onClickTab = (e: React.MouseEvent<HTMLDivElement>) => {
 
     const element = e.currentTarget as HTMLElement
-    const elementNumber = element ?  element.getAttribute("id") : `${tabsPrefix}1`;
+    const elementNumber = element ? element.getAttribute("id") : `${tabsPrefix}1`;
     setActiveTab(elementNumber as string);
   };
 
@@ -69,19 +70,19 @@ export const Tabs: React.FC<Props> = ({
     >
       <div className={clsx(styles.tabLinks, "tabs-container")}>
         {tabNames.length > 0 &&
-          tabNames.map((item, key) => (
-            <div
+          global.TAB_NAMES.map((item, key) => {
+            return tabNames.includes(item) ? (<div
               key={key}
-              id={`${tabsPrefix}${key+1}`}
+              id={`${tabsPrefix}${key + 1}`}
               onClick={onClickTab}
               className={clsx(
                 styles.ItemName,
-                `${tabsPrefix}${key+1}` == activeTab ? styles.active : ""
+                `${tabsPrefix}${key + 1}` == activeTab ? styles.active : ""
               )}
             >
               {item}
-            </div>
-          ))}
+            </div>) : (<></>)
+          })}
         <div className={styles.underline} ref={underline}></div>
       </div>
       <div className={styles.TabContent}>

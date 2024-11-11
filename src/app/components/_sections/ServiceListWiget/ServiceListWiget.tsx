@@ -10,13 +10,14 @@ import { Tabs } from '../../Tabs/Tabs';
 import { Button } from '../../_buttons/Button/Button';
 import ServiceTile from '../../_buttons/ServiceTile/ServiceTile';
 import Image from 'next/image';
-import constants from './constants';
-import useAnimation from '@/app/hooks/Animation/Animation';
-import styles from "./servicelistwigets.module.scss"
 import ServiceTarif from '../../ServiceTarif/ServiceTarif';
 import useSendQuery from "@/app/hooks/sendQuery/sendQuery"
+import useAnimation from '@/app/hooks/Animation/Animation';
 import api from "@/app/api/crud"
 import utils from "@/app/utils"
+import global from '@/app/constants/global';
+import constants from './constants';
+import styles from "./servicelistwigets.module.scss"
 import "./table.scss"
 
 
@@ -32,7 +33,8 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
     const [activeTab, setActiveTab] = useState<string>(`${constants.TABS_ID_PREFIX}1`)
     const [scratchLoad, setScratchLoad] = useState(true)
     const [currentService, setCurrentService] = useState<ExtendedService | null>()
-    const [tabNames, setTabNames] = useState<Array<string>>(constants.TAB_NAMES)
+    const [tabNames, setTabNames] = useState<Array<string>>(global.TAB_NAMES)
+    // const [content, setContent] = useState<React.ReactElement | string>('')
     const { fetchData } = useSendQuery()
 
     const redirectCallback = () => {
@@ -45,6 +47,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
         if (tocken && !service?.content && !service?.platform && service?.id) {
             const servicesRes: object = await fetchData(`${api.custom.SERVICE_AGREEMENTS}${service?.id}`, "GET", {}, null, true)
             updatedService = { ...service, ...servicesRes }
+            console.log(updatedService);
             // const newServiceList: Array<ExtendedService> = serviceList.reduce((res, serv) => { 
             //     if(serv.id == service.id){
             //         res.push(updatedService)
@@ -59,7 +62,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
     }
 
     useEffect(() => {
-        console.log(currentService)
+        // setContent(renderTabContent())
     }, [currentService])
 
     const activateAnimationProcess = () => {
@@ -77,6 +80,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
 
     useEffect(() => {
         activateAnimationProcess()
+        // setContent(renderTabContent())
     }, [activeTab])
 
     useEffect(() => {
@@ -87,10 +91,12 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
     useEffect(() => {
         // setServiceList(services)
         loadContent(services[0])
+        serviceClick(services[0]?.id)
         // setCurrentService()
         animationActicate()
         console.log(services)
     }, [services])
+
 
 
     const serviceClick = async (id: string | number) => {
@@ -98,25 +104,27 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
             return service.id == id ? service : res
         }, services[0])
         console.log(chosen)
-        let tabsList = [constants.TAB_NAMES[0]];
-        if (chosen.serviceLevels) {
+        let tabsList = [global.TAB_NAMES[0]];
+        if (chosen?.serviceLevels) {
             tabsList = chosen.serviceLevels.reduce((res, item) => {
                 if (item.type == "Inhalt")
-                    res.push(constants.TAB_NAMES[1])
-                if (item.type == "Plattformen")
-                    res.push(constants.TAB_NAMES[2])
+                    res.push(global.TAB_NAMES[1])
+                if (item.type == "Plattform")
+                    res.push(global.TAB_NAMES[2])
                 return res;
             }, tabsList)
-            setTabNames(constants.TAB_NAMES)
+            setTabNames(global.TAB_NAMES)
         }
         setTabNames(tabsList)
         setActiveTab(`${constants.TABS_ID_PREFIX}1`)
         loadContent(chosen)
-        console.log(chosen)
-        console.log(`${api.custom.SERVICE_AGREEMENTS}/${chosen.id}`)
     }
 
     const renderTabContent = () => {
+        // console.log(Object.keys(currentService as object))
+
+        console.log(activeTab)
+        console.log(`${constants.TABS_ID_PREFIX}2`)
         switch (activeTab) {
             case `${constants.TABS_ID_PREFIX}1`:
                 return <div className='animation-fade-in-top immidiate-show short-duration content-container'>
@@ -279,6 +287,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
                 </div>);
 
             case `${constants.TABS_ID_PREFIX}3`:
+                console.log(currentService?.platform )
                 // return <div dangerouslySetInnerHTML={{ __html: currentService?.platform as string}}></div>
                 return (<div className='animation-fade-in-top immidiate-show short-duration content-container ServiceWigetTable'>
                     {currentService?.platform ? (
