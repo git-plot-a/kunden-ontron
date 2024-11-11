@@ -71,7 +71,7 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const userEmails = url.searchParams.get("userEmails")?.split(", ");
 
-  if (Array.isArray(userEmails) && userEmails?.length > 1) {
+  if (Array.isArray(userEmails) && userEmails?.length > 0) {
     const emailQueries = userEmails
       .map(
         (email) =>
