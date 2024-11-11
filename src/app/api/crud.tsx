@@ -8,7 +8,7 @@ const SERVICE_PREVIEWS = `${global.URL_CUSTOM}/wp-json/platforms/v1/cards`
 const SERVICE_AGREEMENTS = `${global.URL_CUSTOM}/wp-json/platforms/v1/`
 const DOCUMENTATION_LIST = `${global.URL_CUSTOM}/wp-json/documentation/v1/list`
 const COMPANY_USERS  = `${global.URL_CUSTOM}/wp-json/company/v1/users`
-
+const ADD_WP_REQUEST = `${global.URL_CUSTOM}/wp-json/request/v1/add`
 //default
 
 const custom = {
@@ -19,7 +19,8 @@ const custom = {
     SERVICE_PREVIEWS,
     SERVICE_AGREEMENTS,
     DOCUMENTATION_LIST,
-    COMPANY_USERS
+    COMPANY_USERS,
+    ADD_WP_REQUEST
 }
 
 export default {

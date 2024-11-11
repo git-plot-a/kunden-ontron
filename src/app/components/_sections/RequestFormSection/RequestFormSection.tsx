@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRef } from "react";
 import clsx from "clsx";
 import Container from "../../_layout/Container/Container";
 import Row from "../../_layout/Row/Row";
@@ -19,14 +20,21 @@ import styles from "./request.form.section.module.scss"
 
 const RequestFormSection = () => {
     const [result, setResult] = useState<formSendResult | null>(null)
+    const resultItem = useRef<HTMLDivElement | null>(null)
 
     const handler = async (result: boolean) => {
         const res = constants.RESULTS.reduce((r: formSendResult | null, item) => (item.success === result ? item : r), null)
         setResult(res)
     }
 
+    useEffect(() => {
+        if(resultItem.current){
+            resultItem.current.classList.add("animation-visible")
+        }
+    }, [result])
+
     return <Container>
-        <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack, "animation-fade-in-top")}>
+        <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack, "animation-fade-in-top")} ref={resultItem}>
         {/* <div className={clsx(styles.formContainer, !result ? styles.resultingBack : styles.usualBlack)}> */}
             <Row>
                 {result ?
@@ -39,11 +47,11 @@ const RequestFormSection = () => {
                                     <LottieAnimation animation={technicalAnimation}/>
                                     <LottieAnimation animation={errorAnimation}/> */}
                                 {/* <Image className={"animation-fade-in-top"} src={constants.RESULTS[0].img as string} alt={'result image'} height={340} width={560} /> */}
-                                    <Image className={"animation-fade-in-top"} src={result.img as string} alt={'result image'} height={340} width={560} />
+                                    <Image src={result.img as string} alt={'result image'} height={340} width={560} />
                                 </div>
-                                <div className={clsx(styles.formTitle, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: result.text }} />
+                                <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: result.text }} />
                                 {/* <div className={clsx(styles.formTitle, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: constants.RESULTS[0].text }} /> */}
-                                <div className={clsx(styles.aditionalInfo, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: constants.ADITIONAL_INFO }} />
+                                <div className={styles.aditionalInfo} dangerouslySetInnerHTML={{ __html: constants.ADITIONAL_INFO }} />
                             </div>
                         </Col>
                     )
