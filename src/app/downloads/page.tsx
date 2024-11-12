@@ -59,7 +59,7 @@ const DownloadsPage = () => {
             <>
                 <Header currentPage={"downloads"} />
                 <section id="dowload-top-offer">
-                    <TopOfferSubPages title={"Dienstleistungsanfragen"} imageUrl={'/img/downoloads_offer_image.png'} />
+                    <TopOfferSubPages title={"Dienstleistungsanfragen"} imageUrl={'/img/downoloadsOffer.png'} />
                 </section>
                 <section id="files-list">
                     <Container>
