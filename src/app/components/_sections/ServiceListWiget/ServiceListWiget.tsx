@@ -448,7 +448,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
                 <div className={styles.servicesList}>
                     {services.length > 0 && services.map((service, key) => (
                         <div key={key} onClick={() => { serviceClick(service.id) }}>
-                            <ServiceTile service={service} subtitle={service.serviceLevels && service.serviceLevels.length > 0 ? constants.SUBSCRIBTION_TITLE : undefined} />
+                            <ServiceTile classes={currentService?.id == service.id ? styles.active : ''} service={service} subtitle={service.serviceLevels && service.serviceLevels.length > 0 ? constants.SUBSCRIBTION_TITLE : undefined} />
                         </div>))}
                 </div>
             </Col>

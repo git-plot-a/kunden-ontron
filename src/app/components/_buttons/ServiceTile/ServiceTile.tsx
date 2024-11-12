@@ -11,10 +11,11 @@ interface ExtendedService extends Service {
 
 type Props = {
     service: ExtendedService,
-    subtitle?: string | undefined
+    subtitle?: string | undefined,
+    classes?: string | undefined
 }
 
-const ServiceTile: React.FC<Props> = ({ service, subtitle = undefined }) => {
+const ServiceTile: React.FC<Props> = ({ service, subtitle = undefined, classes = ''}) => {
     
     const callback = (e: React.MouseEvent<HTMLElement>) => {
         const target = e.currentTarget as HTMLElement;
@@ -29,7 +30,7 @@ const ServiceTile: React.FC<Props> = ({ service, subtitle = undefined }) => {
     }
 
     return <div className="animation-fade-in-left">
-        <div className={clsx(styles.productItem)} onClick={callback}>
+        <div className={clsx(styles.productItem, classes)} onClick={callback}>
             <div className={styles.Image}><Image src={service.icon as string} alt={service.title} width={40} height={40} /></div>
             <div className={styles.text}>
                 <div className={styles.title}>{service.title}</div>
