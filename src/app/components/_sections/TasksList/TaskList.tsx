@@ -7,17 +7,22 @@ import styles from "./taskList.module.scss"
 
 type Props = {
     tickets: Array<Ticket>,
-    loading? : boolean
+    loading?: boolean
 }
 
 const TaskList: React.FC<Props> = ({ tickets, loading = true }) => {
 
     return <div>
         <h2 className={styles.tasksTitle}>{constants.TITLE}</h2>
+        {tickets.length > 0 && (
+            <div className={styles.toolsSection}>
+                <div className={styles.quantity}>{`${tickets.length} ${constants.QUANTITY_TITLE}`}</div>
+            </div>
+        )}
         <div className={styles.tasksContainer}>
             {
                 tickets.length > 0 ? tickets.map((ticket, key) => (
-                    <TicketItem key={key} ticket={ticket} classes="animation-fade-in-top" style={{transitionDelay: `${key * 0.2}s`}}/> 
+                    <TicketItem key={key} ticket={ticket} classes="animation-fade-in-top" style={{ transitionDelay: `${key * 0.2}s` }} />
                 ))
 
                     : (loading ? <div>{"Laden..."}</div> : <div>{constants.NO_TICKETS_TASK}</div>)

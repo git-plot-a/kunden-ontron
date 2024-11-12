@@ -129,11 +129,11 @@
       }
       .content {
         &TopContainer {
-          padding-top: 57px;
-          padding-left: 48px;
+          padding-top: 39px;
+          padding-left: 45px;
           .line {
             display: flex;
-            margin-bottom: 24px;
+            margin-bottom: 12px;
             cursor: default;
             &Title {
               font-size: 16px;
@@ -152,11 +152,14 @@
               span {
                 font-weight: inherit;
                 vertical-align: middle;
-                line-height: 32px;
+                line-height: 24px;
+                margin-top: auto;
+                margin-bottom: auto;
               }
               img {
                 vertical-align: middle;
                 margin-right: 13px;
+                max-height: 31px;
               }
               &.bold {
                 font-weight: 500;
@@ -165,8 +168,8 @@
                 font-weight: inherit;
               }
               .estimation{
-                margin-left: 10px;
-                border-bottom: 1px solid var(--share-button-color);
+                margin-left: 6px;
+                // border-bottom: 1px solid var(--share-button-color);
                 color: var(--share-button-color);
                 transition: color 0.2s;
                 font-weight: 400;
@@ -225,8 +228,8 @@
           }
         }
         &BottomContainer {
-          padding-top: 64px;
-          padding-left: 48px;
+          padding-top: 44px;
+          padding-left: 45px;
           .title {
             font-size: 16px;
             line-height: 32px;
@@ -239,9 +242,9 @@
             .event {
               display: flex;
               padding: 10px 0;
-              padding-bottom: 24px;
+              padding-bottom: 22px;
               border-bottom: 1px solid var(--color-border);
-              margin-bottom: 4px;
+              // margin-bottom: 4px;
               font-size: 16px;
               line-height: 24px;
               &:last-child{

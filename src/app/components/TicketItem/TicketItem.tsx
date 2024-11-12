@@ -111,7 +111,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                     <div className={clsx(styles.lineData, styles.bold)}>
                         <div className={styles.value}>{"Oct 31, 11:30 AM"}</div>
                         <div className={styles.estimation} ref={estimationLink} onClick={showPopup}>
-                            <span>{"Time to first response within 8h"}</span>
+                            <span>{"Erste Antwort innerhalb von 8 Stunden"}</span>
                             {popUpVisible && (
                                 <div className={clsx(styles.popup, popUpVisible ? styles.opened : '')}>
                                     <div className={styles.image}>
@@ -147,7 +147,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                 )}
                 {ticket.fields?.priority.name && (
                     <div className={styles.line}>
-                        <div className={styles.lineTitle}>{"Priority"}</div>
+                        <div className={styles.lineTitle}>{"Priorität"}</div>
                         <div className={clsx(styles.lineData, styles.bold)}>
                             {ticket.fields?.priority?.iconUrl && (<Image src={ticket.fields?.priority?.iconUrl} alt={"status"} height={32} width={12} />)}
                             <span>{updatePriorityName(ticket.fields?.priority?.name)}</span>
