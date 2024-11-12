@@ -15,7 +15,7 @@
     display: flex;
     width: max-content;
     background-color: var(--most-light);
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 1px 6px;
     font-size: 10px;
     line-height: 15px;
@@ -48,8 +48,8 @@
     justify-content: flex-start;
   }
   &Icon {
-    margin-right: 16px;
-    border-radius: 12px;
+    margin-right: 10px;
+    border-radius: 10px;
     overflow: hidden;
     height: 70px;
     width: 70px;
@@ -62,14 +62,14 @@
       font-size: 14px;
       line-height: 32px;
       color: var(--dark-text);
-      font-weight: 600;
+      font-weight: 700;
       margin: 0;
       margin-bottom: auto;
       margin-top: auto;
       display: block;
     }
     .updated {
-      font-size: 12px;
+      font-size: 14px;
       line-height: 18px;
       color: var(--light-gray-text);
     }
@@ -116,8 +116,8 @@
     z-index: 1;
     transform: rotateY(180deg);
     background-color: var(--most-light);
-    padding: 2.5px 18px 13px 18px;
-    border: 1px solid var(--dark-border);
+    padding: 2.5px 18px 13px 8px;
+    border: 1px solid var(--pale-border-gray);
   }
 
 }
