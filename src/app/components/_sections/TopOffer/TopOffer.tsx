@@ -10,14 +10,16 @@ const TopOffer = () => {
         <Container classes={styles.container}>
             <Row>
                 <Col span={10}>
-                    <h1 className={clsx(styles.title, "animation-fade-in animation-fade-in-top middle-duration")} style={{transitionDelay: '0.4s'}}>
+                    <h1 className={clsx(styles.title, "animation-fade-in animation-fade-in-top middle-duration")} style={{ transitionDelay: '0.4s' }}>
                         <span>Willkommen,</span>
-                        <br/>
-                            Erzgebirgsklinikum!
+                        <br />
+                        Erzgebirgsklinikum!
                     </h1>
                 </Col>
                 <Col span={14}>
-                    <Image src={'/img/topOffer.svg'} alt="top-offer" width={669} height={317} />
+                    <div className={styles.imageContainer}>
+                        <Image src={'/img/topOffer.svg'} alt="top-offer" width={556} height={254} />
+                    </div>
                 </Col>
             </Row>
         </Container>
