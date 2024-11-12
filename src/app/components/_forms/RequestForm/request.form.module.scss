@@ -30,6 +30,7 @@
 textarea {
   &.fieldText {
     height: 220px;
+    margin-bottom: 48px;
   }
 }
 .hidden {
@@ -53,10 +54,8 @@ textarea {
   line-height: 24px;
   font-weight: 300;
   padding-bottom: 12px;
-  margin-top: -12px;
+  margin-top: -36px;
   white-space: wrap;
-  padding-left: 24px;
-  padding-right: 24px;
   &.general{
     margin-top: 21px;
     text-align: justify;

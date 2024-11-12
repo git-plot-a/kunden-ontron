@@ -2,21 +2,21 @@
   display: flex;
   &.medium {
     .lvlTitle {
-      font-size: 14px;
+      font-size: 16px;
       line-height: 32px;
       min-width: 84px;
       color: var(--dark-text);
     }
     .lvlValue{
-      font-size: 14px;
+      font-size: 16px;
       line-height: 24px;
       height: 24px;
       border-radius: 4px;
       min-width: 75px;
-      color: var(--dark-text);
+      color: var(--most-light);
     }
     .data{
-      font-size: 14px;
+      font-size: 16px;
       line-height: 32px;
       margin-left: 10px;
     }

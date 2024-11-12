@@ -81,19 +81,19 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
 
 
     useEffect(() => {
-        if(animatedElement.current){
+        if (animatedElement.current) {
             animatedElement.current.classList.add("animation-visible")
         }
     }, [isOpened])
 
 
-    const AuthorProcess = (author: string)=>{
+    const AuthorProcess = (author: string) => {
         const curreUser = utils.user.getUserData();
         return curreUser.user_email && curreUser.user_email == author ? "Sie" : author
     }
 
     const updatePriorityName = (priorityName: string) => {
-        const name = constants.PRIORITIES[priorityName.toLowerCase()] 
+        const name = constants.PRIORITIES[priorityName.toLowerCase()]
         return name ? name : priorityName
     }
 
@@ -120,7 +120,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                                         <Image src={'/img/support_lvl_bronze.svg'} alt="support level" height={81} width={81} />
                                     </div>
                                     <div className={styles.text}>
-                                        Your current support level is     Bronze. To get solutions faster, consider upgrading to a higher support level Learn more
+                                        Ihr aktuelles Support-Level ist Bronze. Um schneller Lösungen zu erhalten, erwägen Sie ein Upgrade auf ein höheres Support-Level <span style={{ color: '#0096D7' }}>Mehr erfahren</span>
                                     </div>
                                 </div>
                             )}
