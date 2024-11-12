@@ -9,6 +9,7 @@ import ProductList from './components/_sections/ProductList/ProductList';
 import TilesSection from './components/_sections/TilesSection/TilesSection';
 import TopOffer from './components/_sections/TopOffer/TopOffer';
 import useSendQuery from './hooks/sendQuery/sendQuery';
+import useAnimation from './hooks/Animation/Animation';
 import api from '@/app/api/crud';
 import utils from './utils';
 
@@ -18,6 +19,7 @@ const HomePage = () => {
   const [services, setServices] = useState<Array<Service>>([])
   const [loading, setLoading] = useState(true)
   const { fetchData } = useSendQuery()
+  const activateAnimaiton  = useAnimation()
 
 
 
@@ -49,6 +51,7 @@ const HomePage = () => {
   useEffect(() => {
     if (services.length > 0) {
       setLoading(false)
+      activateAnimaiton()
     }
   }, [services])
 
