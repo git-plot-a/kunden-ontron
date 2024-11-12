@@ -17,6 +17,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     const [popUpVisible, setPopupVisible] = useState(false)
     const estimationLink = useRef<HTMLDivElement | null>(null)
     const animatedElement = useRef<HTMLDivElement | null>(null)
+    const popup = useRef<HTMLDivElement | null>(null)
 
     function formatDate(dateString: string): string {
         const date = new Date(dateString);
@@ -63,12 +64,12 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     }
 
     const showPopup = () => {
-        // setPopupVisible(!popUpVisible)
+        setPopupVisible(true)
     }
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (estimationLink.current && !estimationLink.current.contains(event.target as Node) && popUpVisible) {
+            if (estimationLink.current && !estimationLink.current.contains(event.target as Node) && popup.current && !popup.current.contains(event.target as Node) && popUpVisible) {
                 setPopupVisible(false);
             }
         }
@@ -76,7 +77,8 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
         return () => {
             document.removeEventListener("click", handleClickOutside);
         }
-    }, [])
+    }, [popUpVisible])
+
 
     useEffect(() => {
         if(animatedElement.current){
@@ -110,10 +112,10 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                     <div className={styles.lineTitle}>{"Expected resolution time"}</div>
                     <div className={clsx(styles.lineData, styles.bold)}>
                         <div className={styles.value}>{"Oct 31, 11:30 AM"}</div>
-                        <div className={styles.estimation} ref={estimationLink} onClick={showPopup}>
+                        <div className={styles.estimation} ref={estimationLink} onMouseOver={showPopup}>
                             <span>{"Erste Antwort innerhalb von 8 Stunden"}</span>
                             {popUpVisible && (
-                                <div className={clsx(styles.popup, popUpVisible ? styles.opened : '')}>
+                                <div className={clsx(styles.popup, popUpVisible ? styles.opened : '')} ref={popup}>
                                     <div className={styles.image}>
                                         <Image src={'/img/support_lvl_bronze.svg'} alt="support level" height={81} width={81} />
                                     </div>
