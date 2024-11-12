@@ -1,14 +1,15 @@
 .container {
   min-height: 296px;
   position: relative;
+  margin-top: 28px;
 }
 .title {
   font-size: 44px;
   line-height: 64px;
   font-weight: 600;
-  padding-left: 47px;
+  padding-left: 50px;
   margin: 0;
-  padding-top: 40px;
+  padding-top: 50px;
   color: var(--most-light);
   cursor: default;
   span {

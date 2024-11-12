@@ -1,5 +1,5 @@
 .container {
-  margin-top: 58px;
+  margin-top: 64px;
   .serviceInfo {
     display: flex;
     justify-content: flex-start;
@@ -25,7 +25,7 @@
       display: flex;
       justify-content: flex-start;
       height: 64px;
-      margin-bottom: 8px;
+      margin-bottom: 13px;
       background-color: var(--light-gray);
       padding-right: 20px;
       padding-left: 20px;
@@ -97,11 +97,17 @@
             color: var(--dark-text);
             opacity: 1;
           }
-          &:hover, &:focus, &:active{
+          &:hover,
+          &:focus,
+          &:active {
             border: 1px solid var(--silver-service-level);
           }
         }
       }
     }
   }
+}
+
+.mainContent {
+  margin-top: 6px;
 }
