@@ -5,7 +5,7 @@
       var(--start-back-gradient),
       var(--finish-back-gradient)
     );
-    padding: 95px 101px;
+    padding: 67px;
     padding-bottom: 45px;
     border-radius: 32px;
     position: relative;
@@ -30,17 +30,17 @@
     font-weight: 600;
     color: var(--most-light);
     text-align: center;
-    margin-top: 122px;
+    margin-top: 241px;
     &Block {
       position: absolute;
       width: -webkit-fill-available;
       width: -moz-available;
       top: 0;
       bottom: 0;
-      left: 93px;
+      left: 0;
       margin-top: auto;
       margin-bottom: auto;
-      width: calc(41.6% - 88px);
+      width: 43%;
       // max-width: calc(41.6% - 88px);
       // min-width: calc(41.6% - 88px);
       height: max-content;
@@ -95,12 +95,12 @@
   position: absolute;
   animation: sparklin 3s linear infinite alternate;
   &.small {
-    top: 67px;
-    left: 173px;
+    top: 97px;
+    left: 191px;
   }
   &.big {
-    top: 111px;
-    left: 231px;
+    top: 138px;
+    left: 235px;
     animation-direction: alternate-reverse;
   }
 }

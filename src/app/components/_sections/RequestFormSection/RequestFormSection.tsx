@@ -68,7 +68,7 @@ const RequestFormSection = () => {
                                     <div className={styles.formTitleContiner}>
                                         <div className={clsx(styles.formTitle, "animation-fade-in long-duration")} dangerouslySetInnerHTML={{__html: constants.TITLE}} style={{transitionDelay: '0.2s'}}/>
                                         <div className={clsx(styles.formTitleImage, "animation-fade-in long-duration")} style={{transitionDelay: '0.4s'}}>
-                                            <Image src={'/img/decore1.svg'} alt="send a request" width={426} height={351} />
+                                            <Image src={'/img/decore1.svg'} alt="send a request" width={322} height={265} />
                                         </div>
                                     </div>
                                 </div>
