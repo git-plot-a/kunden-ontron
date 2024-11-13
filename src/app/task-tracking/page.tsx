@@ -61,7 +61,7 @@ const TaskTrackingPage = () => {
             <section id="top-offer">
                 <TopOfferSubPages title={<>Dienstleistungsanfragen</>} imageUrl="/img/trackingOffer.png" />
             </section>
-            <section>
+            <section style={{paddingBottom: '224px'}}>
                 <Container>
                     <Row>
                         <Col span={24}>

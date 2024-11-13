@@ -57,7 +57,7 @@ const PlatformsPage = () => {
             <section id="top-offer">
                 <TopOfferSubPages title={<>Produkte verwalten</>} imageUrl={'/img/platformsOffer.png'} />
             </section>
-            <section id="user-services">
+            <section id="user-services" style={{paddingBottom: '224px'}}>
                 <ServiceListWiget services={services} />
             </section>
             {/* <LottieAnimation /> */}

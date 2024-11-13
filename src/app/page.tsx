@@ -60,7 +60,7 @@ const HomePage = () => {
   return <>{!loading && (
     <>
       <Header currentPage='home' />
-      <TopOffer />
+      <TopOffer title={'<span>Willkommen,</span><br />Erzgebirgsklinikum!'}/>
       <Container>
         <TilesSection />
         <ProductList services={services} />

@@ -171,6 +171,17 @@ a {
   line-height: 24px;
 }
 
+.mainContent{
+  padding-bottom: 224px;
+}
+
+.notFoundContainer{
+height: calc(100vh - 260px);
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+
 @keyframes shimmer {
   0% {
     background-color: var(--most-light);
