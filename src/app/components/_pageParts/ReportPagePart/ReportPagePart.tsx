@@ -9,6 +9,7 @@ import { Button } from '../../_buttons/Button/Button';
 import constants from "./constants"
 
 const ReportPagePart = () => {
+    const [loading, setLoading] = useState(true)
     const [exumpleLine1Data, setExumpleLine1Data] = useState(constants.LINE_EXUMAPLE1.data)
     const [exumpleLine2Data, setExumpleLine2Data] = useState(constants.LINE_EXUMAPLE2.data)
     const [exumpleLine3Data, setExumpleLine3Data] = useState(constants.LINE_EXUMAPLE3.data)
@@ -80,6 +81,11 @@ const ReportPagePart = () => {
         setExumpleLine3Data(newThirdLineData)
 
     }, [])
+
+    useEffect(()=>{
+        setLoading(false)
+    }, [exumpleLine3Data])
+    
     //Data based
     const exumpleLine1Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE1.options as ChartOptions<'line'>
     const exumpleLine2Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE2.options as ChartOptions<'line'>
@@ -104,7 +110,7 @@ const ReportPagePart = () => {
     const optionsDoughnut: ChartOptions<'doughnut'> = constants.DOUGHNUT.options as ChartOptions<'doughnut'>
 
 
-    return <>
+    return <>{!loading && (
         <Container>
             <Row>
                 <Col span={24}>
@@ -198,7 +204,8 @@ const ReportPagePart = () => {
                     </div>
                 </Col>
             </Row>
-        </Container></>
+        </Container>
+        )}</>
 }
 
 export default ReportPagePart
