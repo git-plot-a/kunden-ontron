@@ -64,20 +64,20 @@ const TaskTrackingPage = () => {
                 newTicketsList.sort((a, b) => {
                     const dateA = new Date(a.fields.created as string).getTime();
                     const dateB = new Date(b.fields.created as string).getTime();
-                    return dateA - dateB;
+                    return dateB - dateA;
                 });
                 console.log(newTicketsList)
                 break;
             case 'proiroty':
-                const priorityOrder = ["Highest", "High", "Medium", "Low", "Lowest"];
+                const priorityOrder = ["Highest", "High", "Normal", "Medium", "Low", "Lowest"];
                 newTicketsList.sort((a, b) => {
-                    const priorityA = a.fields.priority.name;
-                    const priorityB = b.fields.priority.name;
+                    const priorityA = a.fields?.priority?.name;
+                    const priorityB = b.fields?.priority?.name;
 
                     const indexA = priorityOrder.indexOf(priorityA);
                     const indexB = priorityOrder.indexOf(priorityB);
 
-                    return indexB - indexA;
+                    return indexA - indexB;
                 });
                 break;
             case 'author':
