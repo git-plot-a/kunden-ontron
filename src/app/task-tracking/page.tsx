@@ -86,15 +86,12 @@ const TaskTrackingPage = () => {
                     const emailA = a.fields.customfield_10244.toLowerCase();
                     const emailB = b.fields.customfield_10244.toLowerCase();
 
-                    // Проверяем, совпадает ли email с текущим пользователем
                     const isCurrentUserA = emailA === currentUserEmail.toLowerCase();
                     const isCurrentUserB = emailB === currentUserEmail.toLowerCase();
 
-                    // Сначала email текущего пользователя
                     if (isCurrentUserA && !isCurrentUserB) return -1;
                     if (!isCurrentUserA && isCurrentUserB) return 1;
 
-                    // Алфавитный порядок для остальных
                     return emailA.localeCompare(emailB);
                 });
                 break;
