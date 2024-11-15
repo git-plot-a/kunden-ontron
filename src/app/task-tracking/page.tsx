@@ -77,7 +77,7 @@ const TaskTrackingPage = () => {
                     const indexA = priorityOrder.indexOf(priorityA);
                     const indexB = priorityOrder.indexOf(priorityB);
 
-                    return indexA - indexB;
+                    return indexB - indexA;
                 });
                 break;
             case 'author':
