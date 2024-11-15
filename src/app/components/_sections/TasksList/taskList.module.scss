@@ -26,13 +26,17 @@
 
 .toolsSection{
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-bottom: 41px;
   .quantity{
     line-height: 54px;
     font-size: 16px;
     color: var(--pale-text);
 
+  }
+  .sortList{
+    min-width: 433px;
+    margin-bottom: 0;
   }
 }
 
