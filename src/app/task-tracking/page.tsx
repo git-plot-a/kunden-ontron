@@ -55,17 +55,66 @@ const TaskTrackingPage = () => {
     }, [])
 
 
+
+
+    const sortingFunction = (val: string) => {
+        const newTicketsList: Array<Ticket> = tickets.map(item => item)
+        switch (val) {
+            case 'date':
+                newTicketsList.sort((a, b) => {
+                    const dateA = new Date(a.fields.created as string).getTime();
+                    const dateB = new Date(b.fields.created as string).getTime();
+                    return dateA - dateB;
+                });
+                console.log(newTicketsList)
+                break;
+            case 'proiroty':
+                const priorityOrder = ["Highest", "High", "Medium", "Low", "Lowest"];
+                newTicketsList.sort((a, b) => {
+                    const priorityA = a.fields.priority.name;
+                    const priorityB = b.fields.priority.name;
+
+                    const indexA = priorityOrder.indexOf(priorityA);
+                    const indexB = priorityOrder.indexOf(priorityB);
+
+                    return indexA - indexB;
+                });
+                break;
+            case 'author':
+                newTicketsList.sort((a, b) => {
+                    const currentUserEmail = utils.user.getUserData()?.user_email;
+                    const emailA = a.fields.customfield_10244.toLowerCase();
+                    const emailB = b.fields.customfield_10244.toLowerCase();
+
+                    // Проверяем, совпадает ли email с текущим пользователем
+                    const isCurrentUserA = emailA === currentUserEmail.toLowerCase();
+                    const isCurrentUserB = emailB === currentUserEmail.toLowerCase();
+
+                    // Сначала email текущего пользователя
+                    if (isCurrentUserA && !isCurrentUserB) return -1;
+                    if (!isCurrentUserA && isCurrentUserB) return 1;
+
+                    // Алфавитный порядок для остальных
+                    return emailA.localeCompare(emailB);
+                });
+                break;
+        }
+
+        setTickets(newTicketsList)
+
+    }
+
     return <>
         {!loading && (<>
             <Header currentPage="task-tracking" />
             <section id="top-offer">
                 <TopOfferSubPages title={<>Dienstleistungsanfragen</>} imageUrl="/img/trackingOffer.png" />
             </section>
-            <section style={{paddingBottom: '224px'}}>
+            <section style={{ paddingBottom: '224px' }}>
                 <Container>
                     <Row>
                         <Col span={24}>
-                            <TaskList tickets={tickets ? tickets : []} />
+                            <TaskList tickets={tickets ? tickets : []} sortingFunction={sortingFunction} />
                         </Col>
                     </Row>
                 </Container>

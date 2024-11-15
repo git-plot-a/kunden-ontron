@@ -8,39 +8,60 @@ import DropDownList from "../../DropDownList/DropDownList"
 
 type Props = {
     tickets: Array<Ticket>,
-    loading?: boolean
+    loading?: boolean,
+    sortingFunction: (val: string) => void
 }
 
-const TaskList: React.FC<Props> = ({ tickets, loading = true }) => {
+const TaskList: React.FC<Props> = ({ tickets, loading = true, sortingFunction = () => { } }) => {
 
     const items: Array<DropDownList> = [
         {
-            title: 'Nach dem Datum der Antragseinreichung',
-            value: '1'
+            title: 'Datum der Einreichung (neu zuerst)',
+            value: 'date'
         },
         {
-            title: 'Nach Priorität',
-            value: '2'
+            title: 'Priorität (anfangs hoch)',
+            value: 'proiroty'
         },
         {
-            title: 'Eigene Anfragen zuerst ',
-            value: '1'
+            title: 'Autor (eigene zuerst) ',
+            value: 'author'
         }
     ]
+
+    const dropDownHandler = (val: string) => {
+        if (window) {
+            const ticketsList = document.querySelectorAll(".ticket");
+            ticketsList.forEach(item => {
+                item.classList.remove('animation-visible')
+                item.classList.add(styles.noAnimation)
+            })
+        }
+        sortingFunction(val)
+        if (window) {
+            setTimeout(() => {
+                const ticketsList = document.querySelectorAll(".ticket");
+                ticketsList.forEach(item => {
+                    item.classList.add('animation-visible')
+                    item.classList.remove(styles.noAnimation)
+                })
+            }, 100)
+        }
+    }
 
     return <div>
         <h2 className={styles.tasksTitle}>{constants.TITLE}</h2>
         {tickets.length > 0 && (
             <div className={styles.toolsSection}>
                 <div className={styles.quantity}>{`${tickets.length} ${constants.QUANTITY_TITLE}`}</div>
-                <DropDownList items={items} handler={()=>{}} def={0} classes={styles.sortList}/>
+                <DropDownList items={items} handler={dropDownHandler} def={0} classes={styles.sortList} />
             </div>
         )}
 
         <div className={styles.tasksContainer}>
             {
                 tickets.length > 0 ? tickets.map((ticket, key) => (
-                    <TicketItem key={key} ticket={ticket} classes="animation-fade-in-top" style={{ transitionDelay: `${key * 0.2}s` }} />
+                    <TicketItem key={key} ticket={ticket} classes="animation-fade-in-top ticket" style={{ transitionDelay: `${key * 0.2}s` }} />
                 ))
 
                     : (loading ? <div>{"Laden..."}</div> : <div>{constants.NO_TICKETS_TASK}</div>)

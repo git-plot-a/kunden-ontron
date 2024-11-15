@@ -21,6 +21,7 @@ const DropDownList: React.FC<Props> = ({ items, handler, def = undefined, classe
     const itemClick = (key: number) => {
         changeOpening()
         setcurrentChoice(key)
+        console.log(items[key].value)
         handler(items[key].value)
     }
 
