@@ -119,46 +119,7 @@ export const sendRequestFormSchems = yup.object().shape({
   requestTypeId: yup.number().integer().required(constants.REQUIRED_FIELD),
   summary: yup.string().max(30, constants.MAX_LENGTH),
   description: yup.string().max(250, constants.MAX_LENGTH).required(constants.REQUIRED_FIELD),
-  priority: yup.number().integer().max(4, constants.UNKNOWN_PRIORITY).min(1, constants.UNKNOWN_PRIORITY).required(constants.REQUIRED_FIELD)
-  // email: yup.string().email(constants.EMAIL).required(constants.REQUIRED_FIELD)
+  priority: yup.number().integer().max(4, constants.UNKNOWN_PRIORITY).min(1, constants.UNKNOWN_PRIORITY).required(constants.REQUIRED_FIELD),
+  // service: yup.number().integer().required()
 })
 
-// export const addCommentFormSchems = yup.object().shape({
-//   post: yup
-//     .number()
-//     .required(constants.REQUIRED_FIELD)
-//     .min(1),
-//   content: yup.string(),
-// })
-
-// export const checkUrl = (urlString: string): boolean => {
-//   return url.test(urlString)
-// }
-
-// export const editCommentFormSchems = yup.object().shape({
-//   id: yup
-//     .number()
-//     .required(constants.REQUIRED_FIELD)
-//     .min(1),
-//   parent: yup
-//     .number()
-//     .required(constants.REQUIRED_FIELD)
-//     .min(0),
-//   content: yup.string(),
-// })
-
-// export const addCommentReplayFormSchems = yup.object().shape({
-//   post: yup
-//     .number(constants.INCORRECT_POST)
-//     .required(constants.REQUIRED_FIELD)
-//     .min(1),
-//   parent: yup
-//     .number(constants.INCORRECT_COMMENT_PARENT)
-//     .required(constants.REQUIRED_FIELD)
-//     .min(1),
-//   content: yup.string(),
-// })
-
-// export const addImageFormSchems = yup.object().shape({
-//   alt: yup.string().max(10000, constants.MAX_LENGTH),
-// })

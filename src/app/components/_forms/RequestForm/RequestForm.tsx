@@ -68,13 +68,16 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
 
 
 
+
+
     return <div className={styles.formContainer}>
         <Formik
             initialValues={{
                 requestTypeId: "15",
                 summary: '',
                 description: '',
-                priority: "3"
+                priority: "3",
+                service: "0"
             }}
             validationSchema={sendRequestFormSchems}
             onSubmit={submitHandler}
@@ -89,27 +92,21 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                                 <span>{props.errors["requestTypeId"]}</span>
                             </div>
                         )}
-                        {/* </Col> */}
-                        {/* <Col span={12}>
-                        <Field name="category" id="category" type="text" className={styles.hidden} />
-                        <DropDownList items={constants.CATEGORIES} handler={()=>{}}></DropDownList>
-                        {typeof props.errors["category"] != "undefined" && (
+
+                         {/* <Field type="string" name="service" id="service" className={styles.hidden} />
+                        <DropDownList items={constants.REQUEST_TYPES} handler={(newVal: string) => { props.setFieldValue("service", newVal) }}></DropDownList>
+                        {typeof props.errors["service"] != "undefined" && (
                             <div className={styles.messages}>
-                                <span>{props.errors["category"]}</span>
+                                <span>{props.errors["service"]}</span>
                             </div>
-                        )}
-                    </Col> */}
-                        {/* </Row>
-                <Row>
-                    <Col span={24} classes="animation-fade-in-top" style={{transitionDelay: '0.2s'}}> */}
+                        )} */}
+
                         <Field name="summary" id="summary" placeholder="Problembezeichnung" className={styles.fieldText} />
                         {typeof props.errors["summary"] != "undefined" && (
                             <div className={styles.messages}>
                                 <span>{props.errors["summary"]}</span>
                             </div>
                         )}
-                        {/* </Col>
-                    <Col span={24} classes="animation-fade-in-top" style={{transitionDelay: '0.4s'}}> */}
                         <Field type="number" name="priority" id="priority" className={styles.hidden} />
                         <DropDownList items={constants.PRORITIES as Array<DropDownList>} handler={(newVal: string) => { props.setFieldValue("priority", newVal) }} def={2}></DropDownList>
                         {typeof props.errors["requestTypeId"] != "undefined" && (
@@ -117,8 +114,6 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                                 <span>{props.errors["requestTypeId"]}</span>
                             </div>
                         )}
-                        {/* </Col>
-                    <Col span={24} classes="animation-fade-in-top" style={{transitionDelay: '0.6s'}}> */}
                         <Field name="description" id="description" placeholder="Beschreibung*" as="textarea" className={styles.fieldText} />
                         {typeof props.errors["description"] != "undefined" && (
                             <div className={styles.messages}>

@@ -31,9 +31,6 @@ const TaskTrackingPage = () => {
         const ticketsLoading = async () => {
             const userData = utils.user.getUserData();
             let email = '';
-            console.log(Array.isArray(userData.roles))
-            console.log(userData.roles.includes("sla_manager"))
-            console.log(userData.roles.includes("administrator"))
             if (!Array.isArray(userData.roles) || (!userData.roles.includes("sla_manager") && !userData.roles.includes("administrator"))) {
                 email = utils.user.getUserData()?.user_email
             }

@@ -82,10 +82,12 @@ const ReportPagePart = () => {
 
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         setLoading(false)
     }, [exumpleLine3Data])
-    
+
+
+
     //Data based
     const exumpleLine1Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE1.options as ChartOptions<'line'>
     const exumpleLine2Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE2.options as ChartOptions<'line'>
@@ -108,6 +110,49 @@ const ReportPagePart = () => {
     const dataDoughnut: ChartData<'doughnut'> = constants.DOUGHNUT.data
 
     const optionsDoughnut: ChartOptions<'doughnut'> = constants.DOUGHNUT.options as ChartOptions<'doughnut'>
+
+
+    const dataBar: ChartData<'bar'> = {
+        labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'], // Метки для оси X
+        datasets: [
+            {
+                label: 'Part 1',
+                data: [12, 19, 3, 5], // Значения первой части каждого столбца
+                backgroundColor: 'rgba(255, 99, 132, 0.7)', // Цвет для части 1
+            },
+            {
+                label: 'Part 2',
+                data: [8, 10, 5, 7], // Значения второй части каждого столбца
+                backgroundColor: 'rgba(54, 162, 235, 0.7)', // Цвет для части 2
+            },
+            {
+                label: 'Part 3',
+                data: [4, 7, 6, 3], // Значения третьей части каждого столбца
+                backgroundColor: 'rgba(255, 206, 86, 0.7)', // Цвет для части 3
+            },
+        ],
+    };
+
+    const optionsBar: ChartOptions<'bar'> = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top', // Позиция легенды
+            },
+            tooltip: {
+                enabled: true, // Включение всплывающих подсказок
+            },
+        },
+        scales: {
+            x: {
+                stacked: true, // Включение группировки по оси X
+            },
+            y: {
+                stacked: true, // Включение группировки по оси Y
+                beginAtZero: true, // Начинать ось Y с нуля
+            },
+        },
+    };
 
 
     return <>{!loading && (
@@ -179,7 +224,7 @@ const ReportPagePart = () => {
                     <h2 className={styles.title}>Alternative diagrams</h2>
                 </Col>
                 <Col span={24}>
-                    <div style={{fontSize: '12px', marginBottom: '30px'}}>{"More examples: https://react-chartjs-2-two.vercel.app/examples/area-chart"}</div>
+                    <div style={{ fontSize: '12px', marginBottom: '30px' }}>{"More examples: https://react-chartjs-2-two.vercel.app/examples/area-chart"}</div>
                 </Col>
             </Row>
             <Row>
@@ -198,6 +243,9 @@ const ReportPagePart = () => {
                         <div>
                             <Scatter data={dataLine} options={optionsLine} height={300} width={300} />
                         </div>
+                        <div>
+                            <Bar data={dataBar} options={optionsBar} />
+                        </div>
                         {/* <Pie data={data} options={options} />; */}
                         {/* <Doughnut data={data} options={options} />; */}
 
@@ -205,7 +253,7 @@ const ReportPagePart = () => {
                 </Col>
             </Row>
         </Container>
-        )}</>
+    )}</>
 }
 
 export default ReportPagePart
