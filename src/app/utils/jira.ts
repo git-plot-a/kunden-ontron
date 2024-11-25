@@ -12,6 +12,7 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
   const headers = {
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest",
+    "Cache-Control": "no-cache", 
   };
 
   try {
@@ -32,8 +33,6 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
       // if(data.userEmails)
       url += `?userEmails=${encodeURIComponent(data.userEmails.join(", "))}`;
     }
-    console.log(data.userEmails)
-    console.log(url)
     const response = await fetch(url, options);
     // return response;
     if (!response.ok) {

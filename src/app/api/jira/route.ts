@@ -81,6 +81,7 @@ export async function GET(req: Request) {
   
     const queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=OIT AND (${emailQueries})&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
 
+    // return queryUrl;
     // return  NextResponse.json({url: queryUrl});
 
     // const isFetchRequest =
@@ -112,6 +113,7 @@ export async function GET(req: Request) {
         headers: {
           "Content-Type": "application/json",
           Authorization: auth,
+          "Cache-Control": "no-cache", 
         },
       });
 
