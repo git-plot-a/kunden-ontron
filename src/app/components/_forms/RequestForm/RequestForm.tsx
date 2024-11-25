@@ -32,7 +32,8 @@ const RequestForm: React.FC<Props> = ({ handler }) => {
                 "summary": values.summary,
                 "description": values.description,
                 "userEmail": user.user_email,
-                "priority": { "id": String(values.priority) }
+                "priority": { "id": String(values.priority) },
+                "project": user.project
             }
             const result: { [key: string]: string } = await utils.jira.apiRequest(requestData)
             setLoading(false)

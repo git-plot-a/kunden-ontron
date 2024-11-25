@@ -22,11 +22,11 @@ export async function POST(req: Request) {
 
   const requestBody = await req.json();
 
-  const { type, summary, description, userEmail, priority } = requestBody;
+  const { type, summary, description, userEmail, priority, project } = requestBody;
 
-  if (userEmail) {
+  if (userEmail && project?.id) {
     const body = {
-      serviceDeskId: "2",
+      serviceDeskId: project.id,
       requestTypeId: type,
       requestFieldValues: {
         summary: summary || global.REQUEST_TYPES[2].title,
@@ -69,17 +69,17 @@ export async function GET(req: Request) {
   const auth = `Basic ${btoa(`${global.JIRA_USER}:${global.JIRA_TOCKEN}`)}`;
 
   const url = new URL(req.url);
-  const userEmails = url.searchParams.get("userEmails")?.split(", ");
+  const userEmails = url.searchParams.get("userEmail");
+  const project = url.searchParams.get("project");
+  let queryUrl
 
-  if (Array.isArray(userEmails) && userEmails?.length > 0) {
-    const emailQueries = userEmails
-      .map(
-        (email) =>
-          `"Submitter Name[Short text]" ~ "${encodeURIComponent(email)}"`
-      )
-      .join(" OR ");
-  
-    const queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=OIT AND (${emailQueries})&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
+  if (userEmails && userEmails?.length > 0) {
+    const emailQueries = `"Submitter Name[Short text]" ~ "${userEmails}"`
+     
+    queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=${project} AND (${emailQueries})&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
+  }else{
+    queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=${project}&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
+  }
 
     // return queryUrl;
     // return  NextResponse.json({url: queryUrl});
@@ -129,10 +129,10 @@ export async function GET(req: Request) {
         { status: 500 }
       );
     }
-  } else {
-    return NextResponse.json(
-      { message: errors.INCORRECT_DATA },
-      { status: 500 }
-    );
-  }
+  // } else {
+  //   return NextResponse.json(
+  //     { message: errors.INCORRECT_DATA },
+  //     { status: 500 }
+  //   );
+  // }
 }

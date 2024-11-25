@@ -5,19 +5,16 @@ import { useRouter } from "next/navigation"
 import Header from "../components/_sections/Header/Header"
 import Footer from "../components/_sections/Footer/Footer"
 import TopOfferSubPages from "../components/_sections/TopOfferSubPages/TopOfferSubPages"
-import useSendQuery from "../hooks/sendQuery/sendQuery"
 import Container from "../components/_layout/Container/Container"
 import Row from "../components/_layout/Row/Row"
 import Col from "../components/_layout/Col/Col"
 import TaskList from "../components/_sections/TasksList/TaskList"
-import api from "../api/crud"
 import utils from "../utils"
 
 const TaskTrackingPage = () => {
     const router = useRouter()
     const [loading, setLoading] = useState(true)
     const [tickets, setTickets] = useState<Array<Ticket>>([])
-    const { fetchData } = useSendQuery()
 
     useEffect(() => {
         console.log(utils.user.getToken())
@@ -33,17 +30,16 @@ const TaskTrackingPage = () => {
     useEffect(() => {
         const ticketsLoading = async () => {
             const userData = utils.user.getUserData();
-            let email_list = Array<string>();
-            if (Array.isArray(userData.roles) && (userData.roles.includes("sla_manager") || userData.roles.includes("administrator"))) {
-                const users_res: Array<string> = await fetchData(api.custom.COMPANY_USERS, "GET", {}, null, true)
-                if (Array.isArray(users_res) && users_res.length > 0) {
-                    email_list = users_res
-                }
-            } else {
-                email_list.push(utils.user.getUserData()?.user_email)
+            let email = '';
+            console.log(Array.isArray(userData.roles))
+            console.log(userData.roles.includes("sla_manager"))
+            console.log(userData.roles.includes("administrator"))
+            if (!Array.isArray(userData.roles) || (!userData.roles.includes("sla_manager") && !userData.roles.includes("administrator"))) {
+                email = utils.user.getUserData()?.user_email
             }
             const data: object = {
-                userEmails: email_list
+                userEmail: email,
+                project: userData.project
             }
 
             const result = await utils.jira.apiRequest(data, "GET")
@@ -83,8 +79,8 @@ const TaskTrackingPage = () => {
             case 'author':
                 newTicketsList.sort((a, b) => {
                     const currentUserEmail = utils.user.getUserData()?.user_email;
-                    const emailA = a.fields.customfield_10244.toLowerCase();
-                    const emailB = b.fields.customfield_10244.toLowerCase();
+                    const emailA = a.fields.customfield_10244?.toLowerCase();
+                    const emailB = b.fields.customfield_10244?.toLowerCase();
 
                     const isCurrentUserA = emailA === currentUserEmail.toLowerCase();
                     const isCurrentUserB = emailB === currentUserEmail.toLowerCase();
@@ -92,7 +88,7 @@ const TaskTrackingPage = () => {
                     if (isCurrentUserA && !isCurrentUserB) return -1;
                     if (!isCurrentUserA && isCurrentUserB) return 1;
 
-                    return emailA.localeCompare(emailB);
+                    return emailA?.localeCompare(emailB);
                 });
                 break;
         }

@@ -1,18 +1,21 @@
-import constants from "../constants/global";
 import errors from "../constants/errors";
 
 interface ApiRequestData {
   type?: string;
   summary?: string;
   description?: string;
-  userEmails?: Array<string>;
+  userEmail?: string;
+  project?: {
+    name: string;
+    id: string | number;
+  };
 }
 
 const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
   const headers = {
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest",
-    "Cache-Control": "no-cache", 
+    "Cache-Control": "no-cache",
   };
 
   try {
@@ -24,17 +27,16 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
 
     if (method === "POST") {
       options.body = JSON.stringify(data);
-    } else if (
-      method === "GET" &&
-      data.userEmails &&
-      Array.isArray(data.userEmails) &&
-      data.userEmails.length > 0
-    ) {
-      // if(data.userEmails)
-      url += `?userEmails=${encodeURIComponent(data.userEmails.join(", "))}`;
+    } else if (method === "GET") {
+      if(data.userEmail){
+        url += `?userEmail=${encodeURIComponent(data.userEmail)}&project=${data.project?.name}`;
+      }else{
+        url += `?project=${data.project?.name}`;
+      }
     }
+    console.log(url)
     const response = await fetch(url, options);
-    // return response;
+
     if (!response.ok) {
       console.error(`${errors.JIRA_ERROR_MISTAKE}${response.statusText}`);
       return {
@@ -43,9 +45,7 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
       };
     }
 
-    console.log(constants.JIRA_SERVER_RESPONCE, response.body);
     const result = await response.json();
-    console.log(constants.JIRA_SERVER_RESPONCE, result);
     return result;
   } catch (error) {
     console.error(errors.JIRA_ERROR_RESPONSE, error);
