@@ -245,26 +245,28 @@ const LINE_EXUMAPLE2 = {
         borderColor: "#009ee3",
         borderWidth: 1,
       },
-      {
-        label: "Group 2",
-        data: [100, 100, 80, 81, 56, 55],
-        backgroundColor: "#FF8941",
-        borderColor: "#FF8941",
-        borderWidth: 1,
-      },
-      {
-        label: "Group 3",
-        data: [100, 100, 80, 81, 56, 55],
-        backgroundColor: "#5f5f5f",
-        borderColor: "#5f5f5f",
-        borderWidth: 1,
-      }
+      // {
+      //   label: "Group 2",
+      //   data: [100, 100, 80, 81, 56, 55],
+      //   backgroundColor: "#FF8941",
+      //   borderColor: "#FF8941",
+      //   borderWidth: 1,
+      // },
+      // {
+      //   label: "Group 3",
+      //   data: [100, 100, 80, 81, 56, 55],
+      //   backgroundColor: "#5f5f5f",
+      //   borderColor: "#5f5f5f",
+      //   borderWidth: 1,
+      // }
     ],
   },
   options: {
     responsive: true,
     plugins: {
-      legend: { display: false },
+      legend: { display: false, labels: {
+        padding: 20, // Отступы между элементами легенды
+      }, },
       title: { display: false, text: "First Time to Response" },
     },
     scales: {

@@ -71,43 +71,18 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const userEmails = url.searchParams.get("userEmail");
   const project = url.searchParams.get("project");
-  let queryUrl
+  const fields = url.searchParams.get("fields") ? url.searchParams.get("fields") : 'summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate'; 
+  let queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=${project}`
 
   if (userEmails && userEmails?.length > 0) {
     const emailQueries = `"Submitter Name[Short text]" ~ "${userEmails}"`
      
-    queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=${project} AND (${emailQueries})&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
-  }else{
-    queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=${project}&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
+    queryUrl += ` AND (${emailQueries})&fields=${fields}&expand=changelog`;
   }
+    queryUrl += `&fields=${fields}&expand=changelog`;
+  
 
-    // return queryUrl;
-    // return  NextResponse.json({url: queryUrl});
-
-    // const isFetchRequest =
-    //   headers.get("x-requested-with") === "XMLHttpRequest" ||
-    //   headers.get("content-type") === "application/json";
-
-    // if (!isFetchRequest) {
-    //   return NextResponse.json(
-    //     { message: errors.JIRA_ERROR_FORBIDDEN },
-    //     { status: 403 }
-    //   );
-    // }
-
-    // if (!userEmail) {
-    //   return NextResponse.json(
-    //     { message: "userEmail is required" },
-    //     { status: 400 }
-    //   );
-    // }
-
-    // const queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=OIT%20AND%20%22Submitter%20Name%5BShort%20text%5D%22%20~%20%22${encodeURIComponent(
-    //   userEmail as string
-    // )}%22&fields=summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate&expand=changelog`;
-
-    // return {ok: true, url: queryUrl }
-    try {
+     try {
       const response = await fetch(queryUrl, {
         method: "GET",
         headers: {
@@ -129,10 +104,4 @@ export async function GET(req: Request) {
         { status: 500 }
       );
     }
-  // } else {
-  //   return NextResponse.json(
-  //     { message: errors.INCORRECT_DATA },
-  //     { status: 500 }
-  //   );
-  // }
 }

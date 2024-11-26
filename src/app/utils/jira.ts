@@ -9,6 +9,7 @@ interface ApiRequestData {
     name: string;
     id: string | number;
   };
+  fields?: string;
 }
 
 const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
@@ -28,13 +29,19 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
     if (method === "POST") {
       options.body = JSON.stringify(data);
     } else if (method === "GET") {
-      if(data.userEmail){
-        url += `?userEmail=${encodeURIComponent(data.userEmail)}&project=${data.project?.name}`;
-      }else{
+      if (data.userEmail) {
+        url += `?userEmail=${encodeURIComponent(data.userEmail)}&project=${
+          data.project?.name
+        }`;
+      }
+      if (data.project?.id) {
         url += `?project=${data.project?.name}`;
       }
+      if (data.fields) {
+        url += `&fields=${data.fields}`;
+      }
     }
-    console.log(url)
+    console.log(url);
     const response = await fetch(url, options);
 
     if (!response.ok) {
