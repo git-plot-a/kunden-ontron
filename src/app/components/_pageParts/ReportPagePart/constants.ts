@@ -1,3 +1,8 @@
+const TIMELINE_INTERVAL = ['day', 'week', 'month', 'year']
+
+const  PERIOD_TYPES = ['today', 'this_week', 'this_month', 'last_3_month', 'last_year']
+//test
+
 const PIE = {
   data: {
     labels: [
@@ -369,5 +374,8 @@ export default {
   LINE_EXUMAPLE2_TITLE,
   LINE_EXUMAPLE2,
   LINE_EXUMAPLE3_TITLE,
-  LINE_EXUMAPLE3
+  LINE_EXUMAPLE3,
+  //PROD
+  TIMELINE_INTERVAL,
+  PERIOD_TYPES
 };

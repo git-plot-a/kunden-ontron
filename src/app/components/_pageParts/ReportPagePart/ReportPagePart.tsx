@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import clsx from 'clsx';
 import Container from '../../_layout/Container/Container';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import {
@@ -35,16 +36,24 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, 
 
 const ReportPagePart = () => {
     const [loading, setLoading] = useState(true)
+    const [periodType, setPeriodType] = useState(constants.PERIOD_TYPES[2])
+    const [result, setResult] = useState<NestedObject>({})
+    //how many equest were solved, how many were solven on time
+    const [resolvedQuantity, setResolvedQuantity] = useState(constants.BAR.data)
+    //requests types deviation
     const [requestTypesData, setResuestTypesData] = useState(constants.DOUGHNUT.data)
-    // const [awerageTimeDuration, setAwerageTimeDuration] = useState(constants.LINE.data)
-    // const [resolvedQuantity, setResolvedQuantity] = useState(constants.LINE.data)
 
     const typesProccess = (resultData: NestedObject) => {
+        const startDate = getStartDate(periodType)
+        const now = new Date()
         if (Array.isArray(resultData?.issues)) {
             const res = resultData?.issues?.reduce((list, item) => {
-                const typeData = ((item?.fields as NestedObject).customfield_10010 as NestedObject)?.requestType as NestedObject
-                if (typeData?.id) {
-                    list.push({ type_id: typeData?.id as string, name: typeData?.name as string })
+                const createdDate = new Date((item?.fields as NestedObject)?.created as string)
+                if (startDate && createdDate && createdDate >= startDate && createdDate <= now) {
+                    const typeData = ((item?.fields as NestedObject).customfield_10010 as NestedObject)?.requestType as NestedObject
+                    if (typeData?.id) {
+                        list.push({ type_id: typeData?.id as string, name: typeData?.name as string })
+                    }
                 }
                 return list
             }, [] as Array<{ type_id: string, name: string | number }>)
@@ -62,6 +71,7 @@ const ReportPagePart = () => {
                 if (index > -1) {
                     dt[index]++;
                 }
+
                 return dt
             }, lables.map(() => 0))
 
@@ -76,9 +86,50 @@ const ReportPagePart = () => {
         }
     }
 
-    // const resolutionQuantity = (resultData: NestedObject) => {
+    const resolutionQuantity = (resultData: NestedObject) => {
+        const labels: string[] = []
+        const notOnTimeResolved: number[] = []
+        const onTimeResolved: number[] = []
+        const addToPeriod = (startInterval: Date, finishInterval: Date, intervalName: string) => {
+            let resolvedNotOnTimeQuantity: number = 0,
+                resolvedOnTimeQuantity: number = 0
+            if (Array.isArray(resultData?.issues)) {
+                resultData?.issues?.forEach((item) => {
+                    const resolution: Date = new Date((item?.fields as NestedObject).resolutiondate as string)
+                    if (resolution >= startInterval && resolution <= finishInterval) {
+                        console.log((item?.fields as NestedObject)?.customfield_10228)
+                        const timeleft: number = ((((item?.fields as NestedObject)?.customfield_10228 as NestedObject)?.completedCycles as NestedObject[])[0]?.remainingTime as NestedObject)?.millis as number
+                        console.log(timeleft)
+                        if (timeleft < 0) {
+                            resolvedNotOnTimeQuantity++
+                        } else {
+                            resolvedOnTimeQuantity++
+                        }
+                    }
+                })
+            }
+            notOnTimeResolved.push(resolvedNotOnTimeQuantity)
+            onTimeResolved.push(resolvedOnTimeQuantity)
+            labels.push(intervalName);
 
-    // }
+        }
+
+        divideData(periodType, constants.TIMELINE_INTERVAL[2], addToPeriod)
+
+        setResolvedQuantity({
+            ...resolvedQuantity,
+            labels: labels,
+            datasets: [
+                { ...resolvedQuantity.datasets[0], data: notOnTimeResolved, label: 'Resolved not on time tickets' },
+                { ...resolvedQuantity.datasets[1], data: onTimeResolved, label: 'Resolved on time' },
+            ]
+        });
+    }
+
+    const updateAllDateDiagrams = (resultData: NestedObject)=> {
+        typesProccess(resultData)
+        resolutionQuantity(resultData)
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -86,14 +137,15 @@ const ReportPagePart = () => {
             const userData = utils.user.getUserData();
             const data: object = {
                 project: userData.project,
-                fields: 'customfield_10010,status,resolutiondate'
+                fields: 'customfield_10010,status,resolutiondate,customfield_10228,created'
             }
 
 
             const resultData: NestedObject = await utils.jira.apiRequest(data, "GET")
             if (resultData) {
+                setResult(resultData)
                 typesProccess(resultData)
-                // resolutionQuantity(resultData)
+                resolutionQuantity(resultData)
             }
 
             setLoading(false)
@@ -101,6 +153,114 @@ const ReportPagePart = () => {
         loadDiagramData()
     }, [])
 
+
+
+    const getStartDate = (period: string): Date | null => {
+        const now = new Date();
+        switch (period) {
+            case constants.PERIOD_TYPES[0]: {
+                return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            }
+            case constants.PERIOD_TYPES[1]: {
+                const dayOfWeek = now.getDay();
+                return new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek);
+            }
+            case constants.PERIOD_TYPES[2]: {
+                return new Date(now.getFullYear(), now.getMonth(), 1);
+            }
+            case constants.PERIOD_TYPES[3]: {
+                return new Date(now.getFullYear(), now.getMonth() - 3, 1);
+            }
+            case constants.PERIOD_TYPES[4]: {
+                return new Date(now.getFullYear() - 1, 0, 1);
+            }
+            default:
+                return null;
+        }
+    };
+
+    //set Labels
+    const divideData = (period: string,
+        interval: string,
+        callback: (startInterval: Date, finishInterval: Date, name: string) => void) => {
+        const startPeriodDate = getStartDate(period)
+        if (!startPeriodDate) return;
+
+        // const labels: string[] = [];
+        const now = new Date();
+
+        const formatDate = (date: Date): string =>
+            date.toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+            });
+
+        switch (interval) {
+            case constants.TIMELINE_INTERVAL[0]: {
+                let currentDate = new Date(startPeriodDate);
+                while (currentDate <= now) {
+                    const prevData = new Date(currentDate.getTime())
+                    currentDate.setDate(currentDate.getDate() + 1);
+                    callback(prevData, currentDate, formatDate(currentDate))
+                }
+                break;
+            }
+            case constants.TIMELINE_INTERVAL[1]: {
+                let currentDate = new Date(startPeriodDate);
+                while (currentDate <= now) {
+                    const prevData = new Date(currentDate.getTime())
+                    currentDate.setDate(currentDate.getDate() + 7);
+                    callback(prevData, currentDate, `Week of ${formatDate(currentDate)}`)
+                }
+                break;
+            }
+            case constants.TIMELINE_INTERVAL[2]: {
+                let currentDate = new Date(startPeriodDate);
+                while (currentDate <= now) {
+                    const prevData = new Date(currentDate.getTime())
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    callback(prevData, currentDate, formatDate(currentDate))
+                }
+                break;
+            }
+            case constants.TIMELINE_INTERVAL[3]: {
+                let currentDate = new Date(startPeriodDate);
+                while (currentDate <= now) {
+                    const prevData = new Date(currentDate.getTime())
+                    currentDate.setFullYear(currentDate.getFullYear() + 1);
+                    callback(prevData, currentDate, formatDate(currentDate))
+                }
+                break;
+            }
+        }
+        return labels;
+
+    };
+
+
+
+    // // change timeline intervals
+    // const switchTimeline = (timelineType: string) => {
+    //     if (constants.TIMELINE_INTERVAL.includes(timelineType)) {
+    //         //установить новый timeline
+    //         changeTimeline(periodType, timelineType);
+    //         // setResolvedLabels()
+    //         setTimelineType(timelineType)
+    //     }
+    // }
+
+    //change a period of time
+    const switchPeriod = (selectedPeriodType: string) => {
+        if (constants.PERIOD_TYPES.includes(selectedPeriodType)) {
+            setPeriodType(selectedPeriodType)
+        }
+    }
+
+    useEffect(() => {
+        //change the timeline
+        updateAllDateDiagrams(result)
+    }, [periodType])
 
     //test data
 
@@ -207,26 +367,26 @@ const ReportPagePart = () => {
     const optionsDoughnut: ChartOptions<'doughnut'> = constants.DOUGHNUT.options as ChartOptions<'doughnut'>
 
 
-    const dataBar: ChartData<'bar'> = {
-        labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'], // Метки для оси X
-        datasets: [
-            {
-                label: 'Part 1',
-                data: [12, 19, 3, 5], // Значения первой части каждого столбца
-                backgroundColor: 'rgba(255, 99, 132, 0.7)', // Цвет для части 1
-            },
-            {
-                label: 'Part 2',
-                data: [8, 10, 5, 7], // Значения второй части каждого столбца
-                backgroundColor: 'rgba(54, 162, 235, 0.7)', // Цвет для части 2
-            },
-            // {
-            //     label: 'Part 3',
-            //     data: [4, 7, 6, 3], // Значения третьей части каждого столбца
-            //     backgroundColor: 'rgba(255, 206, 86, 0.7)', // Цвет для части 3
-            // },
-        ],
-    };
+    // const dataBar: ChartData<'bar'> = {
+    //     labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'], // Метки для оси X
+    //     datasets: [
+    //         {
+    //             label: 'Part 1',
+    //             data: [12, 19, 3, 5], // Значения первой части каждого столбца
+    //             backgroundColor: 'rgba(255, 99, 132, 0.7)', // Цвет для части 1
+    //         },
+    //         {
+    //             label: 'Part 2',
+    //             data: [8, 10, 5, 7], // Значения второй части каждого столбца
+    //             backgroundColor: 'rgba(54, 162, 235, 0.7)', // Цвет для части 2
+    //         },
+    //         // {
+    //         //     label: 'Part 3',
+    //         //     data: [4, 7, 6, 3], // Значения третьей части каждого столбца
+    //         //     backgroundColor: 'rgba(255, 206, 86, 0.7)', // Цвет для части 3
+    //         // },
+    //     ],
+    // };
 
     const optionsBar: ChartOptions<'bar'> = {
         responsive: true,
@@ -301,7 +461,6 @@ const ReportPagePart = () => {
     };
 
 
-
     return <>{!loading && (
         <Container>
             <Row>
@@ -309,22 +468,46 @@ const ReportPagePart = () => {
                     <h2 className={styles.title}>{"Filnal diagrams data"}</h2>
                 </Col>
                 <Col span={6}>
-                    <Button title={"Tickets-Today"} callback={() => { }} classes={styles.button} />
-                    <Button title={"Tickets-This month"} callback={() => { }} classes={styles.button} />
-                    <Button title={"breached 2/13"} callback={() => { }} classes={styles.button} />
+                    {/* <div>{"Timeline"}</div>
+                    <Button title={"Days"}
+                        callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[0]) }}
+                        classes={clsx(styles.button, timelineType == constants.TIMELINE_INTERVAL[0] ? styles.active : '')} />
+                    <Button title={"Week"}
+                        callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[1]) }}
+                        classes={clsx(styles.button, timelineType == constants.TIMELINE_INTERVAL[1] ? styles.active : '')} />
+                    <Button title={"Month"}
+                        callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[2]) }}
+                        classes={clsx(styles.button, timelineType == constants.TIMELINE_INTERVAL[2] ? styles.active : '')} /> */}
+                    <div>{"Filter"}</div>
+                    <Button title={"Today"}
+                        callback={() => { switchPeriod(constants.PERIOD_TYPES[0]) }}
+                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '')} />
+                    <Button title={"This week"}
+                        callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
+                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '')} />
+                    <Button title={"This month"}
+                        callback={() => { switchPeriod(constants.PERIOD_TYPES[2]) }}
+                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '')} />
+                    <Button title={"Lats three month"}
+                        callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
+                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '')} />
+                    <Button title={"Last year"}
+                        callback={() => { switchPeriod(constants.PERIOD_TYPES[4]) }}
+                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '')} />
                 </Col>
                 <Col span={18}>
                     <div>{"Distribution of request types"}</div>
                     <div style={{ width: '500px' }}>
                         <Doughnut data={requestTypesData} options={optionsDoughnut} height={500} width={700} />
                     </div>
+                    <div>{"How many tickets resolved"}</div>
+                    <div>
+                        <Bar data={resolvedQuantity} options={optionsBar} height={300} width={500} />
+                    </div>
+                    <div><h2>Examples, not processed</h2></div>
                     <div>{"Количество запросов которые поступили"}</div>
                     <div style={{ width: '700px' }}>
                         <Line data={exumpleLine2Data} options={exumpleLine2Options} height={500} width={700} />
-                    </div>
-                    <div>{"Сколько тикетов закрыто + сколько закрто во время"}</div>
-                    <div>
-                        <Bar data={dataBar} options={optionsBar} height={300} width={500} />
                     </div>
                     <div>{"За какое время закрываются тикеты по категориям"}</div>
                     <div>
@@ -394,7 +577,7 @@ const ReportPagePart = () => {
                     </div>
                 </Col>
             </Row> */}
-            <Row>
+            {/* <Row>
                 <Col span={24}>
                     <h2 className={styles.title}>Alternative diagrams</h2>
                 </Col>
@@ -409,24 +592,25 @@ const ReportPagePart = () => {
                         <div>
                             <Bar data={data} options={options} height={300} width={420} />;
                         </div>
-                        {/* <div>
+                        <div>
                             <Pie data={dataPie} options={optionsPie} height={300} width={300} style={{ height: '250px', width: '250px' }} />;
                         </div>
                         <div>
                             <Doughnut data={dataDoughnut} options={optionsDoughnut} height={300} width={300} />
-                        </div> */}
-                        {/* <div>
+                        </div>
+                        <div>
                             <Scatter data={dataLine} options={optionsLine} height={300} width={300} />
-                        </div> */}
+                        </div>
 
-                        {/* <Pie data={data} options={options} />; */}
-                        {/* <Doughnut data={data} options={options} />; */}
+                        <Pie data={data} options={options} />;
+                        <Doughnut data={data} options={options} />;
 
                     </div>
                 </Col>
-            </Row>
+            </Row> */}
         </Container>
     )}</>
+
 }
 
 export default ReportPagePart
