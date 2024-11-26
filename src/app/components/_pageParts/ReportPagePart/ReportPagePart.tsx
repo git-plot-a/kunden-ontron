@@ -42,6 +42,8 @@ const ReportPagePart = () => {
     const [resolvedQuantity, setResolvedQuantity] = useState(constants.BAR.data)
     //requests types deviation
     const [requestTypesData, setResuestTypesData] = useState(constants.DOUGHNUT.data)
+    //requests quantity
+    // const [generalResuestQunatity, setGeneralRequestQuantity] = useState(constants.DOUGHNUT.data)
 
     const typesProccess = (resultData: NestedObject) => {
         const startDate = getStartDate(periodType)
@@ -240,16 +242,6 @@ const ReportPagePart = () => {
 
 
 
-    // // change timeline intervals
-    // const switchTimeline = (timelineType: string) => {
-    //     if (constants.TIMELINE_INTERVAL.includes(timelineType)) {
-    //         //установить новый timeline
-    //         changeTimeline(periodType, timelineType);
-    //         // setResolvedLabels()
-    //         setTimelineType(timelineType)
-    //     }
-    // }
-
     //change a period of time
     const switchPeriod = (selectedPeriodType: string) => {
         if (constants.PERIOD_TYPES.includes(selectedPeriodType)) {
@@ -343,52 +335,12 @@ const ReportPagePart = () => {
 
 
 
-    //Data based
-    // const exumpleLine1Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE1.options as ChartOptions<'line'>
     const exumpleLine2Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE2.options as ChartOptions<'line'>
-    // const exumpleLine3Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE3.options as ChartOptions<'line'>
-
-    //Design expired
-    const data: ChartData<'bar'> = constants.BAR.data
-
-    const options: ChartOptions<'bar'> = constants.BAR.options as ChartOptions<'bar'>
-
-    // const dataLine: ChartData<'scatter'> = constants.LINE.data
-
-    // const optionsLine: ChartOptions<'scatter'> = constants.LINE.options as ChartOptions<'scatter'>
-
-
-    // const dataPie: ChartData<'pie'> = constants.PIE.data
-
-    // const optionsPie: ChartOptions<'pie'> = constants.PIE.options as ChartOptions<'pie'>
-
-    // const dataDoughnut: ChartData<'doughnut'> = constants.DOUGHNUT.data
-
+   
     const optionsDoughnut: ChartOptions<'doughnut'> = constants.DOUGHNUT.options as ChartOptions<'doughnut'>
 
 
-    // const dataBar: ChartData<'bar'> = {
-    //     labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'], // Метки для оси X
-    //     datasets: [
-    //         {
-    //             label: 'Part 1',
-    //             data: [12, 19, 3, 5], // Значения первой части каждого столбца
-    //             backgroundColor: 'rgba(255, 99, 132, 0.7)', // Цвет для части 1
-    //         },
-    //         {
-    //             label: 'Part 2',
-    //             data: [8, 10, 5, 7], // Значения второй части каждого столбца
-    //             backgroundColor: 'rgba(54, 162, 235, 0.7)', // Цвет для части 2
-    //         },
-    //         // {
-    //         //     label: 'Part 3',
-    //         //     data: [4, 7, 6, 3], // Значения третьей части каждого столбца
-    //         //     backgroundColor: 'rgba(255, 206, 86, 0.7)', // Цвет для части 3
-    //         // },
-    //     ],
-    // };
-
-    const optionsBar: ChartOptions<'bar'> = {
+      const optionsBar: ChartOptions<'bar'> = {
         responsive: true,
         plugins: {
             legend: {
