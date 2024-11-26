@@ -12,7 +12,6 @@ import {
     Tooltip,
     Legend,
     ChartOptions,
-    ChartData
 } from 'chart.js';
 import Row from '../../_layout/Row/Row';
 import { Button } from '../../_buttons/Button/Button';
@@ -200,7 +199,7 @@ const ReportPagePart = () => {
 
         switch (interval) {
             case constants.TIMELINE_INTERVAL[0]: {
-                let currentDate = new Date(startPeriodDate);
+                const currentDate = new Date(startPeriodDate);
                 while (currentDate <= now) {
                     const prevData = new Date(currentDate.getTime())
                     currentDate.setDate(currentDate.getDate() + 1);
@@ -209,7 +208,7 @@ const ReportPagePart = () => {
                 break;
             }
             case constants.TIMELINE_INTERVAL[1]: {
-                let currentDate = new Date(startPeriodDate);
+                const currentDate = new Date(startPeriodDate);
                 while (currentDate <= now) {
                     const prevData = new Date(currentDate.getTime())
                     currentDate.setDate(currentDate.getDate() + 7);
@@ -218,7 +217,7 @@ const ReportPagePart = () => {
                 break;
             }
             case constants.TIMELINE_INTERVAL[2]: {
-                let currentDate = new Date(startPeriodDate);
+                const currentDate = new Date(startPeriodDate);
                 while (currentDate <= now) {
                     const prevData = new Date(currentDate.getTime())
                     currentDate.setMonth(currentDate.getMonth() + 1);
@@ -227,7 +226,7 @@ const ReportPagePart = () => {
                 break;
             }
             case constants.TIMELINE_INTERVAL[3]: {
-                let currentDate = new Date(startPeriodDate);
+                const currentDate = new Date(startPeriodDate);
                 while (currentDate <= now) {
                     const prevData = new Date(currentDate.getTime())
                     currentDate.setFullYear(currentDate.getFullYear() + 1);
