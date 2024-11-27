@@ -115,7 +115,7 @@ const ReportPagePart = () => {
 
         }
 
-        divideData(periodType, constants.TIMELINE_INTERVAL[2], addToPeriod)
+        divideData(periodType, constants.TIMELINE_INTERVAL[1], addToPeriod)
 
         setResolvedQuantity({
             ...resolvedQuantity,
