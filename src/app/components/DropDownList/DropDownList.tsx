@@ -10,7 +10,8 @@ type Props = {
     handler: (newVal: string) => void,
     def?: number,
     classes?: string,
-    style?: object
+    style?: object,
+
 }
 
 const DropDownList: React.FC<Props> = ({ items, handler, def = undefined, classes = "", style = undefined}) => {
@@ -43,7 +44,7 @@ const DropDownList: React.FC<Props> = ({ items, handler, def = undefined, classe
     }, [])
 
     return <div className={clsx(styles.dropDownContainer, classes)} ref={ref} style={style}>
-        <div className={clsx(styles.dropDownElements, !openedList && styles.closed)}>
+        <div className={clsx(styles.dropDownElements, openedList && styles.opened)}>
             <div onClick={changeOpening} className={styles.dropDownSelectedItem}>
                 <span>{items[currentChoice]?.title}</span>
                 <Image src={'/img/drop_down_arrow.svg'} alt={'arrow'} width={24} height={24} className={clsx(styles.dropDownArrow, openedList && styles.opened)} /></div>

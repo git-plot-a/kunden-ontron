@@ -1,98 +1,124 @@
-.title, .diagramTitle {
-    padding-top: 65px;
-    font-weight: 600;
+.title,
+.diagramTitle {
+  padding-top: 65px;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  padding-bottom: 11px;
+}
+
+.title {
+  font-weight: 200;
+  color: var(--dark-text);
+  line-height: 48px;
+  padding: 60px 0;
+  &.loading {
+    font-size: 18px;
+  }
+}
+.button {
+  margin-right: 0;
+  margin-left: 12px !important;
+}
+
+.disgramsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.disgramsItemContainer {
+  margin-bottom: 30px;
+}
+
+.diagramTitle {
+  font-size: 16px;
+  line-height: 24px;
+  padding-top: 0;
+}
+.mesureContainer {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 15px;
+  padding-bottom: 25px;
+  .meduateItem {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+    .value {
+      font-size: 20px;
+      line-height: 30px;
+      font-weight: 500;
+      text-align: center;
+      color: var(--title-gradient);
+    }
+    .description {
+      font-size: 10px;
+      line-height: 16px;
+      color: var(--dark-text);
+    }
+  }
+}
+
+.active {
+  border-color: red;
+}
+.finterButtonsContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px 0;
+}
+.diagramContainer {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  &.small {
+    height: 386px;
+  }
+  &.big {
+    height: 494px;
+  }
+
+  .diagramTitle {
     font-size: 24px;
+    font-weight: 700;
     line-height: 32px;
-    padding-bottom: 11px;
-}
-
-.title{
-    font-weight: 200;
-    color: var(--dark-text);
-    line-height: 48px;
-    padding: 60px 0;
-    &.loading{
-        font-size: 18px;
-    }
-}
-.button{
-    margin-right: 0;
-    margin-left:12px !important;
-}
-
-.disgramsContainer{
+    background-color: var(--light-gray);
+    padding: 17px 23px;
+  }
+  .diagramItem {
+    padding: 23px 20px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+  }
 }
 
-.disgramsItemContainer{
-    margin-bottom: 30px;
+.mainContainer {
+  min-height: 240px;
 }
 
-.diagramTitle{
-    font-size: 16px;
-    line-height: 24px;
-    padding-top: 0;
-}
-.mesureContainer{
-    display: flex;
-    justify-content: flex-start;
-    padding-top: 15px;
-    padding-bottom: 25px;
-    .meduateItem{
-        display: flex;
-        flex-direction: column;
-        margin-right: 15px;
-        .value{
-            font-size: 20px;
-            line-height: 30px;
-            font-weight: 500;
-            text-align: center;
-            color: var(--title-gradient)
-        }
-        .description{
-            font-size: 10px;
-            line-height: 16px;
-            color: var(--dark-text);
-        }
+.dropdownContainer {
+  // display: flex;
+  // justify-content: flex-start;
+  .dropDown {
+    width: max-content;
+    min-width: 100px;
+    min-height: 29px;
+    border: 0;
+    span {
+      font-size: 16px !important;
+      line-height: 24px !important;
     }
-}
-
-.active{
-    border-color: red;
-}
-.finterButtonsContainer{
-    display: flex;
-    justify-content: flex-end;
-    padding: 24px 0;
-}
-.diagramContainer{
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    margin-bottom: 24px;
-    overflow: hidden;
-    &.small{
-        height: 386px;
-    }
-    &.big{
-        height: 494px;
-    }
-
-    .diagramTitle{
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 32px;
-        background-color: var(--light-gray);
-        padding: 17px 23px;
-    }
-    .diagramItem{
-        padding: 23px 20px;
-        display: flex;
-        justify-content: center;
-    }
-}
-
-.mainContainer{
-    min-height: 240px;
+  }
+  .containerStyle{
+    padding: 0;
+    margin-left: 0;
+  }
+  .elementsList{
+    min-height: 0;
+    max-height: 29px;
+    border: none;
+    border-radius: 0;
+  }
 }

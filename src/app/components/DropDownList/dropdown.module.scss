@@ -14,14 +14,15 @@
     color: var(--dark-text);
     position: absolute;
     overflow: hidden;
-    max-height: 300px;
-    z-index: 100;
     transition: opacity 0.2s, max-height 0.2s, box-shadow 0.2s;
     box-shadow: 2px 2px 1px 0.5px rgba(0, 0, 0, 0.1);
-    &.closed {
-      max-height: 54px;
-      box-shadow: none; 
-      z-index: 1;
+    max-height: 54px;
+    box-shadow: none;
+    z-index: 1;
+
+    &.opened {
+      max-height: 300px !important;
+      z-index: 100;
       & .dropDownSelectedItem {
         border-botton: none;
       }

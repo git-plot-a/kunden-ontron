@@ -404,37 +404,38 @@ const ReportPagePart = () => {
 
     useEffect(() => {
         updateAllDateDiagrams(result as NestedObject)
+        animationActivation()
     }, [periodType])
 
 
     return <Container classes={styles.mainContainer}>{loading ?
-        (   
+        (
             <div className={clsx(styles.title, styles.loading, "animation-fade-in", "short-duration")}>{constants.LOADING_IS_IN_PROCESS}</div>
         ) : (Array.isArray((result as NestedObject)?.issues) && ((result as NestedObject)?.issues as NestedObject[]).length > 0 ? (
-        <>
-            <Row>
-                <Col span={24}>
-                    <div className={styles.finterButtonsContainer}>
-                        <div style={{ display: 'none' }}>
-                            <Button title={"Today"}
-                                callback={() => { switchPeriod(constants.PERIOD_TYPES[0]) }}
-                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '')} />
-                        </div>
-                        <Button title={"This week"}
-                            callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
-                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '', "animation-fade-in-top")} />
-                        <Button title={"This month"}
-                            callback={() => { switchPeriod(constants.PERIOD_TYPES[2]) }}
-                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '', "animation-fade-in-top")} />
-                        <Button title={"Lats three month"}
-                            callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
-                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '', "animation-fade-in-top")} />
-                        <Button title={"Last year"}
-                            callback={() => { switchPeriod(constants.PERIOD_TYPES[4]) }}
-                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '', "animation-fade-in-top")} />
+            <>
+                <Row>
+                    <Col span={24}>
+                        <div className={styles.finterButtonsContainer}>
+                            <div style={{ display: 'none' }}>
+                                <Button title={"Today"}
+                                    callback={() => { switchPeriod(constants.PERIOD_TYPES[0]) }}
+                                    classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '')} />
+                            </div>
+                            <Button title={"This week"}
+                                callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
+                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '', "animation-fade-in-top")} />
+                            <Button title={"This month"}
+                                callback={() => { switchPeriod(constants.PERIOD_TYPES[2]) }}
+                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '', "animation-fade-in-top")} />
+                            <Button title={"Lats three month"}
+                                callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
+                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '', "animation-fade-in-top")} />
+                            <Button title={"Last year"}
+                                callback={() => { switchPeriod(constants.PERIOD_TYPES[4]) }}
+                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '', "animation-fade-in-top")} />
 
-                    </div>
-                    {/* <div>{"Timeline"}</div>
+                        </div>
+                        {/* <div>{"Timeline"}</div>
                     <Button title={"Days"}
                         callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[0]) }}
                         classes={clsx(styles.button, timelineType == constants.TIMELINE_INTERVAL[0] ? styles.active : '')} />
@@ -444,50 +445,50 @@ const ReportPagePart = () => {
                     <Button title={"Month"}
                         callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[2]) }}
                         classes={clsx(styles.button, timelineType == constants.TIMELINE_INTERVAL[2] ? styles.active : '')} /> */}
-                </Col>
-            </Row>
-            <Row>
-                <Col span={12}>
-                    <div className={clsx(styles.diagramContainer, styles.small)}>
-                        <div className={styles.diagramTitle}>{constants.REQUEST_TYES_DESTRIBUTIONS_TITLE}</div>
-                        <div className={styles.diagramItem} style={{width: '100%', height: '486px', marginTop: '-85px'}}>
-                            <Doughnut data={requestTypesData} options={optionsDoughnut} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={12}>
+                        <div className={clsx(styles.diagramContainer, styles.small)}>
+                            <div className={styles.diagramTitle}>{constants.REQUEST_TYES_DESTRIBUTIONS_TITLE}</div>
+                            <div className={styles.diagramItem} style={{ width: '100%', height: '486px', marginTop: '-85px' }}>
+                                <Doughnut data={requestTypesData} options={optionsDoughnut} />
+                            </div>
                         </div>
-                    </div>
-                </Col>
-                <Col span={12}>
-                    <div className={clsx(styles.diagramContainer, styles.small)}>
-                        <div className={styles.diagramTitle}>{constants.AVERAGETIME_TO_RESPONCE}</div>
-                        <div className={styles.dropdown}>
-                            <DropDownList items={priorities} handler={setAvarageTimeProprityValue} />
-                            <DropDownList items={requestTypes} handler={setAvarageTimeTypeValue} />
+                    </Col>
+                    <Col span={12}>
+                        <div className={clsx(styles.diagramContainer, styles.small)}>
+                            <div className={styles.diagramTitle}>{constants.AVERAGETIME_TO_RESPONCE}</div>
+                            <div className={styles.dropdownContainer}>
+                                <DropDownList items={priorities} handler={setAvarageTimeProprityValue} />
+                                <DropDownList items={requestTypes} handler={setAvarageTimeTypeValue} />
+                            </div>
+                            <div className={styles.diagramItem}>
+                                <Bar data={avarageTimeVal} options={optionsBar} height={300} width={500} />
+                            </div>
                         </div>
-                        <div className={styles.diagramItem}>
-                            <Bar data={avarageTimeVal} options={optionsBar} height={300} width={500} />
+                    </Col>
+                    <Col span={24}>
+                        <div className={clsx(styles.diagramContainer, styles.big)}>
+                            <div className={styles.diagramTitle}>{constants.GENERAL_REQUEST_QUNATITY}</div>
+                            <div className={styles.diagramItem} style={{height: '420px', width: '100%'}}>
+                                <Line data={generalResuestQunatity} options={exumpleLine2Options}  width={1200} height={420}/>
+                            </div>
                         </div>
-                    </div>
-                </Col>
-                <Col span={24}>
-                    <div className={styles.diagramContainer}>
-                        <div>{"Количество запросов которые поступили"}</div>
-                        <div>
-                            <Line data={generalResuestQunatity} options={exumpleLine2Options} height={300} />
+                    </Col>
+                    <Col span={24}>
+                        <div className={clsx(styles.diagramContainer, styles.big)}>
+                            <div>{"How many tickets resolved"}</div>
+                            <div>
+                                <Bar data={resolvedQuantity} options={optionsBar} height={300} width={500} />
+                            </div>
                         </div>
-                    </div>
-                </Col>
-                <Col span={24}>
-                    <div className={styles.diagramContainer}>
-                        <div>{"How many tickets resolved"}</div>
-                        <div>
-                            <Bar data={resolvedQuantity} options={optionsBar} height={300} width={500} />
-                        </div>
-                    </div>
-                </Col>
-            </Row>
-        </>
+                    </Col>
+                </Row>
+            </>
         ) : (
-        <div className={clsx(styles.title, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: constants.NOT_DATA_SIGN }} />
-    ))}</Container >
+            <div className={clsx(styles.title, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: constants.NOT_DATA_SIGN }} />
+        ))}</Container >
 
 }
 

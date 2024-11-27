@@ -21,6 +21,8 @@ const NOT_DATA_SIGN =
 const LOADING_IS_IN_PROCESS =
   "Der Prozess des Ladens von Daten ist im Gange...";
 
+const GENERAL_REQUEST_QUNATITY = 'Gesamtzahl der Anfragen'
+
 //test
 
 const PIE = {
@@ -409,4 +411,5 @@ export default {
   AVERAGETIME_TO_RESPONCE,
   NOT_DATA_SIGN,
   LOADING_IS_IN_PROCESS,
+  GENERAL_REQUEST_QUNATITY
 };
