@@ -42,7 +42,7 @@ const ReportPagePart = () => {
     //requests types deviation
     const [requestTypesData, setResuestTypesData] = useState(constants.DOUGHNUT.data)
     //requests quantity
-    // const [generalResuestQunatity, setGeneralRequestQuantity] = useState(constants.DOUGHNUT.data)
+    const [generalResuestQunatity, setGeneralRequestQuantity] = useState(constants.LINE_EXUMAPLE1.data)
 
     const typesProccess = (resultData: NestedObject) => {
         const startDate = getStartDate(periodType)
@@ -127,9 +127,40 @@ const ReportPagePart = () => {
         });
     }
 
-    const updateAllDateDiagrams = (resultData: NestedObject)=> {
+
+    const generalQuantity = (resultData: NestedObject) =>{
+        const labels: string[] = []
+        const quantity: number[] = []
+        const addToPeriod = (startInterval: Date, finishInterval: Date, intervalName: string) => {
+            let preiodQuantity: number = 0
+            if (Array.isArray(resultData?.issues)) {
+                resultData?.issues?.forEach((item) => {
+                    const resolution: Date = new Date((item?.fields as NestedObject).resolutiondate as string)
+                    if (resolution >= startInterval && resolution <= finishInterval) {
+                        preiodQuantity ++
+                    }
+                })
+            }
+            quantity.push(preiodQuantity)
+            labels.push(intervalName)
+        }
+        divideData(periodType, constants.TIMELINE_INTERVAL[0], addToPeriod)
+        setGeneralRequestQuantity({
+            ...generalResuestQunatity, 
+            labels : labels,
+            datasets: [{
+                ...generalResuestQunatity.datasets[0],
+                data: quantity,
+                label: "Requests in this period"
+            }]
+        })
+    }
+
+    //general functons
+    const updateAllDateDiagrams = (resultData: NestedObject) => {
         typesProccess(resultData)
         resolutionQuantity(resultData)
+        generalQuantity(resultData)
     }
 
     useEffect(() => {
@@ -147,6 +178,7 @@ const ReportPagePart = () => {
                 setResult(resultData)
                 typesProccess(resultData)
                 resolutionQuantity(resultData)
+                generalQuantity(resultData)
             }
 
             setLoading(false)
@@ -335,11 +367,11 @@ const ReportPagePart = () => {
 
 
     const exumpleLine2Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE2.options as ChartOptions<'line'>
-   
+
     const optionsDoughnut: ChartOptions<'doughnut'> = constants.DOUGHNUT.options as ChartOptions<'doughnut'>
 
 
-      const optionsBar: ChartOptions<'bar'> = {
+    const optionsBar: ChartOptions<'bar'> = {
         responsive: true,
         plugins: {
             legend: {
@@ -455,11 +487,11 @@ const ReportPagePart = () => {
                     <div>
                         <Bar data={resolvedQuantity} options={optionsBar} height={300} width={500} />
                     </div>
-                    <div><h2>Examples, not processed</h2></div>
                     <div>{"Количество запросов которые поступили"}</div>
                     <div style={{ width: '700px' }}>
-                        <Line data={exumpleLine2Data} options={exumpleLine2Options} height={500} width={700} />
+                        <Line data={generalResuestQunatity} options={exumpleLine2Options} height={500} width={700} />
                     </div>
+                    <div><h2>Examples, not processed</h2></div>
                     <div>{"За какое время закрываются тикеты по категориям"}</div>
                     <div>
                         <Line options={optionsArea} data={dataArea} height={300} width={500} />;
