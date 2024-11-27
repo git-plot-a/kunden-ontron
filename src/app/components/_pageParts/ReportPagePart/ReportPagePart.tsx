@@ -128,7 +128,7 @@ const ReportPagePart = () => {
     }
 
 
-    const generalQuantity = (resultData: NestedObject) =>{
+    const generalQuantity = (resultData: NestedObject) => {
         const labels: string[] = []
         const quantity: number[] = []
         const addToPeriod = (startInterval: Date, finishInterval: Date, intervalName: string) => {
@@ -137,7 +137,7 @@ const ReportPagePart = () => {
                 resultData?.issues?.forEach((item) => {
                     const resolution: Date = new Date((item?.fields as NestedObject).resolutiondate as string)
                     if (resolution >= startInterval && resolution <= finishInterval) {
-                        preiodQuantity ++
+                        preiodQuantity++
                     }
                 })
             }
@@ -146,8 +146,8 @@ const ReportPagePart = () => {
         }
         divideData(periodType, constants.TIMELINE_INTERVAL[0], addToPeriod)
         setGeneralRequestQuantity({
-            ...generalResuestQunatity, 
-            labels : labels,
+            ...generalResuestQunatity,
+            labels: labels,
             datasets: [{
                 ...generalResuestQunatity.datasets[0],
                 data: quantity,
@@ -226,7 +226,7 @@ const ReportPagePart = () => {
             date.toLocaleDateString('en-US', {
                 day: 'numeric',
                 month: 'short',
-                year: 'numeric',
+                // year: 'numeric',
             });
 
         switch (interval) {
@@ -448,9 +448,26 @@ const ReportPagePart = () => {
         <Container>
             <Row>
                 <Col span={24}>
-                    <h2 className={styles.title}>{"Filnal diagrams data"}</h2>
-                </Col>
-                <Col span={6}>
+                    <div className={styles.finterButtonsContainer}>
+                        <div style={{ display: 'none' }}>
+                            <Button title={"Today"}
+                                callback={() => { switchPeriod(constants.PERIOD_TYPES[0]) }}
+                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '')} />
+                        </div>
+                        <Button title={"This week"}
+                            callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
+                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '')} />
+                        <Button title={"This month"}
+                            callback={() => { switchPeriod(constants.PERIOD_TYPES[2]) }}
+                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '')} />
+                        <Button title={"Lats three month"}
+                            callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
+                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '')} />
+                        <Button title={"Last year"}
+                            callback={() => { switchPeriod(constants.PERIOD_TYPES[4]) }}
+                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '')} />
+
+                    </div>
                     {/* <div>{"Timeline"}</div>
                     <Button title={"Days"}
                         callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[0]) }}
@@ -461,24 +478,10 @@ const ReportPagePart = () => {
                     <Button title={"Month"}
                         callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[2]) }}
                         classes={clsx(styles.button, timelineType == constants.TIMELINE_INTERVAL[2] ? styles.active : '')} /> */}
-                    <div>{"Filter"}</div>
-                    <Button title={"Today"}
-                        callback={() => { switchPeriod(constants.PERIOD_TYPES[0]) }}
-                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '')} />
-                    <Button title={"This week"}
-                        callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
-                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '')} />
-                    <Button title={"This month"}
-                        callback={() => { switchPeriod(constants.PERIOD_TYPES[2]) }}
-                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '')} />
-                    <Button title={"Lats three month"}
-                        callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
-                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '')} />
-                    <Button title={"Last year"}
-                        callback={() => { switchPeriod(constants.PERIOD_TYPES[4]) }}
-                        classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '')} />
                 </Col>
-                <Col span={18}>
+            </Row>
+            <Row>
+                <Col span={24}>
                     <div>{"Distribution of request types"}</div>
                     <div style={{ width: '500px' }}>
                         <Doughnut data={requestTypesData} options={optionsDoughnut} height={500} width={700} />

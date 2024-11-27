@@ -6,9 +6,9 @@
     padding-bottom: 11px;
 }
 .button{
+    margin-right: 0;
     margin-bottom: 20px;
-    margin-left:0 !important;
-    margin-right: 30px !important;
+    margin-left:12px !important;
 }
 
 .disgramsContainer{
@@ -52,4 +52,9 @@
 
 .active{
     border-color: red;
+}
+.finterButtonsContainer{
+    display: flex;
+    justify-content: flex-end;
+    padding: 24px 0;
 }

@@ -15,7 +15,7 @@ const PageReports = () => {
 
      return <>
         <Header currentPage='reports'/>
-        <TopOfferSubPages imageUrl='/img/topOfferTrecking.png' title="SLA-Berichte"/>
+        <TopOfferSubPages imageUrl='/img/sla-reports.png' title="SLA-Berichte"/>
         <ReportPagePart/>
         <Footer/>
     </>
