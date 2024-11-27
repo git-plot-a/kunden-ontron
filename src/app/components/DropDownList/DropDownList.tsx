@@ -45,10 +45,10 @@ const DropDownList: React.FC<Props> = ({ items, handler, def = undefined, classe
     return <div className={clsx(styles.dropDownContainer, classes)} ref={ref} style={style}>
         <div className={clsx(styles.dropDownElements, !openedList && styles.closed)}>
             <div onClick={changeOpening} className={styles.dropDownSelectedItem}>
-                <span>{items[currentChoice].title}</span>
+                <span>{items[currentChoice]?.title}</span>
                 <Image src={'/img/drop_down_arrow.svg'} alt={'arrow'} width={24} height={24} className={clsx(styles.dropDownArrow, openedList && styles.opened)} /></div>
             <div className={styles.dropDownList}>
-                {items.map((item, key) => (
+                {items.length>0 && items.map((item, key) => (
                     <div key={key} onClick={() => { itemClick(key) }} className={styles.dropDownItem}>
                         <div>{item.title}</div>
                     </div>

@@ -1,6 +1,14 @@
+import global from "@/app/constants/global"
 const TIMELINE_INTERVAL = ['day', 'week', 'month', 'year']
 
 const  PERIOD_TYPES = ['today', 'this_week', 'this_month', 'last_3_month', 'last_year']
+
+const REQUEST_TYES_DESTRIBUTIONS_TITLE = 'Verteilung der Anfragetypen'
+
+const PRIORITIES = global.PIORITIES
+
+const AVERAGETIME_TO_RESPONCE = 'Durchschnittliche Reaktionszeit'
+
 //test
 
 const PIE = {
@@ -377,5 +385,8 @@ export default {
   LINE_EXUMAPLE3,
   //PROD
   TIMELINE_INTERVAL,
-  PERIOD_TYPES
+  PERIOD_TYPES,
+  REQUEST_TYES_DESTRIBUTIONS_TITLE,
+  PRIORITIES,
+  AVERAGETIME_TO_RESPONCE
 };

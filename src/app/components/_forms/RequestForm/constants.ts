@@ -17,22 +17,7 @@ const CATEGORIES = [
     }
 ]
 
-const PRORITIES = [
-    {
-        title: 'Notfall',
-        value: '1'
-    },
-    {
-        title: 'Hoch',
-        value: '2'
-    },{
-        title: 'Mittel',
-        value: '3'
-    },{
-        title: 'Niedrig',
-        value: '4'
-    }
-]
+const PRORITIES = global.PIORITIES
 
 const DEFAULT_DESCRIPTION = 'Beschreiben Sie Ihre Anfrage '
 

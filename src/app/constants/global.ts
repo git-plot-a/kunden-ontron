@@ -49,6 +49,23 @@ const FILE_TYPES_FOR_IMAGES = [
 
 const TAB_NAMES = ['Beschreibung', 'Inhalts-Support-Level', 'Plattformen-Support-Level']
 
+const PIORITIES = [
+  {
+      title: 'Notfall',
+      value: '1'
+  },
+  {
+      title: 'Hoch',
+      value: '2'
+  },{
+      title: 'Mittel',
+      value: '3'
+  },{
+      title: 'Niedrig',
+      value: '4'
+  }
+]
+
 export default {
   URL_STANDART,
   URL_CUSTOM,
@@ -60,5 +77,6 @@ export default {
   JIRA_SERVER_RESPONCE,
   REQUEST_TYPES,
   FILE_TYPES_FOR_IMAGES,
-  TAB_NAMES
+  TAB_NAMES,
+  PIORITIES
 };

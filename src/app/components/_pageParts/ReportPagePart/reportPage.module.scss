@@ -7,7 +7,6 @@
 }
 .button{
     margin-right: 0;
-    margin-bottom: 20px;
     margin-left:12px !important;
 }
 
@@ -57,4 +56,22 @@
     display: flex;
     justify-content: flex-end;
     padding: 24px 0;
+}
+.diagramContainer{
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+
+    .diagramTitle{
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32px;
+        background-color: var(--light-gray);
+        padding: 17px 23px;
+    }
+    .diagramItem{
+        display: flex;
+        justify-content: center;
+    }
 }
