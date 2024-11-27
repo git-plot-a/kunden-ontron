@@ -182,6 +182,10 @@ flex-direction: column;
 justify-content: center;
 }
 
+canvas{
+  font-family: var(--font-poppins);
+}
+
 @keyframes shimmer {
   0% {
     background-color: var(--most-light);

@@ -5,6 +5,16 @@
     line-height: 32px;
     padding-bottom: 11px;
 }
+
+.title{
+    font-weight: 200;
+    color: var(--dark-text);
+    line-height: 48px;
+    padding: 60px 0;
+    &.loading{
+        font-size: 18px;
+    }
+}
 .button{
     margin-right: 0;
     margin-left:12px !important;
@@ -62,6 +72,12 @@
     border-radius: 12px;
     margin-bottom: 24px;
     overflow: hidden;
+    &.small{
+        height: 386px;
+    }
+    &.big{
+        height: 494px;
+    }
 
     .diagramTitle{
         font-size: 24px;
@@ -71,7 +87,12 @@
         padding: 17px 23px;
     }
     .diagramItem{
+        padding: 23px 20px;
         display: flex;
         justify-content: center;
     }
+}
+
+.mainContainer{
+    min-height: 240px;
 }

@@ -17,9 +17,12 @@ import Row from '../../_layout/Row/Row';
 import { Button } from '../../_buttons/Button/Button';
 import utils from '@/app/utils';
 import Col from '../../_layout/Col/Col';
+import DropDownList from '../../DropDownList/DropDownList';
+import useAnimation from '@/app/hooks/Animation/Animation';
 import styles from './reportPage.module.scss'
 import constants from "./constants"
-import DropDownList from '../../DropDownList/DropDownList';
+
+
 
 type NestedObject = {
     [key: string]:
@@ -47,6 +50,7 @@ const ReportPagePart = () => {
     const [requestTypes, setRequesTypes] = useState<DropDownListItems[]>([])
     const [avarageTimeProprityValue, setAvarageTimeProprityValue] = useState<string>('')
     const [avarageTimeTypeValue, setAvarageTimeTypeValue] = useState<string>('')
+    const animationActivation = useAnimation()
     //how many equest were solved, how many were solven on time
     const [resolvedQuantity, setResolvedQuantity] = useState(constants.BAR.data)
     //requests types deviation
@@ -59,7 +63,26 @@ const ReportPagePart = () => {
     //options form template
     const optionsDoughnut: ChartOptions<'doughnut'> = constants.DOUGHNUT.options as ChartOptions<'doughnut'>
     const exumpleLine2Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE2.options as ChartOptions<'line'>
-
+    const optionsBar: ChartOptions<'bar'> = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                enabled: true,
+            },
+        },
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true,
+                beginAtZero: true,
+            },
+        },
+    };
 
     //data processing functions for diagrams
     const typesProccess = (resultData: NestedObject) => {
@@ -185,12 +208,12 @@ const ReportPagePart = () => {
                     const currentPriority = (item?.fields as NestedObject).priority as NestedObject
                     const currentTime = ((((item?.fields as NestedObject)?.customfield_10228 as NestedObject)?.completedCycles as NestedObject[])[0]?.elapsedTime as NestedObject)?.millis as number
                     const resolution: Date = new Date((item?.fields as NestedObject).resolutiondate as string)
-                    if(currentTime &&
+                    if (currentTime &&
                         resolution >= startInterval &&
                         resolution <= finishInterval &&
-                        currentType?.id == avarageTimeTypeValue && 
+                        currentType?.id == avarageTimeTypeValue &&
                         currentPriority?.id == avarageTimeProprityValue
-                     ){
+                    ) {
                         timeValues.push(millisToHours(currentTime))
                     }
                 })
@@ -215,18 +238,18 @@ const ReportPagePart = () => {
 
     function calculateAverage(numbers: number[]): number {
         if (numbers.length === 0) {
-          return 0
+            return 0
         }
-      
+
         const sum = numbers.reduce((acc, num) => acc + num, 0); // Сумма всех чисел
         return sum / numbers.length; // Делим сумму на количество элементов
-      }
+    }
 
     function millisToHours(millis: number): number {
         // 1 час = 1000 миллисекунд * 60 секунд * 60 минут
         const hours = millis / (1000 * 60 * 60);
         return hours;
-      }
+    }
 
     const setDropdownLists = (resultData: NestedObject) => {
         const prioritiesList: DropDownListItems[] = []
@@ -276,12 +299,13 @@ const ReportPagePart = () => {
 
 
             const resultData: NestedObject = await utils.jira.apiRequest(data, "GET")
-            if (resultData) {
+            if (resultData && (resultData.issues as NestedObject[])?.length > 20) {
                 updateAllDateDiagrams(resultData)
                 setResult(resultData)
             }
 
             setLoading(false)
+            animationActivation()
         }
         loadDiagramData()
     }, [])
@@ -315,14 +339,12 @@ const ReportPagePart = () => {
         }
     };
 
-    //set Labels
     const divideData = (period: string,
         interval: string,
         callback: (startInterval: Date, finishInterval: Date, name: string) => void) => {
         const startPeriodDate = getStartDate(period)
         if (!startPeriodDate) return;
 
-        // const labels: string[] = [];
         const now = new Date();
 
         const formatDate = (date: Date): string =>
@@ -374,8 +396,6 @@ const ReportPagePart = () => {
     };
 
 
-
-    //change a period of time
     const switchPeriod = (selectedPeriodType: string) => {
         if (constants.PERIOD_TYPES.includes(selectedPeriodType)) {
             setPeriodType(selectedPeriodType)
@@ -383,38 +403,15 @@ const ReportPagePart = () => {
     }
 
     useEffect(() => {
-        //change the timeline
-        updateAllDateDiagrams(result)
+        updateAllDateDiagrams(result as NestedObject)
     }, [periodType])
 
 
-
-
-    const optionsBar: ChartOptions<'bar'> = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top', // Позиция легенды
-            },
-            tooltip: {
-                enabled: true, // Включение всплывающих подсказок
-            },
-        },
-        scales: {
-            x: {
-                stacked: true, // Включение группировки по оси X
-            },
-            y: {
-                stacked: true, // Включение группировки по оси Y
-                beginAtZero: true, // Начинать ось Y с нуля
-            },
-        },
-    };
-
-
-
-    return <>{!loading && (
-        <Container>
+    return <Container classes={styles.mainContainer}>{loading ?
+        (   
+            <div className={clsx(styles.title, styles.loading, "animation-fade-in", "short-duration")}>{constants.LOADING_IS_IN_PROCESS}</div>
+        ) : (Array.isArray((result as NestedObject)?.issues) && ((result as NestedObject)?.issues as NestedObject[]).length > 0 ? (
+        <>
             <Row>
                 <Col span={24}>
                     <div className={styles.finterButtonsContainer}>
@@ -425,16 +422,16 @@ const ReportPagePart = () => {
                         </div>
                         <Button title={"This week"}
                             callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
-                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '')} />
+                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '', "animation-fade-in-top")} />
                         <Button title={"This month"}
                             callback={() => { switchPeriod(constants.PERIOD_TYPES[2]) }}
-                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '')} />
+                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '', "animation-fade-in-top")} />
                         <Button title={"Lats three month"}
                             callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
-                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '')} />
+                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '', "animation-fade-in-top")} />
                         <Button title={"Last year"}
                             callback={() => { switchPeriod(constants.PERIOD_TYPES[4]) }}
-                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '')} />
+                            classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '', "animation-fade-in-top")} />
 
                     </div>
                     {/* <div>{"Timeline"}</div>
@@ -451,15 +448,15 @@ const ReportPagePart = () => {
             </Row>
             <Row>
                 <Col span={12}>
-                    <div className={styles.diagramContainer}>
+                    <div className={clsx(styles.diagramContainer, styles.small)}>
                         <div className={styles.diagramTitle}>{constants.REQUEST_TYES_DESTRIBUTIONS_TITLE}</div>
-                        <div className={styles.diagramItem}>
-                            <Doughnut data={requestTypesData} options={optionsDoughnut} height={280} />
+                        <div className={styles.diagramItem} style={{width: '100%', height: '486px', marginTop: '-85px'}}>
+                            <Doughnut data={requestTypesData} options={optionsDoughnut} />
                         </div>
                     </div>
                 </Col>
                 <Col span={12}>
-                    <div className={styles.diagramContainer}>
+                    <div className={clsx(styles.diagramContainer, styles.small)}>
                         <div className={styles.diagramTitle}>{constants.AVERAGETIME_TO_RESPONCE}</div>
                         <div className={styles.dropdown}>
                             <DropDownList items={priorities} handler={setAvarageTimeProprityValue} />
@@ -487,8 +484,10 @@ const ReportPagePart = () => {
                     </div>
                 </Col>
             </Row>
-        </Container >
-    )}</>
+        </>
+        ) : (
+        <div className={clsx(styles.title, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: constants.NOT_DATA_SIGN }} />
+    ))}</Container >
 
 }
 

@@ -1,13 +1,25 @@
-import global from "@/app/constants/global"
-const TIMELINE_INTERVAL = ['day', 'week', 'month', 'year']
+import global from "@/app/constants/global";
+const TIMELINE_INTERVAL = ["day", "week", "month", "year"];
 
-const  PERIOD_TYPES = ['today', 'this_week', 'this_month', 'last_3_month', 'last_year']
+const PERIOD_TYPES = [
+  "today",
+  "this_week",
+  "this_month",
+  "last_3_month",
+  "last_year",
+];
 
-const REQUEST_TYES_DESTRIBUTIONS_TITLE = 'Verteilung der Anfragetypen'
+const REQUEST_TYES_DESTRIBUTIONS_TITLE = "Verteilung der Anfragetypen";
 
-const PRIORITIES = global.PIORITIES
+const PRIORITIES = global.PIORITIES;
 
-const AVERAGETIME_TO_RESPONCE = 'Durchschnittliche Reaktionszeit'
+const AVERAGETIME_TO_RESPONCE = "Durchschnittliche Reaktionszeit";
+
+const NOT_DATA_SIGN =
+  "Es gibt noch nicht genügend Daten für die Diagramme...<br> Die Berichte werden verfügbar sein, sobald die Daten gesammelt sind.";
+
+const LOADING_IS_IN_PROCESS =
+  "Der Prozess des Ladens von Daten ist im Gange...";
 
 //test
 
@@ -68,20 +80,13 @@ const DOUGHNUT = {
       {
         data: [79, 92, 24, 24, 32],
         backgroundColor: [
-          "rgba(255, 99, 132, 0.6)",
-          "rgba(54, 162, 235, 0.6)",
-          "rgba(255, 206, 86, 0.6)",
-          "rgba(75, 192, 192, 0.6)",
-          "rgba(153, 102, 255, 0.6)",
+          "#009EE3",
+          "#FF9051",
+          "#A1D0B0",
+          "#00486E",
+          "#49bef1",
         ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-        ],
-        borderWidth: 1,
+        borderWidth: 0,
       },
     ],
   },
@@ -89,11 +94,22 @@ const DOUGHNUT = {
     responsive: true,
     plugins: {
       legend: {
+        labels: {
+          boxWidth: 31, 
+          boxHeight: 11,
+          padding: 18,
+          color: "#000000",
+          font: {
+            family: "Poppins, sans-serif", 
+            size: 14, 
+            weight: 200,
+            lineHeight: 1.5,
+          },
+        },
         position: "right",
       },
       title: {
-        display: true,
-        text: "Category Distribution in Doughnut Format",
+        display: false,
       },
     },
   },
@@ -122,7 +138,7 @@ const BAR = {
 };
 
 const LINE = {
-  data:{
+  data: {
     datasets: [
       {
         label: "Scatter Dataset",
@@ -132,14 +148,14 @@ const LINE = {
           { x: 83.96, y: 44.89 },
           { x: 81.45, y: 69.43 },
           { x: 34.86, y: 41.02 },
-          { x: 34.40, y: 70.43 },
+          { x: 34.4, y: 70.43 },
           { x: 78.74, y: 92.07 },
           { x: 77.92, y: 7.39 },
           { x: 39.95, y: 53.31 },
           { x: 30.85, y: 38.48 },
           { x: 39.95, y: 90.51 },
           { x: 40.89, y: 9.26 },
-          { x: 26.24, y: 46.00 },
+          { x: 26.24, y: 46.0 },
           { x: 8.47, y: 34.17 },
           { x: 94.71, y: 12.22 },
           { x: 64.98, y: 59.99 },
@@ -156,13 +172,13 @@ const LINE = {
           { x: 18.89, y: 6.53 },
           { x: 86.35, y: 55.56 },
           { x: 25.08, y: 85.52 },
-          { x: 15.08, y: 83.58 }
+          { x: 15.08, y: 83.58 },
         ],
         backgroundColor: "rgba(75, 192, 192, 0.6)",
         borderColor: "rgba(75, 192, 192, 1)",
-        pointRadius: 5
-      }
-    ]
+        pointRadius: 5,
+      },
+    ],
   },
   options: {
     responsive: true,
@@ -277,9 +293,12 @@ const LINE_EXUMAPLE2 = {
   options: {
     responsive: true,
     plugins: {
-      legend: { display: false, labels: {
-        padding: 20, // Отступы между элементами легенды
-      }, },
+      legend: {
+        display: false,
+        labels: {
+          padding: 20, // Отступы между элементами легенды
+        },
+      },
       title: { display: false, text: "First Time to Response" },
     },
     scales: {
@@ -343,7 +362,7 @@ const LINE_EXUMAPLE3 = {
         backgroundColor: "#5f5f5f",
         borderColor: "#5f5f5f",
         borderWidth: 1,
-      }
+      },
     ],
   },
   options: {
@@ -371,7 +390,6 @@ const LINE_EXUMAPLE3 = {
   },
 };
 
-
 export default {
   PIE,
   DOUGHNUT,
@@ -388,5 +406,7 @@ export default {
   PERIOD_TYPES,
   REQUEST_TYES_DESTRIBUTIONS_TITLE,
   PRIORITIES,
-  AVERAGETIME_TO_RESPONCE
+  AVERAGETIME_TO_RESPONCE,
+  NOT_DATA_SIGN,
+  LOADING_IS_IN_PROCESS,
 };
