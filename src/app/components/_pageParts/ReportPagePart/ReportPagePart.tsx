@@ -52,7 +52,7 @@ const ReportPagePart = () => {
     const [avarageTimeTypeValue, setAvarageTimeTypeValue] = useState<string>('')
     const animationActivation = useAnimation()
     //how many equest were solved, how many were solven on time
-    const [resolvedQuantity, setResolvedQuantity] = useState(constants.BAR.data)
+    const [resolvedQuantity, setResolvedQuantity] = useState(constants.OPTIONS_BAR.data)
     //requests types deviation
     const [requestTypesData, setResuestTypesData] = useState(constants.DOUGHNUT.data)
     //requests quantity
@@ -63,26 +63,7 @@ const ReportPagePart = () => {
     //options form template
     const optionsDoughnut: ChartOptions<'doughnut'> = constants.DOUGHNUT.options as ChartOptions<'doughnut'>
     const exumpleLine2Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE2.options as ChartOptions<'line'>
-    const optionsBar: ChartOptions<'bar'> = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
-            },
-            tooltip: {
-                enabled: true,
-            },
-        },
-        scales: {
-            x: {
-                stacked: true,
-            },
-            y: {
-                stacked: true,
-                beginAtZero: true,
-            },
-        },
-    };
+    const optionsBar: ChartOptions<'bar'> = constants.OPTIONS_BAR.options as ChartOptions<'bar'>
 
     //data processing functions for diagrams
     const typesProccess = (resultData: NestedObject) => {
@@ -162,8 +143,8 @@ const ReportPagePart = () => {
             ...resolvedQuantity,
             labels: labels,
             datasets: [
-                { ...resolvedQuantity.datasets[0], data: notOnTimeResolved, label: 'Resolved not on time tickets' },
                 { ...resolvedQuantity.datasets[1], data: onTimeResolved, label: 'Resolved on time' },
+                { ...resolvedQuantity.datasets[0], data: notOnTimeResolved, label: 'Resolved not on time tickets' },
             ]
         });
     }
@@ -478,9 +459,9 @@ const ReportPagePart = () => {
                     </Col>
                     <Col span={24}>
                         <div className={clsx(styles.diagramContainer, styles.big)}>
-                            <div>{"How many tickets resolved"}</div>
-                            <div>
-                                <Bar data={resolvedQuantity} options={optionsBar} height={300} width={500} />
+                        <div className={styles.diagramTitle}>{constants.RESOLVED_TICKETS_TITLE}</div>
+                        <div className={styles.diagramItem} style={{height: '420px', width: '100%'}}>
+                                <Bar data={resolvedQuantity} options={optionsBar}width={1200} height={420} />
                             </div>
                         </div>
                     </Col>

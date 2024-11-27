@@ -21,53 +21,11 @@ const NOT_DATA_SIGN =
 const LOADING_IS_IN_PROCESS =
   "Der Prozess des Ladens von Daten ist im Gange...";
 
-const GENERAL_REQUEST_QUNATITY = 'Gesamtzahl der Anfragen'
+const GENERAL_REQUEST_QUNATITY = "Gesamtzahl der Anfragen";
+
+const RESOLVED_TICKETS_TITLE = "Aufgelöste Tickets";
 
 //test
-
-const PIE = {
-  data: {
-    labels: [
-      "Category A",
-      "Category B",
-      "Category C",
-      "Category D",
-      "Category E",
-    ],
-    datasets: [
-      {
-        data: [79, 92, 24, 24, 32],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.6)",
-          "rgba(54, 162, 235, 0.6)",
-          "rgba(255, 206, 86, 0.6)",
-          "rgba(75, 192, 192, 0.6)",
-          "rgba(153, 102, 255, 0.6)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Distribution of Categories",
-      },
-    },
-  },
-};
 
 const DOUGHNUT = {
   data: {
@@ -97,13 +55,13 @@ const DOUGHNUT = {
     plugins: {
       legend: {
         labels: {
-          boxWidth: 31, 
+          boxWidth: 31,
           boxHeight: 11,
           padding: 18,
           color: "#000000",
           font: {
-            family: "Poppins, sans-serif", 
-            size: 14, 
+            family: "Poppins, sans-serif",
+            size: 14,
             weight: 200,
             lineHeight: 1.5,
           },
@@ -272,24 +230,10 @@ const LINE_EXUMAPLE2 = {
       {
         label: "Group 2",
         data: [100, 100, 80, 81, 56, 55],
-        backgroundColor: "#009ee3",
-        borderColor: "#009ee3",
-        borderWidth: 1,
+        backgroundColor: "#009EE3",
+        // borderColor: "#009ee3",
+        borderWidth: 0,
       },
-      // {
-      //   label: "Group 2",
-      //   data: [100, 100, 80, 81, 56, 55],
-      //   backgroundColor: "#FF8941",
-      //   borderColor: "#FF8941",
-      //   borderWidth: 1,
-      // },
-      // {
-      //   label: "Group 3",
-      //   data: [100, 100, 80, 81, 56, 55],
-      //   backgroundColor: "#5f5f5f",
-      //   borderColor: "#5f5f5f",
-      //   borderWidth: 1,
-      // }
     ],
   },
   options: {
@@ -298,102 +242,84 @@ const LINE_EXUMAPLE2 = {
       legend: {
         display: false,
         labels: {
-          padding: 20, // Отступы между элементами легенды
+          padding: 20,
         },
       },
       title: { display: false, text: "First Time to Response" },
     },
     scales: {
       y: {
-        beginAtZero: true, // ось Y начинается с 0
+        beginAtZero: true,
         ticks: {
           callback: function (value: number) {
-            return value; // добавление символа процента к каждому значению
+            return value;
           },
         },
       },
       x: {
         ticks: {
-          autoSkip: true, // автоматическое пропускание меток, если их много
-          maxTicksLimit: 20, // ограничение количества меток на оси X
+          autoSkip: true,
+          maxTicksLimit: 20,
         },
       },
     },
   },
 };
 
-const LINE_EXUMAPLE3_TITLE = "Created requests";
-
-const LINE_EXUMAPLE3 = {
+const OPTIONS_BAR = {
   data: {
-    labels: [
-      "Oct 8",
-      "Oct 10",
-      "Oct 12",
-      "Oct 14",
-      "Oct 16",
-      "Oct 18",
-      "Oct 20",
-      "Oct 22",
-      "Oct 24",
-      "Oct 26",
-      "Oct 28",
-      "Oct 30",
-      "Nov 1",
-      "Nov 3",
-      "Nov 5",
-    ],
+    labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
       {
-        label: "Group 2",
-        data: [100, 100, 80, 81, 56, 55],
-        backgroundColor: "#009ee3",
-        borderColor: "#009ee3",
-        borderWidth: 1,
+        label: "Sales",
+        data: [65, 59, 80, 81, 56, 55],
+        backgroundColor: "#FF9051",
+        borderWidth: 0,
       },
+
       {
-        label: "Group 2",
-        data: [100, 100, 80, 81, 56, 55],
-        backgroundColor: "#FF8941",
-        borderColor: "#FF8941",
-        borderWidth: 1,
-      },
-      {
-        label: "Group 3",
-        data: [100, 100, 80, 81, 56, 55],
-        backgroundColor: "#5f5f5f",
-        borderColor: "#5f5f5f",
-        borderWidth: 1,
+        label: "Sales",
+        data: [65, 59, 80, 81, 56, 55],
+        backgroundColor: "#009EE3",
+        borderWidth: 0,
       },
     ],
   },
   options: {
     responsive: true,
     plugins: {
-      legend: { display: false },
-      title: { display: false, text: "First Time to Response" },
-    },
-    scales: {
-      y: {
-        beginAtZero: true, // ось Y начинается с 0
-        ticks: {
-          callback: function (value: number) {
-            return value; // добавление символа процента к каждому значению
+      legend: {
+        position: "bottom",
+        labels: {
+          boxWidth: 11,
+          boxHeight: 11,
+          color: "#000000",
+          padding: 40,
+          font: {
+            family: "Poppins, sans-serif",
+            size: 14,
+            weight: 200,
+            lineHeight: 1.5,
           },
         },
       },
+      tooltip: {
+        enabled: true,
+      },
+    },
+    scales: {
       x: {
-        ticks: {
-          autoSkip: true, // автоматическое пропускание меток, если их много
-          maxTicksLimit: 20, // ограничение количества меток на оси X
-        },
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+        beginAtZero: true,
       },
     },
   },
 };
 
 export default {
-  PIE,
   DOUGHNUT,
   BAR,
   LINE,
@@ -401,8 +327,6 @@ export default {
   LINE_EXUMAPLE1_TITLE,
   LINE_EXUMAPLE2_TITLE,
   LINE_EXUMAPLE2,
-  LINE_EXUMAPLE3_TITLE,
-  LINE_EXUMAPLE3,
   //PROD
   TIMELINE_INTERVAL,
   PERIOD_TYPES,
@@ -411,5 +335,7 @@ export default {
   AVERAGETIME_TO_RESPONCE,
   NOT_DATA_SIGN,
   LOADING_IS_IN_PROCESS,
-  GENERAL_REQUEST_QUNATITY
+  GENERAL_REQUEST_QUNATITY,
+  RESOLVED_TICKETS_TITLE,
+  OPTIONS_BAR,
 };
