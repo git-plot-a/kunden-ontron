@@ -17,7 +17,7 @@ import Row from '../../_layout/Row/Row';
 import { Button } from '../../_buttons/Button/Button';
 import utils from '@/app/utils';
 import Col from '../../_layout/Col/Col';
-import DropDownList from '../../DropDownList/DropDownList';
+import DropDownListMinimized from '../../DropDownList/DropDownListMinimized';
 import useAnimation from '@/app/hooks/Animation/Animation';
 import styles from './reportPage.module.scss'
 import constants from "./constants"
@@ -56,14 +56,15 @@ const ReportPagePart = () => {
     //requests types deviation
     const [requestTypesData, setResuestTypesData] = useState(constants.DOUGHNUT.data)
     //requests quantity
-    const [generalResuestQunatity, setGeneralRequestQuantity] = useState(constants.LINE_EXUMAPLE1.data)
+    const [generalResuestQunatity, setGeneralRequestQuantity] = useState(constants.LINE_EXUMAPLE2.data)
     //avarage time for resolution
-    const [avarageTimeVal, setAvarageTimeVal] = useState(constants.BAR.data)
+    const [avarageTimeVal, setAvarageTimeVal] = useState(constants.OPTIONS_BAR_SMALL.data)
 
     //options form template
     const optionsDoughnut: ChartOptions<'doughnut'> = constants.DOUGHNUT.options as ChartOptions<'doughnut'>
     const exumpleLine2Options: ChartOptions<'line'> = constants.LINE_EXUMAPLE2.options as ChartOptions<'line'>
     const optionsBar: ChartOptions<'bar'> = constants.OPTIONS_BAR.options as ChartOptions<'bar'>
+    const smalloptionsBar: ChartOptions<'bar'> = constants.OPTIONS_BAR_SMALL.options as ChartOptions<'bar'>
 
     //data processing functions for diagrams
     const typesProccess = (resultData: NestedObject) => {
@@ -143,8 +144,8 @@ const ReportPagePart = () => {
             ...resolvedQuantity,
             labels: labels,
             datasets: [
-                { ...resolvedQuantity.datasets[1], data: onTimeResolved, label: 'Resolved on time' },
-                { ...resolvedQuantity.datasets[0], data: notOnTimeResolved, label: 'Resolved not on time tickets' },
+                { ...resolvedQuantity.datasets[1], data: onTimeResolved, label: constants.RESOLVED_ON_TIME_TITLE },
+                { ...resolvedQuantity.datasets[0], data: notOnTimeResolved, label: constants.RESOLVED_NOT_ON_TIME_TITLE },
             ]
         });
     }
@@ -209,7 +210,7 @@ const ReportPagePart = () => {
             datasets: [{
                 ...avarageTimeVal.datasets[0],
                 data: time,
-                label: 'durchschnittlicher Zeitaufwand in Stunden'
+                label: constants.AVERAGE_TIME
             }]
         })
 
@@ -441,11 +442,11 @@ const ReportPagePart = () => {
                         <div className={clsx(styles.diagramContainer, styles.small)}>
                             <div className={styles.diagramTitle}>{constants.AVERAGETIME_TO_RESPONCE}</div>
                             <div className={styles.dropdownContainer}>
-                                <DropDownList items={priorities} handler={setAvarageTimeProprityValue} />
-                                <DropDownList items={requestTypes} handler={setAvarageTimeTypeValue} />
+                                <DropDownListMinimized items={priorities} handler={setAvarageTimeProprityValue} />
+                                <DropDownListMinimized items={requestTypes} handler={setAvarageTimeTypeValue} />
                             </div>
                             <div className={styles.diagramItem}>
-                                <Bar data={avarageTimeVal} options={optionsBar} height={300} width={500} />
+                                <Bar data={avarageTimeVal} options={smalloptionsBar} height={220} width={500} />
                             </div>
                         </div>
                     </Col>

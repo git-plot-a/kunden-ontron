@@ -9,16 +9,30 @@
 
 .title {
   font-weight: 200;
-  color: var(--dark-text);
+  color: var(--light-gray-text);
   line-height: 48px;
   padding: 60px 0;
   &.loading {
     font-size: 18px;
+    animation: blink 2s infinite;
   }
 }
 .button {
   margin-right: 0;
   margin-left: 12px !important;
+  font-size: 14px;
+  line-height: 32px;
+  font-weight: 300;
+  padding: 4px 16px;
+  color: var(--most-dark);
+  background-color: var(--button-hover-gray);
+  border: none;
+  border: 1px solid var(--button-hover-gray);
+  transition: border-color 0.2s;
+  &:hover{
+    background-color: var(--hover-light);
+    border: 1px solid var(--hover-light);
+  }
 }
 
 .disgramsContainer {
@@ -61,7 +75,16 @@
 }
 
 .active {
-  border-color: red;
+  color: var(--active-text-color);
+  border: 1px solid var(--active-text-color);
+  background-color: var(--hover-light);
+  span{
+    color: var(--active-text-color);
+    filter: brightness(1)
+  }
+  &:hover{
+    border: 1px solid var(--active-text-color);
+  }
 }
 .finterButtonsContainer {
   display: flex;
@@ -99,8 +122,9 @@
 }
 
 .dropdownContainer {
-  // display: flex;
-  // justify-content: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
   .dropDown {
     width: max-content;
     min-width: 100px;
@@ -120,5 +144,17 @@
     max-height: 29px;
     border: none;
     border-radius: 0;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
   }
 }
