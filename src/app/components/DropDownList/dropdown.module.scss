@@ -128,8 +128,8 @@
   }
   &Arrow {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 14px;
+    right: 24px;
     transform: rotate(-90deg);
     transition: transform 0.2s;
     &.opened {
@@ -143,8 +143,11 @@
     background-color: var(--light-gray);
     border-radius: 4px;
     right: 0;
-    top: 0;
     top: 3px;
+    .dropDownArrow{
+      top:0;
+      right:0;
+    }
   }
 }
 

@@ -113,7 +113,7 @@
   .diagramItem {
     padding: 23px 20px;
     display: flex;
-    justify-content: center;
+    justify-content: left;
   }
 }
 
@@ -145,6 +145,12 @@
     border: none;
     border-radius: 0;
   }
+}
+
+.noData{
+ font-size: 14px;
+ line-height: 32px;
+ margin-top: 10px;
 }
 
 @keyframes blink {

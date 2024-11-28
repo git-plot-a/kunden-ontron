@@ -31,6 +31,8 @@ const RESOLVED_NOT_ON_TIME_TITLE = 'Nicht fristgerecht gelöste Tickets'
 
 const AVERAGE_TIME = 'Durchschnittlicher Zeitaufwand in Stunden'
 
+const NOT_ENOUGH_DATA_FOR_DAIAGRAM = 'Unzureichende Daten für das Diagramm...'
+
 //test
 
 const DOUGHNUT = {
@@ -237,5 +239,6 @@ export default {
   OPTIONS_BAR_SMALL,
   RESOLVED_ON_TIME_TITLE,
   RESOLVED_NOT_ON_TIME_TITLE,
-  AVERAGE_TIME
+  AVERAGE_TIME,
+  NOT_ENOUGH_DATA_FOR_DAIAGRAM
 };

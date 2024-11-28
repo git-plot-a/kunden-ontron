@@ -158,8 +158,8 @@ const ReportPagePart = () => {
             let preiodQuantity: number = 0
             if (Array.isArray(resultData?.issues)) {
                 resultData?.issues?.forEach((item) => {
-                    const resolution: Date = new Date((item?.fields as NestedObject).resolutiondate as string)
-                    if (resolution >= startInterval && resolution <= finishInterval) {
+                    const createdDate: Date = new Date((item?.fields as NestedObject).created as string)
+                    if (createdDate >= startInterval && createdDate <= finishInterval) {
                         preiodQuantity++
                     }
                 })
@@ -217,18 +217,21 @@ const ReportPagePart = () => {
 
     }
     //general functons
-
-    function calculateAverage(numbers: number[]): number {
+    function calculateSumm(numbers: number[]): number {
         if (numbers.length === 0) {
             return 0
         }
 
-        const sum = numbers.reduce((acc, num) => acc + num, 0); // Сумма всех чисел
-        return sum / numbers.length; // Делим сумму на количество элементов
+        const sum = numbers.reduce((acc, num) => acc + num, 0);
+        return sum
+    }
+
+    function calculateAverage(numbers: number[]): number {
+        const sum = calculateSumm(numbers)
+        return sum / numbers.length;
     }
 
     function millisToHours(millis: number): number {
-        // 1 час = 1000 миллисекунд * 60 секунд * 60 минут
         const hours = millis / (1000 * 60 * 60);
         return hours;
     }
@@ -274,14 +277,19 @@ const ReportPagePart = () => {
         setLoading(true);
         const loadDiagramData = async () => {
             const userData = utils.user.getUserData();
+            let email = undefined
+            if (!Array.isArray(userData.roles) || (!userData.roles.includes("sla_manager") && !userData.roles.includes("administrator"))) {
+                email= userData.user_email
+            }
             const data: object = {
                 project: userData.project,
-                fields: 'customfield_10010,status,resolutiondate,customfield_10228,created,priority'
+                fields: 'customfield_10010,status,resolutiondate,customfield_10228,created,priority',
+                userEmail: email
             }
 
-
             const resultData: NestedObject = await utils.jira.apiRequest(data, "GET")
-            if (resultData && (resultData.issues as NestedObject[])?.length > 20) {
+            console.log((resultData.issues as NestedObject[]))
+            if (resultData && (resultData.issues as NestedObject[])?.length > 0) {
                 updateAllDateDiagrams(resultData)
                 setResult(resultData)
             }
@@ -434,7 +442,13 @@ const ReportPagePart = () => {
                         <div className={clsx(styles.diagramContainer, styles.small)}>
                             <div className={styles.diagramTitle}>{constants.REQUEST_TYES_DESTRIBUTIONS_TITLE}</div>
                             <div className={styles.diagramItem} style={{ width: '100%', height: '486px', marginTop: '-85px' }}>
-                                <Doughnut data={requestTypesData} options={optionsDoughnut} />
+                                {requestTypesData.datasets?.length > 0 && requestTypesData.datasets[0]?.data?.length > 0 && calculateSumm(requestTypesData.datasets[0]?.data) > 0 ? (
+                                    <Doughnut data={requestTypesData} options={optionsDoughnut} />
+                                ) : (
+                                    <div>
+                                        {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </Col>
@@ -446,23 +460,46 @@ const ReportPagePart = () => {
                                 <DropDownListMinimized items={requestTypes} handler={setAvarageTimeTypeValue} />
                             </div>
                             <div className={styles.diagramItem}>
-                                <Bar data={avarageTimeVal} options={smalloptionsBar} height={220} width={500} />
+                                {avarageTimeVal.datasets?.length > 0 && avarageTimeVal.datasets[0]?.data?.length > 0 && calculateSumm(avarageTimeVal.datasets[0]?.data) > 0 ? (
+                                    <Bar data={avarageTimeVal} options={smalloptionsBar} height={220} width={500} />
+                                ) : (
+                                    <div className={styles.noData}>
+                                        {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </Col>
                     <Col span={24}>
                         <div className={clsx(styles.diagramContainer, styles.big)}>
                             <div className={styles.diagramTitle}>{constants.GENERAL_REQUEST_QUNATITY}</div>
-                            <div className={styles.diagramItem} style={{height: '420px', width: '100%'}}>
-                                <Line data={generalResuestQunatity} options={exumpleLine2Options}  width={1200} height={420}/>
+                            <div className={styles.diagramItem} style={{ height: '420px', width: '100%' }}>
+                                {generalResuestQunatity.datasets?.length > 0 && generalResuestQunatity.datasets[0]?.data?.length > 0 && calculateSumm(generalResuestQunatity.datasets[0]?.data)> 0 ? (
+                                    <Line data={generalResuestQunatity} options={exumpleLine2Options} width={1250} height={420} />
+                                ) : (
+                                    <div className={styles.noData}>
+                                        {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </Col>
                     <Col span={24}>
                         <div className={clsx(styles.diagramContainer, styles.big)}>
-                        <div className={styles.diagramTitle}>{constants.RESOLVED_TICKETS_TITLE}</div>
-                        <div className={styles.diagramItem} style={{height: '420px', width: '100%'}}>
-                                <Bar data={resolvedQuantity} options={optionsBar}width={1200} height={420} />
+                            <div className={styles.diagramTitle}>{constants.RESOLVED_TICKETS_TITLE}</div>
+                            <div className={styles.diagramItem} style={{ height: '420px', width: '100%' }}>
+                                {generalResuestQunatity.datasets?.length > 0 &&
+                                generalResuestQunatity.datasets[0]?.data?.length > 0 &&
+                                calculateSumm(generalResuestQunatity.datasets[0]?.data) > 0  &&
+                                generalResuestQunatity.datasets[1]?.data?.length && 
+                                calculateSumm(generalResuestQunatity.datasets[1]?.data) > 0 
+                                  ? (
+                                    <Bar data={resolvedQuantity} options={optionsBar} width={1250} height={420} />
+                                ) : (
+                                    <div className={styles.noData}>
+                                        {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </Col>

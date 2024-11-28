@@ -33,8 +33,7 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
         url += `?userEmail=${encodeURIComponent(data.userEmail)}&project=${
           data.project?.name
         }`;
-      }
-      if (data.project?.id) {
+      }else if (data.project?.id) {
         url += `?project=${data.project?.name}`;
       }
       if (data.fields) {
