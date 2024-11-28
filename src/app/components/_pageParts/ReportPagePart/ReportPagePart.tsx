@@ -228,7 +228,10 @@ const ReportPagePart = () => {
 
     function calculateAverage(numbers: number[]): number {
         const sum = calculateSumm(numbers)
-        return sum / numbers.length;
+        if (numbers.length > 0) {
+            return sum / numbers.length;
+        }
+        return 0
     }
 
     function millisToHours(millis: number): number {
@@ -279,7 +282,7 @@ const ReportPagePart = () => {
             const userData = utils.user.getUserData();
             let email = undefined
             if (!Array.isArray(userData.roles) || (!userData.roles.includes("sla_manager") && !userData.roles.includes("administrator"))) {
-                email= userData.user_email
+                email = userData.user_email
             }
             const data: object = {
                 project: userData.project,
@@ -460,13 +463,16 @@ const ReportPagePart = () => {
                                 <DropDownListMinimized items={requestTypes} handler={setAvarageTimeTypeValue} />
                             </div>
                             <div className={styles.diagramItem}>
-                                {avarageTimeVal.datasets?.length > 0 && avarageTimeVal.datasets[0]?.data?.length > 0 && calculateSumm(avarageTimeVal.datasets[0]?.data) > 0 ? (
-                                    <Bar data={avarageTimeVal} options={smalloptionsBar} height={220} width={500} />
-                                ) : (
-                                    <div className={styles.noData}>
-                                        {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
-                                    </div>
-                                )}
+                                <>
+                                    {console.log(avarageTimeVal.datasets[0]?.data)}
+                                    {avarageTimeVal.datasets?.length > 0 && avarageTimeVal.datasets[0]?.data?.length > 0 && calculateSumm(avarageTimeVal.datasets[0]?.data) > 0 ? (
+                                        <Bar data={avarageTimeVal} options={smalloptionsBar} height={220} width={500} />
+                                    ) : (
+                                        <div className={styles.noData}>
+                                            {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
+                                        </div>
+                                    )}
+                                </>
                             </div>
                         </div>
                     </Col>
@@ -474,7 +480,7 @@ const ReportPagePart = () => {
                         <div className={clsx(styles.diagramContainer, styles.big)}>
                             <div className={styles.diagramTitle}>{constants.GENERAL_REQUEST_QUNATITY}</div>
                             <div className={styles.diagramItem} style={{ height: '420px', width: '100%' }}>
-                                {generalResuestQunatity.datasets?.length > 0 && generalResuestQunatity.datasets[0]?.data?.length > 0 && calculateSumm(generalResuestQunatity.datasets[0]?.data)> 0 ? (
+                                {generalResuestQunatity.datasets?.length > 0 && generalResuestQunatity.datasets[0]?.data?.length > 0 && calculateSumm(generalResuestQunatity.datasets[0]?.data) > 0 ? (
                                     <Line data={generalResuestQunatity} options={exumpleLine2Options} width={1250} height={420} />
                                 ) : (
                                     <div className={styles.noData}>
@@ -488,18 +494,18 @@ const ReportPagePart = () => {
                         <div className={clsx(styles.diagramContainer, styles.big)}>
                             <div className={styles.diagramTitle}>{constants.RESOLVED_TICKETS_TITLE}</div>
                             <div className={styles.diagramItem} style={{ height: '420px', width: '100%' }}>
-                                {generalResuestQunatity.datasets?.length > 0 &&
-                                generalResuestQunatity.datasets[0]?.data?.length > 0 &&
-                                calculateSumm(generalResuestQunatity.datasets[0]?.data) > 0  &&
-                                generalResuestQunatity.datasets[1]?.data?.length && 
-                                calculateSumm(generalResuestQunatity.datasets[1]?.data) > 0 
-                                  ? (
-                                    <Bar data={resolvedQuantity} options={optionsBar} width={1250} height={420} />
-                                ) : (
-                                    <div className={styles.noData}>
-                                        {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
-                                    </div>
-                                )}
+                                {resolvedQuantity.datasets?.length > 0 &&
+                                    resolvedQuantity.datasets[0]?.data?.length > 0 &&
+                                    calculateSumm(resolvedQuantity.datasets[0]?.data) > 0 &&
+                                    resolvedQuantity.datasets[1]?.data?.length &&
+                                    calculateSumm(resolvedQuantity.datasets[1]?.data) > 0
+                                    ? (
+                                        <Bar data={resolvedQuantity} options={optionsBar} width={1250} height={420} />
+                                    ) : (
+                                        <div className={styles.noData}>
+                                            {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
+                                        </div>
+                                    )}
                             </div>
                         </div>
                     </Col>
