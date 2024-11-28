@@ -138,7 +138,7 @@ const ReportPagePart = () => {
 
         }
 
-        divideData(periodType, constants.TIMELINE_INTERVAL[1], addToPeriod)
+        divideData(periodType, constants.TIMELINE_INTERVAL[0], addToPeriod)
 
         setResolvedQuantity({
             ...resolvedQuantity,
@@ -409,11 +409,9 @@ const ReportPagePart = () => {
                 <Row>
                     <Col span={24}>
                         <div className={styles.finterButtonsContainer}>
-                            <div style={{ display: 'none' }}>
-                                <Button title={"Today"}
+                            <Button title={"Today"}
                                     callback={() => { switchPeriod(constants.PERIOD_TYPES[0]) }}
-                                    classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '')} />
-                            </div>
+                                    classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '', "animation-fade-in-top")} />
                             <Button title={"This week"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
                                 classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '', "animation-fade-in-top")} />
@@ -463,16 +461,14 @@ const ReportPagePart = () => {
                                 <DropDownListMinimized items={requestTypes} handler={setAvarageTimeTypeValue} />
                             </div>
                             <div className={styles.diagramItem}>
-                                <>
-                                    {console.log(avarageTimeVal.datasets[0]?.data)}
-                                    {avarageTimeVal.datasets?.length > 0 && avarageTimeVal.datasets[0]?.data?.length > 0 && calculateSumm(avarageTimeVal.datasets[0]?.data) > 0 ? (
-                                        <Bar data={avarageTimeVal} options={smalloptionsBar} height={220} width={500} />
-                                    ) : (
-                                        <div className={styles.noData}>
-                                            {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
-                                        </div>
-                                    )}
-                                </>
+                                {avarageTimeVal.datasets?.length > 0 && avarageTimeVal.datasets[0]?.data?.length > 0 && calculateSumm(avarageTimeVal.datasets[0]?.data) > 0 ? (
+                                    <Bar data={avarageTimeVal} options={smalloptionsBar} height={220} width={500} />
+                                ) : (
+                                    <div className={styles.noData}>
+                                        {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
+                                    </div>
+                                )}
+
                             </div>
                         </div>
                     </Col>
@@ -512,7 +508,7 @@ const ReportPagePart = () => {
                 </Row>
             </>
         ) : (
-            <div className={clsx(styles.title, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: constants.NOT_DATA_SIGN }} />
+            <div className={clsx(styles.title)} dangerouslySetInnerHTML={{ __html: constants.NOT_DATA_SIGN }} />
         ))}</Container >
 
 }
