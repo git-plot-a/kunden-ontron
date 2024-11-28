@@ -446,7 +446,7 @@ const ReportPagePart = () => {
                                 {requestTypesData.datasets?.length > 0 && requestTypesData.datasets[0]?.data?.length > 0 && calculateSumm(requestTypesData.datasets[0]?.data) > 0 ? (
                                     <Doughnut data={requestTypesData} options={optionsDoughnut} />
                                 ) : (
-                                    <div>
+                                    <div className={styles.noData} style={{marginTop: '85px'}}>
                                         {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
                                     </div>
                                 )}
