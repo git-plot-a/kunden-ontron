@@ -1,6 +1,6 @@
 .container {
   height: 266px;
-  width: 266px;
+  width: 100%;
   border-radius: 24px;
   padding: 32px;
   display: flex;
@@ -22,10 +22,10 @@
   &::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 175%;
-    height: 175%;
+    top: -150px;
+    left: -150px;
+    width: 800px;
+    height: 800px;
     background: linear-gradient(
       42.12deg,
       #079fe4 0%,
@@ -45,15 +45,17 @@
 
 .icon {
   height: 78px;
-  width: 78px;
+  display: flex;
+  justify-content: flex-end;
 }
 .title {
-  font-size: 25px;
-  line-height: 32px;
+  font-size: 30px;
+  line-height: 38px;
   color: var(--most-light);
-  font-weight: 500;
+  font-weight: 600;
   vertical-align: bottom;
   margin-bottom: 0;
+  width: 50%;
 }
 
 .noImage {

@@ -16,7 +16,12 @@ const TILES_LIST = [
     },
     {
         title: "Download-Bereich",
-        icon: "/img/tile3.svg",
+        icon: "/img/download_button.svg",
+        callback: () =>{}
+    },
+    {
+        title: "SLA-Berichte",
+        icon: "/img/list.svg",
         callback: () =>{}
     }
 ]

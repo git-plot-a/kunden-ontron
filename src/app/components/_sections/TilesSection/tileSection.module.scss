@@ -1,12 +1,12 @@
 .container {
-  display: flex;
-  justify-content: flex-start;
+  // display: flex;
+  // justify-content: flex-start;
   padding-top: 28px;
-  flex-wrap: wrap;
-  margin-left: -32px;
+  // flex-wrap: wrap;
+  // margin-left: -32px;
 }
 .itemContainer {
-  margin-left: 32px;
+  margin-bottom: 24px;
 }
 
 .tile- {
@@ -32,6 +32,13 @@
     &::before {
       animation-direction: reverse;
       animation-duration: 7s ;
+    }
+  }
+  &5 {
+    transition-delay: 0.3s !important;
+    transition-duration: 0.5s;
+    &::before {
+      animation-duration: 3s ;
     }
   }
 }
