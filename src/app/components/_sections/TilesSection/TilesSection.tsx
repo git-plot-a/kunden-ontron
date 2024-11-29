@@ -31,8 +31,8 @@ const TilesSection = () => {
         <Container>
             <Row>
                 {constants.TILES_LIST.map((item, key) => (
-                    <Col span={key < 3 ? 12 : 6}>
-                        <div key={key} className={styles.itemContainer}>
+                    <Col span={key < 3 ? 12 : 6} key={key}>
+                        <div className={styles.itemContainer}>
                             <Tile title={item.title} icon={item.icon} classes={`${styles[`tile-${key + 1}`]} animation-fade-in-bottom tile-${key + 1}`} callback={item.callback} />
                         </div>
                     </Col>
