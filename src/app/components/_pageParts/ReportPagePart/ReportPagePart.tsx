@@ -409,9 +409,9 @@ const ReportPagePart = () => {
                 <Row>
                     <Col span={24}>
                         <div className={styles.finterButtonsContainer}>
-                            <Button title={"Today"}
+                            {/* <Button title={"Today"}
                                     callback={() => { switchPeriod(constants.PERIOD_TYPES[0]) }}
-                                    classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '', "animation-fade-in-top")} />
+                                    classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '', "animation-fade-in-top")} /> */}
                             <Button title={"This week"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
                                 classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '', "animation-fade-in-top")} />
@@ -421,9 +421,9 @@ const ReportPagePart = () => {
                             <Button title={"Lats three month"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
                                 classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '', "animation-fade-in-top")} />
-                            <Button title={"Last year"}
+                            {/* <Button title={"Last year"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[4]) }}
-                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '', "animation-fade-in-top")} />
+                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '', "animation-fade-in-top")} /> */}
 
                         </div>
                         {/* <div>{"Timeline"}</div>
