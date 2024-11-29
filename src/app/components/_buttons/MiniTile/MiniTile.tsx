@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React from 'react'
 import clsx from 'clsx'
 import Image from 'next/image'
 import constants from './constants'
