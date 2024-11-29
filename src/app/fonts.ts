@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import 'typeface-poppins';
 
 export const poppins = localFont({
   src: [

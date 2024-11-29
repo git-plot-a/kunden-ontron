@@ -12,6 +12,7 @@ import useSendQuery from './hooks/sendQuery/sendQuery';
 import useAnimation from './hooks/Animation/Animation';
 import api from '@/app/api/crud';
 import utils from './utils';
+import 'typeface-roboto';
 
 
 const HomePage = () => {

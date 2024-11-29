@@ -21,6 +21,8 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "sass": "^1.78.0",
+    "typeface-poppins": "^1.1.13",
+    "typeface-roboto": "^1.1.13",
     "uuid": "^10.0.0",
     "yap": "^0.0.2",
     "yup": "^1.4.0"

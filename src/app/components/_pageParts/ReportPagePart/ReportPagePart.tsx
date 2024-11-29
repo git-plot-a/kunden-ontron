@@ -42,6 +42,13 @@ type DropDownListItems = {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
+ChartJS.defaults.font = {
+    family: "Poppins, sans-serif", 
+    size: 14, 
+    weight: 300,
+    lineHeight: 1.5, 
+  };
+  
 const ReportPagePart = () => {
     const [loading, setLoading] = useState(true)
     const [periodType, setPeriodType] = useState(constants.PERIOD_TYPES[2])
