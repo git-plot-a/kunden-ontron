@@ -24,11 +24,10 @@ import "./table.scss"
 
 type Props = {
     services: Array<ExtendedService>,
-    setCurrent: (hash: string | null) => void,
     current: string | null
 }
 
-const ServiceListWiget: React.FC<Props> = ({ services, current, setCurrent }) => {
+const ServiceListWiget: React.FC<Props> = ({ services, current }) => {
     const router = useRouter()
     const animationActicate = useAnimation()
     // const [serviceList, setServiceList] = useState<Array<ExtendedService>>(services)
