@@ -23,10 +23,12 @@ import "./table.scss"
 
 
 type Props = {
-    services: Array<ExtendedService>
+    services: Array<ExtendedService>,
+    setCurrent: (hash: string | null) => void,
+    current: string | null
 }
 
-const ServiceListWiget: React.FC<Props> = ({ services }) => {
+const ServiceListWiget: React.FC<Props> = ({ services, current, setCurrent }) => {
     const router = useRouter()
     const animationActicate = useAnimation()
     // const [serviceList, setServiceList] = useState<Array<ExtendedService>>(services)
@@ -89,12 +91,21 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
 
 
     useEffect(() => {
-        // setServiceList(services)
-        loadContent(services[0])
-        serviceClick(services[0]?.id)
-        // setCurrentService()
+        let chosenService = 0
+        if (current) {
+            const targetService = services.reduce((target, serv, key) => {
+                if (serv.slug == current) {
+                    return key
+                }
+                return target
+            }, -1)
+            if (targetService > -1) {
+                chosenService = targetService
+            }
+        }
+        loadContent(services[chosenService])
+        serviceClick(services[chosenService]?.id)
         animationActicate()
-        console.log(services)
     }, [services])
 
 
@@ -114,6 +125,9 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
                 return res;
             }, tabsList)
             setTabNames(global.TAB_NAMES)
+        }
+        if(chosen?.slug != current){
+            router.push(`/platforms#${chosen.slug}`)
         }
         setTabNames(tabsList)
         setActiveTab(`${constants.TABS_ID_PREFIX}1`)
@@ -141,7 +155,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
                             <div className={styles.tariffsSection}>
                                 <div className={styles.title}>Unterstützungsstufe</div>
                                 <div className={styles.tariffsSectionContainer}>
-                                    <ServiceTarif serviceLevels={currentService?.serviceLevels as Array<ServiceAgreement>} size={"medium"}/>
+                                    <ServiceTarif serviceLevels={currentService?.serviceLevels as Array<ServiceAgreement>} size={"medium"} />
                                 </div>
                             </div>
                         ) : <></>}
@@ -287,7 +301,7 @@ const ServiceListWiget: React.FC<Props> = ({ services }) => {
                 </div>);
 
             case `${constants.TABS_ID_PREFIX}3`:
-                console.log(currentService?.platform )
+                console.log(currentService?.platform)
                 // return <div dangerouslySetInnerHTML={{ __html: currentService?.platform as string}}></div>
                 return (<div className='animation-fade-in-top immidiate-show short-duration content-container ServiceWigetTable'>
                     {currentService?.platform ? (

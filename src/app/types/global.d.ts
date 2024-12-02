@@ -81,6 +81,7 @@ declare global {
     contractEndData?: string;
     serviceLevels?: Array<ServiceAgreement>;
     status?: ServiceStatus;
+    slug?: string;
   }
 
   interface ExtendedService extends Service {

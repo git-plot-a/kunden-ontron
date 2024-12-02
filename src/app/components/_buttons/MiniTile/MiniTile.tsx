@@ -1,11 +1,13 @@
 "use client"
 
 import React, { useRef } from 'react'
+import { useRouter } from "next/navigation"
 import clsx from 'clsx'
 import Image from 'next/image'
 import constants from './constants'
 import styles from "./miniTile.module.scss"
 import ServiceTarif from '../../ServiceTarif/ServiceTarif'
+// import { serverHooks } from 'next/dist/server/app-render/entry-base'
 
 type Props = {
     service: Service,
@@ -14,6 +16,7 @@ type Props = {
 }
 
 const MiniTile: React.FC<Props> = ({ service, currentStyle = {} }) => {
+    const router = useRouter()
     const reference = useRef<HTMLDivElement | null>(null)
 
     const onMouseOver = () => {
@@ -27,8 +30,13 @@ const MiniTile: React.FC<Props> = ({ service, currentStyle = {} }) => {
         }, 400) 
     }
 
+
+
+    const redirectToService = () => {
+        router.push(`/platforms#${service.slug}`)
+    }
     // return <div className={clsx(styles.container, "animation-fade-in-bottom")} style={currentStyle}>
-       return  <div ref={reference} className={clsx(styles.container, "animation-fade-in-bottom")} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} style={currentStyle}>
+       return  <div ref={reference} className={clsx(styles.container, "animation-fade-in-bottom")} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} style={currentStyle} onClick={redirectToService}>
         {/* <div className={clsx(styles.flippInner, isFlipped ? styles.flipped : '')}> */}
         <div className={clsx(styles.flippInner)}>
             <div className={styles.frontSide}>
