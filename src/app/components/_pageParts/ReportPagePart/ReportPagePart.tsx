@@ -21,6 +21,7 @@ import DropDownListMinimized from '../../DropDownList/DropDownListMinimized';
 import useAnimation from '@/app/hooks/Animation/Animation';
 import styles from './reportPage.module.scss'
 import constants from "./constants"
+import contants from '../../Tabs/contants';
 
 
 
@@ -43,12 +44,12 @@ type DropDownListItems = {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 ChartJS.defaults.font = {
-    family: "Poppins, sans-serif", 
-    size: 14, 
+    family: "Poppins, sans-serif",
+    size: 14,
     weight: 300,
-    lineHeight: 1.5, 
-  };
-  
+    lineHeight: 1.5,
+};
+
 const ReportPagePart = () => {
     const [loading, setLoading] = useState(true)
     const [periodType, setPeriodType] = useState(constants.PERIOD_TYPES[2])
@@ -83,33 +84,33 @@ const ReportPagePart = () => {
                 if (startDate && createdDate && createdDate >= startDate && createdDate <= now) {
                     const typeData = ((item?.fields as NestedObject).customfield_10010 as NestedObject)?.requestType as NestedObject
                     if (typeData?.id) {
-                        list.push({ type_id: typeData?.id as string, name: typeData?.name as string })
+                        list.push(typeData?.id as string)
                     }
                 }
                 return list
-            }, [] as Array<{ type_id: string, name: string | number }>)
-
-
-            const lables = res.reduce((lb, label) => {
-                if (!lb.includes(label.name as string)) {
-                    lb.push(label.name as string)
-                }
-                return lb
-            }, [] as Array<string>)
-
+            }, [] as Array<string | number>)
+            const labels: string[] = []
             const typesData = res.reduce((dt, item) => {
-                const index = lables.indexOf(item.name as string)
+                const needed_type = constants.REQUEST_TYPES.filter(type => type.value == item);
+                let index = -1;
+                if(needed_type.length > 0 && !labels.includes(needed_type[0].title)) {
+                    labels.push(needed_type[0].title as string)
+                    dt.push(0)
+                    index = labels.length - 1;
+                }else{
+                    index = labels.indexOf(needed_type[0].title as string)
+                }
                 if (index > -1) {
                     dt[index]++;
                 }
 
                 return dt
-            }, lables.map(() => 0))
+            }, [] as number[])
 
-
+           
             setResuestTypesData({
                 ...requestTypesData,
-                labels: lables,
+                labels: labels,
                 datasets: [
                     { ...requestTypesData.datasets[0], data: typesData },
                 ]
@@ -128,9 +129,7 @@ const ReportPagePart = () => {
                 resultData?.issues?.forEach((item) => {
                     const resolution: Date = new Date((item?.fields as NestedObject).resolutiondate as string)
                     if (resolution >= startInterval && resolution <= finishInterval) {
-                        console.log((item?.fields as NestedObject)?.customfield_10228)
-                        const timeleft: number = ((((item?.fields as NestedObject)?.customfield_10228 as NestedObject)?.completedCycles as NestedObject[])[0]?.remainingTime as NestedObject)?.millis as number
-                        console.log(timeleft)
+                        const timeleft: number = ((((item?.fields as NestedObject)?.customfield_10227 as NestedObject)?.completedCycles as NestedObject[])[0]?.remainingTime as NestedObject)?.millis as number
                         if (timeleft < 0) {
                             resolvedNotOnTimeQuantity++
                         } else {
@@ -254,15 +253,17 @@ const ReportPagePart = () => {
                 const currentPrioritiy: NestedObject = ((item?.fields as NestedObject)?.priority as NestedObject) as NestedObject
                 const currentType: NestedObject = ((item?.fields as NestedObject)?.customfield_10010 as NestedObject)?.requestType as NestedObject
                 if (currentPrioritiy && prioritiesList.filter(priority => priority.value == currentPrioritiy.id).length == 0) {
+                    const localName = constants.PRIORITIES.filter(priority => priority.value == currentPrioritiy.id)
                     prioritiesList.push({
-                        title: currentPrioritiy.name as string,
+                        title: (localName.length >0 ? localName[0].title : currentPrioritiy.name) as string,
                         value: currentPrioritiy.id as string
                     })
 
                 }
                 if (currentType && requestTypeList.filter(type => type.value == currentType.id).length == 0) {
+                    const localName = constants.REQUEST_TYPES.filter(type => type.value == currentType.id)
                     requestTypeList.push({
-                        title: currentType.name as string,
+                        title: (localName.length > 0 ? localName[0].title :  currentType.name) as string,
                         value: currentType.id as string
                     })
                 }
@@ -293,12 +294,11 @@ const ReportPagePart = () => {
             }
             const data: object = {
                 project: userData.project,
-                fields: 'customfield_10010,status,resolutiondate,customfield_10228,created,priority',
+                fields: 'customfield_10010,status,resolutiondate,customfield_10228,customfield_10227,created,priority',
                 userEmail: email
             }
 
             const resultData: NestedObject = await utils.jira.apiRequest(data, "GET")
-            console.log((resultData.issues as NestedObject[]))
             if (resultData && (resultData.issues as NestedObject[])?.length > 0) {
                 updateAllDateDiagrams(resultData)
                 setResult(resultData)
@@ -419,13 +419,13 @@ const ReportPagePart = () => {
                             {/* <Button title={"Today"}
                                     callback={() => { switchPeriod(constants.PERIOD_TYPES[0]) }}
                                     classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '', "animation-fade-in-top")} /> */}
-                            <Button title={"This week"}
+                            <Button title={"Diese Woche"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
                                 classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '', "animation-fade-in-top")} />
-                            <Button title={"This month"}
+                            <Button title={"Diesen Monat"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[2]) }}
                                 classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '', "animation-fade-in-top")} />
-                            <Button title={"Lats three month"}
+                            <Button title={"Letzten drei Monate"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
                                 classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '', "animation-fade-in-top")} />
                             {/* <Button title={"Last year"}
@@ -453,7 +453,7 @@ const ReportPagePart = () => {
                                 {requestTypesData.datasets?.length > 0 && requestTypesData.datasets[0]?.data?.length > 0 && calculateSumm(requestTypesData.datasets[0]?.data) > 0 ? (
                                     <Doughnut data={requestTypesData} options={optionsDoughnut} />
                                 ) : (
-                                    <div className={styles.noData} style={{marginTop: '85px'}}>
+                                    <div className={styles.noData} style={{ marginTop: '85px' }}>
                                         {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}
                                     </div>
                                 )}

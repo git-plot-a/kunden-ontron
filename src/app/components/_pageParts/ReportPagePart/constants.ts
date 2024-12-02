@@ -33,6 +33,8 @@ const AVERAGE_TIME = 'Durchschnittlicher Zeitaufwand in Stunden'
 
 const NOT_ENOUGH_DATA_FOR_DAIAGRAM = 'Unzureichende Daten für das Diagramm...'
 
+const REQUEST_TYPES = global.REQUEST_TYPES
+
 //test
 
 const DOUGHNUT = {
@@ -240,5 +242,6 @@ export default {
   RESOLVED_ON_TIME_TITLE,
   RESOLVED_NOT_ON_TIME_TITLE,
   AVERAGE_TIME,
-  NOT_ENOUGH_DATA_FOR_DAIAGRAM
+  NOT_ENOUGH_DATA_FOR_DAIAGRAM,
+  REQUEST_TYPES
 };
