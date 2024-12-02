@@ -79,8 +79,8 @@ const ReportPagePart = () => {
         const now = new Date()
         if (Array.isArray(resultData?.issues)) {
             const res = resultData?.issues?.reduce((list, item) => {
-                const createdDate = new Date((item?.fields as NestedObject)?.created as string)
-                if (startDate && createdDate && createdDate >= startDate && createdDate <= now) {
+                const createdDate = gerCurrentData((item?.fields as NestedObject)?.created as string)
+                if (startDate && createdDate && createdDate > startDate && createdDate <= now) {
                     const typeData = ((item?.fields as NestedObject).customfield_10010 as NestedObject)?.requestType as NestedObject
                     if (typeData?.id) {
                         list.push(typeData?.id as string)
@@ -92,21 +92,23 @@ const ReportPagePart = () => {
             const typesData = res.reduce((dt, item) => {
                 const needed_type = constants.REQUEST_TYPES.filter(type => type.value == item);
                 let index = -1;
-                if(needed_type.length > 0 && !labels.includes(needed_type[0].title)) {
-                    labels.push(needed_type[0].title as string)
-                    dt.push(0)
-                    index = labels.length - 1;
-                }else{
-                    index = labels.indexOf(needed_type[0].title as string)
+                if (needed_type.length > 0) {
+                    if (!labels.includes(needed_type[0].title)) {
+                        labels.push(needed_type[0].title as string)
+                        dt.push(0)
+                        index = labels.length - 1;
+
+                    } else {
+                        index = labels.indexOf(needed_type[0].title as string)
+                    }
                 }
                 if (index > -1) {
                     dt[index]++;
                 }
-
                 return dt
             }, [] as number[])
 
-           
+            console.log(res)
             setResuestTypesData({
                 ...requestTypesData,
                 labels: labels,
@@ -126,7 +128,7 @@ const ReportPagePart = () => {
                 resolvedOnTimeQuantity: number = 0
             if (Array.isArray(resultData?.issues)) {
                 resultData?.issues?.forEach((item) => {
-                    const resolution: Date = new Date((item?.fields as NestedObject).resolutiondate as string)
+                    const resolution: Date = gerCurrentData((item?.fields as NestedObject).resolutiondate as string)
                     if (resolution >= startInterval && resolution <= finishInterval) {
                         const timeleft: number = ((((item?.fields as NestedObject)?.customfield_10227 as NestedObject)?.completedCycles as NestedObject[])[0]?.remainingTime as NestedObject)?.millis as number
                         if (timeleft < 0) {
@@ -163,8 +165,8 @@ const ReportPagePart = () => {
             let preiodQuantity: number = 0
             if (Array.isArray(resultData?.issues)) {
                 resultData?.issues?.forEach((item) => {
-                    const createdDate: Date = new Date((item?.fields as NestedObject).created as string)
-                    if (createdDate >= startInterval && createdDate <= finishInterval) {
+                    const createdDate: Date = gerCurrentData((item?.fields as NestedObject).created as string)
+                    if (createdDate > startInterval && createdDate <= finishInterval) {
                         preiodQuantity++
                     }
                 })
@@ -194,7 +196,7 @@ const ReportPagePart = () => {
                     const currentType = ((item?.fields as NestedObject).customfield_10010 as NestedObject)?.requestType as NestedObject
                     const currentPriority = (item?.fields as NestedObject).priority as NestedObject
                     const currentTime = ((((item?.fields as NestedObject)?.customfield_10228 as NestedObject)?.completedCycles as NestedObject[])[0]?.elapsedTime as NestedObject)?.millis as number
-                    const resolution: Date = new Date((item?.fields as NestedObject).resolutiondate as string)
+                    const resolution: Date = gerCurrentData((item?.fields as NestedObject).resolutiondate as string)
                     if (currentTime &&
                         resolution >= startInterval &&
                         resolution <= finishInterval &&
@@ -221,8 +223,16 @@ const ReportPagePart = () => {
 
 
     }
+    const gerCurrentData = (value: string) => {
+        const createdDate: Date = new Date(value)
+        createdDate.setHours(0);
+        createdDate.setMinutes(0);
+        createdDate.setSeconds(0);
+        createdDate.setMilliseconds(0);
+        return createdDate
+    }
     //general functons
-    function calculateSumm(numbers: number[]): number {
+    const calculateSumm = (numbers: number[]): number => {
         if (numbers.length === 0) {
             return 0
         }
@@ -231,7 +241,7 @@ const ReportPagePart = () => {
         return sum
     }
 
-    function calculateAverage(numbers: number[]): number {
+    const calculateAverage = (numbers: number[]): number => {
         const sum = calculateSumm(numbers)
         if (numbers.length > 0) {
             return sum / numbers.length;
@@ -239,7 +249,7 @@ const ReportPagePart = () => {
         return 0
     }
 
-    function millisToHours(millis: number): number {
+    const millisToHours = (millis: number): number => {
         const hours = millis / (1000 * 60 * 60);
         return hours;
     }
@@ -254,7 +264,7 @@ const ReportPagePart = () => {
                 if (currentPrioritiy && prioritiesList.filter(priority => priority.value == currentPrioritiy.id).length == 0) {
                     const localName = constants.PRIORITIES.filter(priority => priority.value == currentPrioritiy.id)
                     prioritiesList.push({
-                        title: (localName.length >0 ? localName[0].title : currentPrioritiy.name) as string,
+                        title: (localName.length > 0 ? localName[0].title : currentPrioritiy.name) as string,
                         value: currentPrioritiy.id as string
                     })
 
@@ -262,7 +272,7 @@ const ReportPagePart = () => {
                 if (currentType && requestTypeList.filter(type => type.value == currentType.id).length == 0) {
                     const localName = constants.REQUEST_TYPES.filter(type => type.value == currentType.id)
                     requestTypeList.push({
-                        title: (localName.length > 0 ? localName[0].title :  currentType.name) as string,
+                        title: (localName.length > 0 ? localName[0].title : currentType.name) as string,
                         value: currentType.id as string
                     })
                 }
@@ -304,9 +314,9 @@ const ReportPagePart = () => {
             }
 
             setLoading(false)
-            setTimeout (()=>{
+            setTimeout(() => {
                 animationActivation()
-            }, 500) 
+            }, 500)
         }
         loadDiagramData()
     }, [])
@@ -448,7 +458,7 @@ const ReportPagePart = () => {
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <div className={clsx(styles.diagramContainer, styles.small)} style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-center'}}>
+                        <div className={clsx(styles.diagramContainer, styles.small)} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-center' }}>
                             <div className={styles.diagramTitle}>{constants.REQUEST_TYES_DESTRIBUTIONS_TITLE}</div>
                             <div className={clsx(styles.diagramItem, styles.diagramItemDounat)} style={{ width: '100%', height: '486px', marginTop: '-85px' }}>
                                 {requestTypesData.datasets?.length > 0 && requestTypesData.datasets[0]?.data?.length > 0 && calculateSumm(requestTypesData.datasets[0]?.data) > 0 ? (

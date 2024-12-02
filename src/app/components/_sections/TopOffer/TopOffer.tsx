@@ -21,7 +21,7 @@ const TopOffer: React.FC<Props> = ({title}) => {
                 </Col>
                 <Col span={14}>
                     <div className={styles.imageContainer}>
-                        <Image src={'/img/topOffer.png'} alt="top-offer" width={665.5} height={294} />
+                        <Image src={'/img/topOffer.png'} alt="top-offer" width={500} height={220} />
                     </div>
                 </Col>
             </Row>

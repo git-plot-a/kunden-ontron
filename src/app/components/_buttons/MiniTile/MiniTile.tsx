@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useRef } from 'react'
 import clsx from 'clsx'
 import Image from 'next/image'
 import constants from './constants'
@@ -14,17 +14,21 @@ type Props = {
 }
 
 const MiniTile: React.FC<Props> = ({ service, currentStyle = {} }) => {
-    //const [isFlipped, setIsFlipped] = useState(false);
+    const reference = useRef<HTMLDivElement | null>(null)
 
-    // const onMouseOver = () => {
-    //     setIsFlipped(true); // Переключаем состояние при клике
-    // };
-    // const onMouseLeave = () => {
-    //     setIsFlipped(false);
-    // }
+    const onMouseOver = () => {
+        if(window){ 
+            reference.current?.classList.add(styles.hovered)   
+        }
+    }
+    const onMouseLeave = () => {
+        setTimeout(()=>{
+            reference.current?.classList.remove(styles.hovered)  
+        }, 400) 
+    }
 
-    return <div className={clsx(styles.container, "animation-fade-in-bottom")} style={currentStyle}>
-        {/* <div className={clsx(styles.container, "animation-fade-in-bottom")} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} style={currentStyle}> */}
+    // return <div className={clsx(styles.container, "animation-fade-in-bottom")} style={currentStyle}>
+       return  <div ref={reference} className={clsx(styles.container, "animation-fade-in-bottom")} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} style={currentStyle}>
         {/* <div className={clsx(styles.flippInner, isFlipped ? styles.flipped : '')}> */}
         <div className={clsx(styles.flippInner)}>
             <div className={styles.frontSide}>

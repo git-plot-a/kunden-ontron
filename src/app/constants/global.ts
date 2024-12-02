@@ -21,11 +21,11 @@ const REQUEST_TYPES: Array<DropDownList> = [
   //     value: 6,
   //     description: 'Reichen Sie eine Anfrage ein oder melden Sie ein Problem.'
   // },
-  {
-    title: "Anfrage per E-Mail",
-    value: "10",
-    description: "Anfrage über Ihren E-Mail-Supportkanal erhalten.",
-  },
+  // {
+  //   title: "Anfrage per E-Mail",
+  //   value: "10",
+  //   description: "Anfrage über Ihren E-Mail-Supportkanal erhalten.",
+  // },
   {
     title: "Serviceanfrage",
     value: "15",

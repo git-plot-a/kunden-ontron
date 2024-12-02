@@ -1,6 +1,14 @@
 .container {
   width: 266px;
   perspective: 1000px; 
+  transition: transform 0.3s;
+  &:hover{
+    transform: scale(1.05);
+  }
+  &.hovered{
+    transition: transform 0.2s;
+    transition-delay: 0s !important;
+  }
 }
 .status {
   &Container {
