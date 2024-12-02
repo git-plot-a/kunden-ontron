@@ -30,7 +30,7 @@
     font-weight: 600;
     color: var(--most-light);
     text-align: center;
-    margin-top: 241px;
+    margin-top: 158px;
     &Block {
       position: absolute;
       width: -webkit-fill-available;
@@ -50,15 +50,16 @@
         position: relative;
         left: 0;
         .formTitleImage {
-          margin-top: -93px;
+          margin-top: -67px;
         }
         .formTitle {
-          margin-top: -30px;
+          margin-top: -15px;
         }
       }
     }
     &Image {
       text-align: center;
+      // margin-left: 68px;
       // margin-top: 28px;
     }
   }
