@@ -447,9 +447,9 @@ const ReportPagePart = () => {
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <div className={clsx(styles.diagramContainer, styles.small)}>
+                        <div className={clsx(styles.diagramContainer, styles.small)} style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-center'}}>
                             <div className={styles.diagramTitle}>{constants.REQUEST_TYES_DESTRIBUTIONS_TITLE}</div>
-                            <div className={styles.diagramItem} style={{ width: '100%', height: '486px', marginTop: '-85px' }}>
+                            <div className={clsx(styles.diagramItem, styles.diagramItemDounat)} style={{ width: '100%', height: '486px', marginTop: '-85px' }}>
                                 {requestTypesData.datasets?.length > 0 && requestTypesData.datasets[0]?.data?.length > 0 && calculateSumm(requestTypesData.datasets[0]?.data) > 0 ? (
                                     <Doughnut data={requestTypesData} options={optionsDoughnut} />
                                 ) : (
