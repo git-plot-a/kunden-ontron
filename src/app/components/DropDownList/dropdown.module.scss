@@ -87,6 +87,9 @@
       background-color: var(--hover-light);
       // color: var(--active-text-color);
     }
+    &.blocked{
+      opacity: 0.5;
+    }
     // &:last-child{
     //     border-bottom: none;
     // }

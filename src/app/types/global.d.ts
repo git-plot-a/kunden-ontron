@@ -23,6 +23,7 @@ declare global {
     title: string;
     value: string;
     description?: string;
+    blocked?: boolean;
     [key: string]: string;
   }
 

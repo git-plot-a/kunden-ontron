@@ -42,6 +42,10 @@ const DropDownListMinimized: React.FC<Props> = ({ items, handler, def = undefine
         }
     }, [])
 
+    useEffect(() => {
+        setcurrentChoice(0)
+    }, [items])
+
     return <div className={clsx(styles.dropDownMiniContainer, styles.dropDownContainer, classes)} ref={ref}>
         <div className={clsx(styles.dropDownMiniElements, styles.dropDownElements, openedList && styles.opened)}>
             <div onClick={changeOpening} className={clsx(styles.dropDownSelectedItem, styles.dropDownMiniSelectedItem)}>
@@ -60,7 +64,11 @@ const DropDownListMinimized: React.FC<Props> = ({ items, handler, def = undefine
         </div>
         <div className={clsx(styles.dropDownList, styles.dropDownMiniList, openedList && styles.opened)}>
             {items.length > 0 && items.map((item, key) => (
-                <div key={key} onClick={() => { itemClick(key) }} className={styles.dropDownItem}>
+                <div key={key} onClick={() => {
+                    if (!item?.blocked) {
+                        itemClick(key)
+                    }
+                }} className={clsx(styles.dropDownItem, item.blocked ? styles.blocked : '')}>
                     <div>{item.title}</div>
                 </div>
             ))}
