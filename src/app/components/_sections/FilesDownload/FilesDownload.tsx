@@ -34,7 +34,7 @@ const FilesDownload: React.FC<Props> = ({fileList}) => {
                     <div className={styles.text}>{file.title}</div>
                     <div className={styles.data}>{`Hochgeladen ${transformDate(file.data)}`}</div>
                     <div className={styles.loadButton}>
-                        <StandartButton title={constants.DOWNLOAD_TEXT} active={false} image='/img/download.svg' classes={styles.button} link={file.link} />
+                        <StandartButton title={constants.DOWNLOAD_TEXT} active={false} image='/img/download.svg' classes={styles.button} link={file.link} blank={true}/>
                     </div>
                 </div>)
             })}

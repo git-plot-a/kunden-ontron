@@ -15,12 +15,13 @@ type Props = {
     title: string | React.ReactNode,
     callback?: (args: unknown) => void | null | undefined,
     active: boolean,
-    image?: string
+    image?: string,
+    blank?: boolean
 }
 
 
 
-const StandartButton: FC<Props> = ({ title, classes = "", link = null, callback = null, active = false, image = '' }) => {
+const StandartButton: FC<Props> = ({ title, classes = "", link = null, callback = null, active = false, image = '', blank = false }) => {
 
     const buttonClick: (e: React.MouseEvent<HTMLDivElement>) => void | null = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -42,7 +43,7 @@ const StandartButton: FC<Props> = ({ title, classes = "", link = null, callback 
             </div>
 
         ) : (
-            <Link className={clsx(styles.container, active ? styles.active : '', classes)} href={link as Url} >
+            <Link className={clsx(styles.container, active ? styles.active : '', classes)} href={link as Url} target={blank ? "_blank" : "_self"}>
                 <Image src={image} alt={title as string} width={24} height={24} />
                 <span>{title}</span>
             </Link>
