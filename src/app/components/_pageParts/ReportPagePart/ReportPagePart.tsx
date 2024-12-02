@@ -21,7 +21,6 @@ import DropDownListMinimized from '../../DropDownList/DropDownListMinimized';
 import useAnimation from '@/app/hooks/Animation/Animation';
 import styles from './reportPage.module.scss'
 import constants from "./constants"
-import contants from '../../Tabs/contants';
 
 
 
