@@ -304,7 +304,9 @@ const ReportPagePart = () => {
             }
 
             setLoading(false)
-            animationActivation()
+            setTimeout (()=>{
+                animationActivation()
+            }, 500) 
         }
         loadDiagramData()
     }, [])
@@ -420,13 +422,13 @@ const ReportPagePart = () => {
                                     classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '', "animation-fade-in-top")} /> */}
                             <Button title={"Diese Woche"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
-                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '', "animation-fade-in-top")} />
+                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '',)} />
                             <Button title={"Diesen Monat"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[2]) }}
-                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '', "animation-fade-in-top")} />
+                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '',)} />
                             <Button title={"Letzten drei Monate"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
-                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '', "animation-fade-in-top")} />
+                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '',)} />
                             {/* <Button title={"Last year"}
                                 callback={() => { switchPeriod(constants.PERIOD_TYPES[4]) }}
                                 classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '', "animation-fade-in-top")} /> */}
