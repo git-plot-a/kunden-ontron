@@ -154,14 +154,13 @@ const OPTIONS_BAR = {
       {
         label: "Sales",
         data: [65, 59, 80, 81, 56, 55],
-        backgroundColor: "#FF9051",
+        backgroundColor: "#009EE3",
         borderWidth: 0,
       },
-
       {
         label: "Sales",
         data: [65, 59, 80, 81, 56, 55],
-        backgroundColor: "#009EE3",
+        backgroundColor: "#FF9051",
         borderWidth: 0,
       },
     ],

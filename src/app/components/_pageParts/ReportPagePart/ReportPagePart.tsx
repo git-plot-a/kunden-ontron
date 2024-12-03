@@ -265,22 +265,25 @@ const ReportPagePart = () => {
                     createdDate > (startDate as Date) &&
                     createdDate <= now
                 ) {
-                    const currentPrioritiy: NestedObject = ((item?.fields as NestedObject)?.priority as NestedObject) as NestedObject
-                    const currentType: NestedObject = ((item?.fields as NestedObject)?.customfield_10010 as NestedObject)?.requestType as NestedObject
-                    if (currentPrioritiy && prioritiesList.filter(priority => priority.value == currentPrioritiy.id).length == 0) {
-                        const localName = constants.PRIORITIES.filter(priority => priority.value == currentPrioritiy.id)
-                        prioritiesList.push({
-                            title: (localName.length > 0 ? localName[0].title : currentPrioritiy.name) as string,
-                            value: currentPrioritiy.id as string
-                        })
+                    const currentTime = ((((item?.fields as NestedObject)?.customfield_10228 as NestedObject)?.completedCycles as NestedObject[])[0]?.elapsedTime as NestedObject)?.millis as number
+                    if (currentTime) {
+                        const currentPrioritiy: NestedObject = ((item?.fields as NestedObject)?.priority as NestedObject) as NestedObject
+                        const currentType: NestedObject = ((item?.fields as NestedObject)?.customfield_10010 as NestedObject)?.requestType as NestedObject
+                        if (currentPrioritiy && prioritiesList.filter(priority => priority.value == currentPrioritiy.id).length == 0) {
+                            const localName = constants.PRIORITIES.filter(priority => priority.value == currentPrioritiy.id)
+                            prioritiesList.push({
+                                title: (localName.length > 0 ? localName[0].title : currentPrioritiy.name) as string,
+                                value: currentPrioritiy.id as string
+                            })
 
-                    }
-                    if (currentType && requestTypeList.filter(type => type.value == currentType.id).length == 0) {
-                        const localName = constants.REQUEST_TYPES.filter(type => type.value == currentType.id)
-                        requestTypeList.push({
-                            title: (localName.length > 0 ? localName[0].title : currentType.name) as string,
-                            value: currentType.id as string
-                        })
+                        }
+                        if (currentType && requestTypeList.filter(type => type.value == currentType.id).length == 0) {
+                            const localName = constants.REQUEST_TYPES.filter(type => type.value == currentType.id)
+                            requestTypeList.push({
+                                title: (localName.length > 0 ? localName[0].title : currentType.name) as string,
+                                value: currentType.id as string
+                            })
+                        }
                     }
                 }
             })

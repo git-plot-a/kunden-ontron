@@ -21,7 +21,6 @@ const DropDownListMinimized: React.FC<Props> = ({ items, handler, def = undefine
     const itemClick = (key: number) => {
         changeOpening()
         setcurrentChoice(key)
-        console.log(items[key].value)
         handler(items[key].value)
     }
 
