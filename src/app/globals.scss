@@ -185,6 +185,17 @@ justify-content: center;
 canvas{
   font-family: var(--font-poppins);
 }
+.Golden {
+  background-color: var(--gold-service-level) !important;
+}
+
+.Silber {
+  background-color: var(--silver-service-level) !important;
+}
+
+.Bronze {
+  background-color: var(--bronze-service-level) !important;
+}
 
 @keyframes shimmer {
   0% {

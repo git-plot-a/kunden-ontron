@@ -8,6 +8,9 @@ import Row from "../../_layout/Row/Row";
 import Col from "../../_layout/Col/Col";
 import RequestForm from "../../_forms/RequestForm/RequestForm";
 import Image from "next/image";
+import api from "../../../api/crud"
+import utils from "@/app/utils";
+import useAnimation from "@/app/hooks/Animation/Animation";
 // import LottieAnimation from "../../LottieAnimation/LottieAnimation";
 // import sentAnimation from "./animations/Robo_email_v002.json"
 // import questionAnimation from "./animations/Robo_question_v002.json"
@@ -21,6 +24,10 @@ import styles from "./request.form.section.module.scss"
 const RequestFormSection = () => {
     const [result, setResult] = useState<formSendResult | null>(null)
     const resultItem = useRef<HTMLDivElement | null>(null)
+    const [services, setServices] = useState<Preview[] | null>(null)
+    const [loading, setLoading] = useState(false)
+    const [chosenServiceId, setChosenServiceId] = useState<string | null>(null)
+    const activateAnimaiton = useAnimation()
 
     const handler = async (result: boolean) => {
         const res = constants.RESULTS.reduce((r: formSendResult | null, item) => (item.success === result ? item : r), null)
@@ -28,59 +35,93 @@ const RequestFormSection = () => {
     }
 
     useEffect(() => {
-        if(resultItem.current){
+        if (resultItem.current) {
             resultItem.current.classList.add("animation-visible")
         }
     }, [result])
 
-    return <Container>
-        <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack, "animation-fade-in-top")} ref={resultItem}>
-        {/* <div className={clsx(styles.formContainer, !result ? styles.resultingBack : styles.usualBlack)}> */}
-            <Row>
-                {result ?
-                    (
-                        <Col span={24}>
-                            <div className={clsx(styles.formTitleBlock, styles.fullSize)}>
-                                <div className={styles.formTitleImage}>
-                                    {/* <LottieAnimation animation={sentAnimation}/>
+    useEffect(() => {
+        setLoading(true)
+        const getServices = async () => {
+            const res: Preview[] = await utils.api.fetchData(api.custom.PREVIEW_CARDS, 'GET', {}, null, true);
+            if (res) {
+                setServices(res)
+                if(res.length > 0) {
+                    setChosenServiceId(res[0].related_entity?.id as string)
+                }
+            }
+            setLoading(false)
+            setTimeout(() => {
+                activateAnimaiton()
+            }, 300)
+        }
+
+        getServices()
+    }, [])
+
+    const processSupportLvel = (serviceCode: string) => {
+        const serviceItem = services?.filter(service => serviceCode == service.related_entity.id)
+        if (serviceItem && serviceItem.length > 0 && serviceItem[0].levels?.label) {
+            return constants.ADITIONAL_INFO.replace(/<span>(.*?)<\/span>/, `<span class="${serviceItem[0].levels.label}" >${serviceItem[0].levels.label}</span>`);
+        }
+        return constants.ADITIONAL_INFO
+    }
+    const processSupportText = (serviceCode: string, resText: string) => {
+        const serviceItem = services?.filter(service => serviceCode == service.related_entity.id)
+        if (serviceItem && serviceItem.length > 0 && serviceItem[0].responce_time) {
+            return resText.replace(/<span>(.*?)<\/span>/, `<span class="${serviceItem[0].levels.label}" >${serviceItem[0].responce_time}</span>`);
+        }
+        return resText
+    }
+
+    return <>{!loading &&
+        (<Container>
+            <div className={clsx(styles.formContainer, result ? styles.resultingBack : styles.usualBlack)} ref={resultItem}>
+                {/* <div className={clsx(styles.formContainer, !result ? styles.resultingBack : styles.usualBlack)}> */}
+                <Row>
+                    {result ?
+                        (
+                            <Col span={24}>
+                                <div className={clsx(styles.formTitleBlock, styles.fullSize)}>
+                                    <div className={styles.formTitleImage}>
+                                        {/* <LottieAnimation animation={sentAnimation}/>
                                     <LottieAnimation animation={questionAnimation}/>
                                     <LottieAnimation animation={technicalAnimation}/>
                                     <LottieAnimation animation={errorAnimation}/> */}
-                                {/* <Image className={"animation-fade-in-top"} src={constants.RESULTS[0].img as string} alt={'result image'} height={340} width={560} /> */}
-                                    <Image src={result.img as string} alt={'result image'} height={250} width={322} />
+                                        {/* <Image className={"animation-fade-in-top"} src={constants.RESULTS[0].img as string} alt={'result image'} height={340} width={560} /> */}
+                                        <Image src={result.img as string} alt={'result image'} height={250} width={322} />
+                                    </div>
+                                    <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: processSupportText(chosenServiceId as string, result.text) }} />
+                                    {chosenServiceId && (<div className={styles.aditionalInfo} dangerouslySetInnerHTML={{ __html: processSupportLvel(chosenServiceId) }} />)}
                                 </div>
-                                <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: result.text }} />
-                                {/* <div className={clsx(styles.formTitle, "animation-fade-in")} dangerouslySetInnerHTML={{ __html: constants.RESULTS[0].text }} /> */}
-                                <div className={styles.aditionalInfo} dangerouslySetInnerHTML={{ __html: constants.ADITIONAL_INFO }} />
-                            </div>
-                        </Col>
-                    )
-                    : (
-                        <>
-                            <Col span={10}>
-                                <div className={clsx(styles.decoreElement, styles.small)}>
-                                    <Image src={'/img/big_romb_1.svg'} alt={'Decore romb 1'} width={39.2} height={45} />
-                                </div>
-                                <div className={clsx(styles.decoreElement, styles.big)}>
-                                    <Image src={'/img/big_romb_1.svg'} alt={'Decore romb 2'} width={53.7} height={61} />
-                                </div>
-                                <div className={styles.formTitleBlock} >
-                                    <div className={styles.formTitleContiner}>
-                                        <div className={clsx(styles.formTitle, "animation-fade-in long-duration")} dangerouslySetInnerHTML={{__html: constants.TITLE}} style={{transitionDelay: '0.2s'}}/>
-                                        <div className={clsx(styles.formTitleImage, "animation-fade-in long-duration")} style={{transitionDelay: '0.4s'}}>
-                                            <Image src={'/img/decore1.svg'} alt="send a request" width={322} height={200} style={{marginLeft: '68px'}}/>
+                            </Col>
+                        )
+                        : (
+                            <>
+                                <Col span={10}>
+                                    <div className={clsx(styles.decoreElement, styles.small)}>
+                                        <Image src={'/img/big_romb_1.svg'} alt={'Decore romb 1'} width={39.2} height={45} />
+                                    </div>
+                                    <div className={clsx(styles.decoreElement, styles.big)}>
+                                        <Image src={'/img/big_romb_1.svg'} alt={'Decore romb 2'} width={53.7} height={61} />
+                                    </div>
+                                    <div className={styles.formTitleBlock} >
+                                        <div className={styles.formTitleContiner}>
+                                            <div className={clsx(styles.formTitle, "animation-fade-in long-duration")} dangerouslySetInnerHTML={{ __html: constants.TITLE }} style={{ transitionDelay: '0.2s' }} />
+                                            <div className={clsx(styles.formTitleImage, "animation-fade-in long-duration")} style={{ transitionDelay: '0.4s' }}>
+                                                <Image src={'/img/decore1.svg'} alt="send a request" width={322} height={200} style={{ marginLeft: '68px' }} />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Col>
-                            <Col span={14}>
-                                <RequestForm handler={handler}  />
-                            </Col>
-                        </>
-                    )}
-            </Row>
-        </div>
-    </Container>
+                                </Col>
+                                <Col span={14}>
+                                    <RequestForm handler={handler} services={services} setChosenServiceId={setChosenServiceId} />
+                                </Col>
+                            </>
+                        )}
+                </Row>
+            </div>
+        </Container>)}</>
 }
 
 export default RequestFormSection

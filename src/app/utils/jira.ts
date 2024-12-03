@@ -41,10 +41,11 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
       }
     }
     console.log(url);
+    console.log(data)
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      console.error(`${errors.JIRA_ERROR_MISTAKE}${response.statusText}`);
+      // console.error(`${errors.JIRA_ERROR_MISTAKE}${response.statusText}`);
       return {
         status: "400",
         message: `${errors.JIRA_ERROR_MISTAKE}${response.statusText}`,

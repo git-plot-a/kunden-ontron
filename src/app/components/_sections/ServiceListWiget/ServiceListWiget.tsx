@@ -125,7 +125,7 @@ const ServiceListWiget: React.FC<Props> = ({ services, current }) => {
             }, tabsList)
             setTabNames(global.TAB_NAMES)
         }
-        if(chosen?.slug != current){
+        if(chosen && chosen?.slug != current){
             router.push(`/platforms#${chosen.slug}`)
         }
         setTabNames(tabsList)

@@ -61,6 +61,10 @@
       text-align: center;
       // margin-top: 28px;
     }
+    span{
+      font-weight: 600;
+      background-color: transparent !important;
+    }
   }
 }
 
@@ -104,6 +108,20 @@
     animation-direction: alternate-reverse;
   }
 }
+
+
+.Golden {
+  background-color: var(--gold-service-level);
+}
+
+.Silber {
+  background-color: var(--silver-service-level);
+}
+
+.Bronze {
+  background-color: var(--bronze-service-level);
+}
+
 
 @keyframes sparklin {
   0% {

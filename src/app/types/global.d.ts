@@ -104,10 +104,28 @@ declare global {
     item: Service;
     files: Array<FileItem>;
   }
+
+  type Preview = {
+    title: string;
+    related_entity: {
+      id?: string | number;
+      title: string;
+    };
+    sla_types: {
+      title: string;
+      label: string;
+    };
+    levels: {
+      title: string;
+      label: string;
+    };
+    responce_time: string | number;
+  };
+
   type Ticket = {
     key: string;
     fields: {
-      customfield_10244: string,
+      customfield_10244: string;
       summary: string;
       status: {
         name: string;

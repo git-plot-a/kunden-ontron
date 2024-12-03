@@ -22,17 +22,21 @@ export async function POST(req: Request) {
 
   const requestBody = await req.json();
 
-  const { type, summary, description, userEmail, priority, project } = requestBody;
+  const { type, summary, description, userEmail, priority, project, service } =
+    requestBody;
 
   if (userEmail && project?.id) {
     const body = {
       serviceDeskId: project.id,
       requestTypeId: type,
       requestFieldValues: {
-        summary: summary || global.REQUEST_TYPES[2].title,
-        description: description || "",
-        customfield_10244: userEmail,
-        priority: priority,
+        ...{
+          summary: summary || global.REQUEST_TYPES[2].title,
+          description: description || "",
+          customfield_10244: userEmail,
+          priority: priority
+        },
+        ...(service ? { customfield_10251: service } : {}),
       },
     };
 
@@ -71,37 +75,38 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const userEmails = url.searchParams.get("userEmail");
   const project = url.searchParams.get("project");
-  const fields = url.searchParams.get("fields") ? url.searchParams.get("fields") : 'summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate'; 
-  let queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=${project}`
+  const fields = url.searchParams.get("fields")
+    ? url.searchParams.get("fields")
+    : "summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate";
+  let queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=${project}`;
 
   if (userEmails && userEmails?.length > 0) {
-    const emailQueries = `"Submitter Name[Short text]" ~ "${userEmails}"`
-     
+    const emailQueries = `"Submitter Name[Short text]" ~ "${userEmails}"`;
+
     queryUrl += ` AND (${emailQueries})&fields=${fields}&expand=changelog`;
   }
-    queryUrl += `&fields=${fields}&expand=changelog`;
-  
+  queryUrl += `&fields=${fields}&expand=changelog`;
 
-     try {
-      const response = await fetch(queryUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: auth,
-          "Cache-Control": "no-cache", 
-        },
-      });
+  try {
+    const response = await fetch(queryUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: auth,
+        "Cache-Control": "no-cache",
+      },
+    });
 
-      if (!response.ok) {
-        throw new Error(`${errors.JIRA_ERROR_RESPONSE} ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      return NextResponse.json(data);
-    } catch (error) {
-      return NextResponse.json(
-        { message: errors.JIRA_ERROR_MISTAKE + error },
-        { status: 500 }
-      );
+    if (!response.ok) {
+      throw new Error(`${errors.JIRA_ERROR_RESPONSE} ${response.statusText}`);
     }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json(
+      { message: errors.JIRA_ERROR_MISTAKE + error },
+      { status: 500 }
+    );
+  }
 }

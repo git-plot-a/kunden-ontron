@@ -3,7 +3,7 @@ const TITLE = 'Wie können<br/>wir Ihnen heute helfen?'
 const RESULTS: Array<formSendResult> = [
     {
         success: true,
-        text: 'Vielen Dank für Ihre Anfrage.<br/>Wir werden diese bearbeiten und uns<br/>innerhalb von 4 Stunden bei Ihnen melden.',
+        text: 'Vielen Dank für Ihre Anfrage.<br/>Wir werden diese bearbeiten und uns<br/>innerhalb von <span>4</span> Stunden bei Ihnen melden.',
         img: '/img/decore2.svg'
 
     },
