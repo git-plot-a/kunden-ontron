@@ -89,7 +89,7 @@ const RequestFormSection = () => {
                                     <LottieAnimation animation={technicalAnimation}/>
                                     <LottieAnimation animation={errorAnimation}/> */}
                                         {/* <Image className={"animation-fade-in-top"} src={constants.RESULTS[0].img as string} alt={'result image'} height={340} width={560} /> */}
-                                        <Image src={result.img as string} alt={'result image'} height={250} width={322} />
+                                        <Image src={result.img as string} alt={'result image'} height={150} width={322}  style={{marginTop: '60px', marginBottom: '60px'}}/>
                                     </div>
                                     <div className={styles.formTitle} dangerouslySetInnerHTML={{ __html: processSupportText(chosenServiceId as string, result.text) }} />
                                     {chosenServiceId && (<div className={styles.aditionalInfo} dangerouslySetInnerHTML={{ __html: processSupportLvel(chosenServiceId) }} />)}
@@ -109,7 +109,7 @@ const RequestFormSection = () => {
                                         <div className={styles.formTitleContiner}>
                                             <div className={clsx(styles.formTitle, "animation-fade-in long-duration")} dangerouslySetInnerHTML={{ __html: constants.TITLE }} style={{ transitionDelay: '0.2s' }} />
                                             <div className={clsx(styles.formTitleImage, "animation-fade-in long-duration")} style={{ transitionDelay: '0.4s' }}>
-                                                <Image src={'/img/decore1.svg'} alt="send a request" width={322} height={200} style={{ marginLeft: '68px' }} />
+                                                <Image src={'/img/decore1.svg'} alt="send a request" width={322} height={130} style={{marginTop: '30px'}}/>
                                             </div>
                                         </div>
                                     </div>
