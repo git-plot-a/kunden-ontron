@@ -88,7 +88,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
 
     useEffect(() => {
         const getTarifInfo = () =>{
-
+            setTarifData(null)
         }
 
         if(!tarifData){
