@@ -23,15 +23,15 @@
   font-size: 14px;
   line-height: 32px;
   font-weight: 300;
-  padding: 4px 16px;
+  padding: 4px 16px !important;
   color: var(--most-dark);
   background-color: var(--button-hover-gray);
   border: none;
   border: 1px solid var(--button-hover-gray);
   transition: border-color 0.2s;
   &:hover{
-    background-color: var(--hover-light);
-    border: 1px solid var(--hover-light);
+    background-color: var(--hover-light) !important;
+    border: 1px solid var(--hover-light) !important;
   }
 }
 
