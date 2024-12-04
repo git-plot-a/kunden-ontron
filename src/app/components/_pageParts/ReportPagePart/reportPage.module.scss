@@ -75,15 +75,15 @@
 }
 
 .active {
-  color: var(--active-text-color);
-  border: 1px solid var(--active-text-color);
-  background-color: var(--hover-light);
+  color: var(--active-text-color) !important;
+  border: 1px solid var(--active-text-color) !important;
+  background-color: var(--hover-light) !important;
   span{
-    color: var(--active-text-color);
-    filter: brightness(1)
+    color: var(--active-text-color) !important;
+    filter: brightness(1) !important
   }
   &:hover{
-    border: 1px solid var(--active-text-color);
+    border: 1px solid var(--active-text-color) !important;
   }
 }
 .finterButtonsContainer {
