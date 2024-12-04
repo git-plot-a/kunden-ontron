@@ -77,7 +77,7 @@ export async function GET(req: Request) {
   const project = url.searchParams.get("project");
   const fields = url.searchParams.get("fields")
     ? url.searchParams.get("fields")
-    : "summary,description,issuetype,created,customfield_10244,priority,updated,timetracking,status,resolutiondate";
+    : "summary,description,issuetype,created,customfield_10244,customfield_10010,customfield_10227,customfield_10228,priority,updated,timetracking,status,resolutiondate";
   let queryUrl = `https://ontron.atlassian.net/rest/api/3/search?jql=project=${project}`;
 
   if (userEmails && userEmails?.length > 0) {

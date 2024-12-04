@@ -21,7 +21,7 @@
   --blue-button: #f3fbff;
   --share-button-color: #009fe3;
   --start-back-gradient: #009ee3;
-  --finish-back-gradient: #67c5ee;
+  --finish-back-gradient: #678fee;
   --card-back: #079fe4;
   --gray-borders: #898997;
   --placeholder-light-gray: #eeeeee;
@@ -197,6 +197,13 @@ canvas{
   background-color: var(--bronze-service-level) !important;
 }
 
+.link{
+  color: #0096D7;
+  transition: color 0.2s;
+  &:hover{
+    color: #009EE3;
+  }
+}
 @keyframes shimmer {
   0% {
     background-color: var(--most-light);

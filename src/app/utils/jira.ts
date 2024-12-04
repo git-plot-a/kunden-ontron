@@ -40,8 +40,6 @@ const apiRequest = async (data: ApiRequestData = {}, method = "POST") => {
         url += `&fields=${data.fields}`;
       }
     }
-    console.log(url);
-    console.log(data)
     const response = await fetch(url, options);
 
     if (!response.ok) {

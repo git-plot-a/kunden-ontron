@@ -122,8 +122,23 @@ declare global {
     responce_time: string | number;
   };
 
+  
+  type EventItem = {
+    field: string;
+    fromString?: string;
+    toString?: string | null
+  }
+
+  type HistoryEvent = {
+    created: string;
+    items: Array<EventItem>
+  }
+
   type Ticket = {
     key: string;
+    changelog?: {
+      histories: Array<HistoryEvent>
+    };
     fields: {
       customfield_10244: string;
       summary: string;
