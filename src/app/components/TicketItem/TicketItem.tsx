@@ -97,6 +97,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
         return name ? name : priorityName
     }
 
+    console.log(ticket?.fields?.resolutiondate)
     return <div className={clsx(styles.tasksItem, isOpened ? styles.opened : '', classes)} style={style} ref={animatedElement}>
         <div className={clsx(styles.ticketTop, isOpened ? styles.opened : '')} onClick={showInfo}>
             <div className={styles.title}>
@@ -108,25 +109,27 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
         </div>
         <div className={clsx(styles.ticketContentSection, isOpened ? styles.opened : '')}>
             <div className={styles.contentTopContainer}>
-                <div className={styles.line}>
-                    <div className={styles.lineTitle}>{"Expected resolution time"}</div>
-                    <div className={clsx(styles.lineData, styles.bold)}>
-                        <div className={styles.value}>{"Oct 31, 11:30 AM"}</div>
-                        <div className={styles.estimation} ref={estimationLink} onMouseOver={showPopup}>
-                            <span>{"Erste Antwort innerhalb von 8 Stunden"}</span>
-                            {popUpVisible && (
-                                <div className={clsx(styles.popup, popUpVisible ? styles.opened : '')} ref={popup}>
-                                    <div className={styles.image}>
-                                        <Image src={'/img/support_lvl_bronze.svg'} alt="support level" height={81} width={81} />
+                { !ticket?.fields?.resolutiondate && (
+                    <div className={styles.line}>
+                        <div className={styles.lineTitle}>{"Expected resolution time"}</div>
+                        <div className={clsx(styles.lineData, styles.bold)}>
+                            <div className={styles.value}>{"Oct 31, 11:30 AM"}</div>
+                            <div className={styles.estimation} ref={estimationLink} onMouseOver={showPopup}>
+                                <span>{"Erste Antwort innerhalb von 8 Stunden"}</span>
+                                {popUpVisible && (
+                                    <div className={clsx(styles.popup, popUpVisible ? styles.opened : '')} ref={popup}>
+                                        <div className={styles.image}>
+                                            <Image src={'/img/support_lvl_bronze.svg'} alt="support level" height={81} width={81} />
+                                        </div>
+                                        <div className={styles.text}>
+                                            Ihr aktuelles Support-Level ist Bronze. Um schneller Lösungen zu erhalten, erwägen Sie ein Upgrade auf ein höheres Support-Level <span style={{ color: '#0096D7' }}>Mehr erfahren</span>
+                                        </div>
                                     </div>
-                                    <div className={styles.text}>
-                                        Ihr aktuelles Support-Level ist Bronze. Um schneller Lösungen zu erhalten, erwägen Sie ein Upgrade auf ein höheres Support-Level <span style={{ color: '#0096D7' }}>Mehr erfahren</span>
-                                    </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
                 {/* {task.fields?.resolutiondate && (
                                 <div className={styles.line}>
                                     <div className={styles.lineTitle}>{"Expected resolution time"}</div>
@@ -135,7 +138,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                             )} */}
                 {ticket.fields?.created && (
                     <div className={styles.line}>
-                        <div className={styles.lineTitle}>{"Request submitted"}</div>
+                        <div className={styles.lineTitle}>{"Antrag eingereicht"}</div>
                         <div className={styles.lineData}>{formatDate(ticket.fields?.created)}</div>
                     </div>
                 )}
