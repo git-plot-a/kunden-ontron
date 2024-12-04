@@ -20,14 +20,14 @@
 .button {
   margin-right: 0 !important;
   margin-left: 12px !important;
-  font-size: 14px;
-  line-height: 32px;
-  font-weight: 300;
+  font-size: 14px !important;
+  line-height: 32px !important;
+  font-weight: 300 !important;
   padding: 4px 16px !important;
-  color: var(--most-dark);
-  background-color: var(--button-hover-gray);
+  color: var(--most-dark) !important;
+  background-color: var(--button-hover-gray) !important;
   border: none;
-  border: 1px solid var(--button-hover-gray);
+  border: 1px solid var(--button-hover-gray) !important;
   transition: border-color 0.2s;
   &:hover{
     background-color: var(--hover-light) !important;
