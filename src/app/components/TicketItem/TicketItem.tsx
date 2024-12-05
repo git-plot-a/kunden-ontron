@@ -141,10 +141,6 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
         setEventsList([...resolution, ...list])
     }, [])
 
-    const ServiceLevelImage = () =>{
-
-        return 'support_lvl_Bronze.svg'
-    }
 
     const AuthorProcess = (author: string) => {
         const curreUser = utils.user.getUserData();
