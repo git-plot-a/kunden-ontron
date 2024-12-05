@@ -191,7 +191,6 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
             return null;
         }
 
-        
     }
 
 
@@ -255,7 +254,6 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                         </div>
                     </div>
                 )}
-                {ticket.fields?.}
             </div>
             {eventsList.length > 0 && (
                 <div className={styles.contentBottomContainer}>
