@@ -4,7 +4,9 @@ import clsx from "clsx"
 import Image from "next/image"
 import constants from "./constants"
 import styles from "./ticketItem.module.scss"
+import useSendQuery from "@/app/hooks/sendQuery/sendQuery"
 import utils from "@/app/utils"
+import api from "../../api/crud"
 
 type Props = {
     ticket: Ticket,
@@ -24,6 +26,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     const popup = useRef<HTMLDivElement | null>(null)
     const [tarifData, setTarifData] = useState<Preview | null>(null)
     const [eventsList, setEventsList] = useState<Event[]>([])
+    const { fetchData } = useSendQuery()
 
     function formatDate(dateString: string): string {
         const date = new Date(dateString);
@@ -87,11 +90,17 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
 
 
     useEffect(() => {
-        const getTarifInfo = () =>{
-            setTarifData(null)
+        const getTarifInfo = async () => {
+            const jira_id = ticket.fields?.customfield_10251?.id
+            if(jira_id){
+                const res = await fetchData(`${api.custom.PREVIEW_CARDS}/${jira_id}`,'GET', {}, null, true)
+                if(res && res.length > 0){
+                    setTarifData(res[0])
+                }
+            }
         }
 
-        if(!tarifData){
+        if(!tarifData && isOpened){
             getTarifInfo()
         }
 
@@ -133,7 +142,8 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
     }, [])
 
     const ServiceLevelImage = () =>{
-        return 'support_lvl_bronze.svg'
+
+        return 'support_lvl_Bronze.svg'
     }
 
     const AuthorProcess = (author: string) => {
@@ -146,6 +156,46 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
         return name ? name : priorityName
     }
 
+    const firstReactionCulculation = (firstReaction: number) =>{
+        if(ticket?.fields?.created){
+            const createdDate  = new Date(ticket?.fields?.created)
+            const reactionDate = new Date(createdDate.getTime() + firstReaction * 60 * 60 * 1000);
+            
+            const WORK_START_HOUR = 8; 
+            const WORK_END_HOUR = 17;
+    
+            while (reactionDate.getHours() < WORK_START_HOUR || reactionDate.getHours() >= WORK_END_HOUR) {
+                if (reactionDate.getHours() < WORK_START_HOUR) {
+                    reactionDate.setHours(WORK_START_HOUR, 0, 0, 0);
+                } else {
+                    reactionDate.setDate(reactionDate.getDate() + 1);
+                    reactionDate.setHours(WORK_START_HOUR, 0, 0, 0);
+                }
+            }
+    
+
+            const options: Intl.DateTimeFormatOptions = {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true,
+            };
+            const formattedReactionDate = reactionDate.toLocaleString('en-US', options);
+    
+            console.log('Дата реагирования:', formattedReactionDate);
+    
+            return formattedReactionDate;
+        } else {
+            console.log('Дата создания отсутствует.');
+            return null;
+        }
+
+        
+    }
+
+
+
     return <div className={clsx(styles.tasksItem, isOpened ? styles.opened : '', classes)} style={style} ref={animatedElement}>
         <div className={clsx(styles.ticketTop, isOpened ? styles.opened : '')} onClick={showInfo}>
             <div className={styles.title}>
@@ -157,19 +207,19 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
         </div>
         <div className={clsx(styles.ticketContentSection, isOpened ? styles.opened : '')}>
             <div className={styles.contentTopContainer}>
-                {!ticket?.fields?.resolutiondate && (
+                {!ticket?.fields?.resolutiondate && tarifData && (
                     <div className={styles.line}>
                         <div className={styles.lineTitle}>{constants.EXPECTED_REOLUTION_DATE}</div>
                         <div className={clsx(styles.lineData, styles.bold)}>
-                            <div className={styles.value}>{"Oct 31, 11:30 AM"}</div>
+                            <div className={styles.value}>{firstReactionCulculation(tarifData?.responce_time as number)}</div>
                             <div className={styles.estimation} ref={estimationLink} onMouseOver={showPopup}>
-                                <span dangerouslySetInnerHTML={{__html:constants.FIRST_RESPONCE }}/>
+                                <span dangerouslySetInnerHTML={{__html: utils.culculations.processResponceTime(tarifData?.responce_time as number, constants.FIRST_RESPONCE) }}/>
                                 {popUpVisible && (
                                     <div className={clsx(styles.popup, popUpVisible ? styles.opened : '')} ref={popup}>
-                                        <div className={styles.image}>
-                                            <Image src={`/img/${ServiceLevelImage()}`} alt="support level" height={81} width={81} />
+                                        <div className={clsx(styles.image, styles[tarifData.levels.label])}>
+                                            <Image src={`/img/support_lvl_${tarifData.levels.label}.svg`} alt="support level" height={81} width={81} />
                                         </div>
-                                        <div className={styles.text} dangerouslySetInnerHTML={{__html: constants.SUPPORT_LEVEL}}/>
+                                        <div className={styles.text} dangerouslySetInnerHTML={{__html: utils.culculations.processTarif(tarifData?.levels.label as string, constants.SUPPORT_LEVEL)}}/>
                                     </div>
                                 )}
                             </div>
@@ -205,6 +255,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                         </div>
                     </div>
                 )}
+                {ticket.fields?.}
             </div>
             {eventsList.length > 0 && (
                 <div className={styles.contentBottomContainer}>

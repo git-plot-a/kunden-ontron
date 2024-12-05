@@ -145,6 +145,9 @@ declare global {
       status: {
         name: string;
       };
+      customfield_10251: {
+        id: string;
+      }
       resolutiondate: string | null;
       created: string | null;
       priority: {

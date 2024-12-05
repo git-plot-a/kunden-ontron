@@ -6,7 +6,7 @@ const RESOLUTION_DATE = 'Ticket-Auflösung'
 
 const EXPECTED_REOLUTION_DATE = 'Erwartete Lösungszeit'
 
-const FIRST_RESPONCE = '"Erste Antwort innerhalb von <span>8</span> Stunden"'
+const FIRST_RESPONCE = 'Erste Antwort innerhalb von <span>8</span> Stunden'
 
 const SUPPORT_LEVEL = ' Ihr aktuelles Support-Level ist <span>Bronze</span>. Um schneller Lösungen zu erhalten, erwägen Sie ein Upgrade auf ein höheres Support-Level <a href="/platforms" class="link">Mehr erfahren ></a>'
 

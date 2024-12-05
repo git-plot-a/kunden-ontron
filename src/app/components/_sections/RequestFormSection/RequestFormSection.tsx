@@ -62,14 +62,14 @@ const RequestFormSection = () => {
     const processSupportLvel = (serviceCode: string) => {
         const serviceItem = services?.filter(service => serviceCode == service.related_entity.id)
         if (serviceItem && serviceItem.length > 0 && serviceItem[0].levels?.label) {
-            return constants.ADITIONAL_INFO.replace(/<span>(.*?)<\/span>/, `<span class="${serviceItem[0].levels.label}" >${serviceItem[0].levels.label}</span>`);
+            return utils.culculations.processTarif(serviceItem[0].levels?.label, constants.ADITIONAL_INFO, true)
         }
         return constants.ADITIONAL_INFO
     }
     const processSupportText = (serviceCode: string, resText: string) => {
         const serviceItem = services?.filter(service => serviceCode == service.related_entity.id)
         if (serviceItem && serviceItem.length > 0 && serviceItem[0].responce_time) {
-            return resText.replace(/<span>(.*?)<\/span>/, `<span class="${serviceItem[0].levels.label}" >${serviceItem[0].responce_time}</span>`);
+            return utils.culculations.processResponceTime(serviceItem[0].responce_time as number, resText)
         }
         return resText
     }
