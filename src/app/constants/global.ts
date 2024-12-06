@@ -40,6 +40,13 @@ const REQUEST_TYPES: Array<DropDownList> = [
   },
 ];
 
+const PERIOD_TYPES = [
+  // { slug:  "today", title: "Heute"},
+  { slug: "this_week", title: "Diese Woche" },
+  { slug: "this_month", title: "Diesen Monat" },
+  { slug: "last_3_month", title: "Letzten drei Monate" },
+];
+
 const FILE_TYPES_FOR_IMAGES = [
   "image/gif",
   "image/jpeg",
@@ -47,24 +54,30 @@ const FILE_TYPES_FOR_IMAGES = [
   "image/webp",
 ];
 
-const TAB_NAMES = ['Beschreibung', 'Inhalts-Support-Level', 'Plattformen-Support-Level']
+const TAB_NAMES = [
+  "Beschreibung",
+  "Inhalts-Support-Level",
+  "Plattformen-Support-Level",
+];
 
 const PIORITIES = [
   {
-      title: 'Notfall',
-      value: '1'
+    title: "Notfall",
+    value: "1",
   },
   {
-      title: 'Hoch',
-      value: '2'
-  },{
-      title: 'Mittel',
-      value: '3'
-  },{
-      title: 'Niedrig',
-      value: '4'
-  }
-]
+    title: "Hoch",
+    value: "2",
+  },
+  {
+    title: "Mittel",
+    value: "3",
+  },
+  {
+    title: "Niedrig",
+    value: "4",
+  },
+];
 
 export default {
   URL_STANDART,
@@ -78,5 +91,6 @@ export default {
   REQUEST_TYPES,
   FILE_TYPES_FOR_IMAGES,
   TAB_NAMES,
-  PIORITIES
+  PIORITIES,
+  PERIOD_TYPES,
 };

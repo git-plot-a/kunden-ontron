@@ -38,14 +38,14 @@ const StandartButton: FC<Props> = ({ title, classes = "", link = null, callback 
     return <>
         {!link ? (
             <div className={clsx(styles.container, active ? styles.active : '', classes)} onClick={buttonClick}>
-                <Image src={image} alt={title as string} width={24} height={24} />
-                <span>{title}</span>
+                {image && (<Image src={image} alt={title as string} width={24} height={24} />)}
+                <span dangerouslySetInnerHTML={{ __html: title as string}}/>
             </div>
 
         ) : (
             <Link className={clsx(styles.container, active ? styles.active : '', classes)} href={link as Url} target={blank ? "_blank" : "_self"}>
-                <Image src={image} alt={title as string} width={24} height={24} />
-                <span>{title}</span>
+                {image && (<Image src={image} alt={title as string} width={24} height={24} />)}
+                <span dangerouslySetInnerHTML={{ __html: title as string}}/>
             </Link>
         )}
     </>

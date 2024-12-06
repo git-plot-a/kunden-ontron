@@ -35,8 +35,9 @@
 
   }
   .sortList{
-    min-width: 433px;
+    // min-width: 433px;
     margin-bottom: 0;
+    margin-left: 16px;
   }
 }
 
@@ -259,6 +260,12 @@
 //     }
 //   }
 // }
+
+.drowDownListsArea{
+  display: flex;
+  width: max-content;
+
+}
 
 .noAnimation {
   transition: none !important;

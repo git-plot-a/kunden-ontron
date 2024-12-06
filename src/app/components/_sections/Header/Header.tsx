@@ -12,17 +12,20 @@ import useAnimation from "@/app/hooks/Animation/Animation"
 import constants from "./constants"
 import utils from "../../../utils"
 import styles from "./header.module.scss"
+import clsx from "clsx"
 
 
 type Props = {
     currentPage: string
 }
 
-const Header:React.FC<Props> = ({currentPage = "home"}) => {
+const Header: React.FC<Props> = ({ currentPage = "home" }) => {
     const checkVisibility = useAnimation()
     const router = useRouter()
     const [menuList, setMenuList] = useState(constants.LIST_MENU)
     const [loading, setLoading] = useState(true)
+    const [showPopUp, setShowPopUp] = useState(false)
+
 
 
     const logOut = () => {
@@ -31,14 +34,19 @@ const Header:React.FC<Props> = ({currentPage = "home"}) => {
         router.push('/login')
     }
 
+    const openPopUp = () => {
+        console.log(showPopUp)
+        setShowPopUp(!showPopUp)
+    }
+
     useEffect(() => {
         const updatedMenu = menuList
-        updatedMenu[1].callback = logOut
+        // updatedMenu[1].callback = openPopUp
         setMenuList(updatedMenu)
         setLoading(false)
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         checkVisibility()
     }, [loading])
 
@@ -61,13 +69,29 @@ const Header:React.FC<Props> = ({currentPage = "home"}) => {
                 </Col>
                 <Col span={19} classes={styles.smallParts}>
                     <ul className={styles.menuContainer}>
-                        {menuList.length > 0 && menuList.map((item, key) => (
-                            <li key={key} className="animation-fade-in animation-fade-in middle-duration immidiate-show" style={{transitionDelay: `${key*0.1}s`}}> 
-                                <StandartButton title={item.title} link={item.link} callback={item?.callback ? item.callback : undefined} active={currentPage == item.id} image={item.img}/>
-                            </li>
-
-                        ))}
+                        {menuList.length > 0 && menuList.map((item, key) => {
+                            if (key < menuList.length - 1) {
+                                return (<li key={key} className="animation-fade-in animation-fade-in middle-duration immidiate-show" style={{ transitionDelay: `${key * 0.1}s` }}>
+                                    <StandartButton title={item.title} link={item.link} callback={item?.callback ? item.callback : undefined} active={currentPage == item.id} image={item.img} classes={styles.button} />
+                                </li>)
+                            }
+                        })}
+                        <li className={clsx("animation-fade-in animation-fade-in middle-duration immidiate-show", styles.buttomContainer)} style={{ transitionDelay: `${(menuList.length - 1) * 0.1}s` }}>
+                            <StandartButton title={menuList[menuList.length - 1].title} link={menuList[menuList.length - 1].link} callback={openPopUp} active={currentPage == menuList[menuList.length - 1].id} image={menuList[menuList.length - 1].img} classes={styles.buttomContainer} />
+                        </li>
                     </ul>
+                    {showPopUp && (
+                        <div className={styles.popUpBack}>
+                            <div className={styles.infoPart}>
+                                <div><b>{utils.user.getUserData().company}</b></div>
+                                <div>{utils.user.getUserData().user_email}</div>
+                                <div className={styles.role}>{utils.user.getUserData().roles[0].title}</div>
+                            </div>
+                            <div className={styles.buttonsPart}>
+                                <StandartButton title={'Anmelden'} callback={logOut} image="/img/logout.svg" active={false}/>
+                            </div>
+                        </div>
+                    )}
                 </Col>
             </Row>
         </Container>)

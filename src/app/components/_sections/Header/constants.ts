@@ -9,11 +9,11 @@ const LIST_MENU = [
     img: '/img/home.svg'
   },  
   {
-    title: "Abmelden",
+    title: "<img style='height: 32px; width: 32px; margin-top: -3px; filter: none; margin-right: 0px;' alt='user-icon' src='/img/user_icon.svg'/>",
     // link: `#feedback-section`,
     callback: ()=>{},
-    id: "logout",
-    img: '/img/logout.svg'
+    id: "user",
+    // img: '/img/user_icon.svg'
   },
 ];
 

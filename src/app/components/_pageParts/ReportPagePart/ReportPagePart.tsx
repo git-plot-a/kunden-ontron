@@ -22,24 +22,6 @@ import useAnimation from '@/app/hooks/Animation/Animation';
 import styles from './reportPage.module.scss'
 import constants from "./constants"
 
-
-
-type NestedObject = {
-    [key: string]:
-    | NestedObject
-    | string
-    | number
-    | boolean
-    | null
-    | undefined
-    | Array<NestedObject>
-};
-
-type DropDownListItems = {
-    title: string,
-    value: string,
-}
-
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 ChartJS.defaults.font = {
@@ -51,7 +33,7 @@ ChartJS.defaults.font = {
 
 const ReportPagePart = () => {
     const [loading, setLoading] = useState(true)
-    const [periodType, setPeriodType] = useState(constants.PERIOD_TYPES[2])
+    const [periodType, setPeriodType] = useState(constants.PERIOD_TYPES[1])
     const [result, setResult] = useState<NestedObject>({})
     const [priorities, setPriorities] = useState<DropDownListItems[]>([])
     const [requestTypes, setRequesTypes] = useState<DropDownListItems[]>([])
@@ -75,7 +57,7 @@ const ReportPagePart = () => {
 
     //data processing functions for diagrams
     const typesProccess = (resultData: NestedObject) => {
-        const startDate = getStartDate(periodType)
+        const startDate = utils.culculations.getStartDate(periodType.slug)
         const now = new Date()
         if (Array.isArray(resultData?.issues)) {
             const res = resultData?.issues?.reduce((list, item) => {
@@ -144,7 +126,7 @@ const ReportPagePart = () => {
 
         }
 
-        divideData(periodType, constants.TIMELINE_INTERVAL[0], addToPeriod)
+        divideData(periodType.slug, constants.TIMELINE_INTERVAL[0], addToPeriod)
 
         setResolvedQuantity({
             ...resolvedQuantity,
@@ -173,7 +155,7 @@ const ReportPagePart = () => {
             quantity.push(preiodQuantity)
             labels.push(intervalName)
         }
-        divideData(periodType, constants.TIMELINE_INTERVAL[0], addToPeriod)
+        divideData(periodType.slug, constants.TIMELINE_INTERVAL[0], addToPeriod)
         setGeneralRequestQuantity({
             ...generalResuestQunatity,
             labels: labels,
@@ -209,7 +191,7 @@ const ReportPagePart = () => {
             time.push(calculateAverage(timeValues))
             labels.push(intervalName)
         }
-        divideData(periodType, constants.TIMELINE_INTERVAL[0], addToPeriod)
+        divideData(periodType.slug, constants.TIMELINE_INTERVAL[0], addToPeriod)
         setAvarageTimeVal({
             ...avarageTimeVal,
             labels: labels,
@@ -253,8 +235,8 @@ const ReportPagePart = () => {
         return hours;
     }
 
-    const setDropdownLists = (resultData: NestedObject, selectedPeriodType: string = periodType) => {
-        const startDate = getStartDate(selectedPeriodType)
+    const setDropdownLists = (resultData: NestedObject, selectedPeriodType: string = periodType.slug) => {
+        const startDate = utils.culculations.getStartDate(selectedPeriodType)
         const now = new Date();
         const prioritiesList: DropDownListItems[] = []
         const requestTypeList: DropDownListItems[] = []
@@ -316,7 +298,8 @@ const ReportPagePart = () => {
         const loadDiagramData = async () => {
             const userData = utils.user.getUserData();
             let email = undefined
-            if (!Array.isArray(userData.roles) || (!userData.roles.includes("sla_manager") && !userData.roles.includes("administrator"))) {
+            const includesPrivilagedRoles = utils.culculations.checkRoles()
+            if (!includesPrivilagedRoles) {
                 email = userData.user_email
             }
             const data: object = {
@@ -344,34 +327,11 @@ const ReportPagePart = () => {
     }, [avarageTimeProprityValue, avarageTimeTypeValue])
 
 
-    const getStartDate = (period: string): Date | null => {
-        const now = new Date();
-        switch (period) {
-            case constants.PERIOD_TYPES[0]: {
-                return new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            }
-            case constants.PERIOD_TYPES[1]: {
-                const dayOfWeek = now.getDay();
-                return new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek);
-            }
-            case constants.PERIOD_TYPES[2]: {
-                return new Date(now.getFullYear(), now.getMonth(), 1);
-            }
-            case constants.PERIOD_TYPES[3]: {
-                return new Date(now.getFullYear(), now.getMonth() - 3, 1);
-            }
-            case constants.PERIOD_TYPES[4]: {
-                return new Date(now.getFullYear() - 1, 0, 1);
-            }
-            default:
-                return null;
-        }
-    };
 
     const divideData = (period: string,
         interval: string,
         callback: (startInterval: Date, finishInterval: Date, name: string) => void) => {
-        const startPeriodDate = getStartDate(period)
+        const startPeriodDate = utils.culculations.getStartDate(period)
         if (!startPeriodDate) return;
 
         const now = new Date();
@@ -426,10 +386,40 @@ const ReportPagePart = () => {
 
 
     const switchPeriod = (selectedPeriodType: string) => {
-        if (constants.PERIOD_TYPES.includes(selectedPeriodType)) {
-            setPeriodType(selectedPeriodType)
-            setDropdownLists(result, selectedPeriodType)
+        const selectedPeriod = constants.PERIOD_TYPES.filter((type)=>type.slug == selectedPeriodType)
+        if (selectedPeriod.length > 0) {
+            setPeriodType(selectedPeriod[0])
+            setDropdownLists(result, selectedPeriod[0].slug)
         }
+    }
+
+    const countByDate = (ticketsArray: NestedObject[], condition: (item: NestedObject) => boolean) => {
+        const startDate = utils.culculations.getStartDate(periodType.slug)
+        if (Array.isArray(ticketsArray) && ticketsArray.length > 0) {
+            const res = ticketsArray.reduce((res: NestedObject[], item) => {
+                const created = new Date((item.fields as NestedObject)?.created as string)
+                if (created && startDate && created >= startDate && condition(item)) {
+                    res.push(item)
+                }
+                return res
+            }, [])
+            return res.length
+        }
+        return 0;
+    }
+
+    const resolvedCondition = (item: NestedObject) => {
+        return (item.fields as NestedObject)?.resolutiondate !== null
+    }
+
+    const ticketInPocess = (item: NestedObject) => {
+        const firstResponce = ((item.fields as NestedObject)?.customfield_10228 as NestedObject).completedCycles as NestedObject[]
+        return (item.fields as NestedObject)?.resolutiondate == null && firstResponce && firstResponce.length > 0
+    }
+
+    const WaitingForAnswer = (item: NestedObject) => {
+        const firstResponce = ((item.fields as NestedObject)?.customfield_10228 as NestedObject).completedCycles as NestedObject[]
+        return (item.fields as NestedObject)?.resolutiondate == null && firstResponce && firstResponce.length == 0
     }
 
     useEffect(() => {
@@ -446,33 +436,39 @@ const ReportPagePart = () => {
                 <Row>
                     <Col span={24}>
                         <div className={styles.finterButtonsContainer}>
-                            {/* <Button title={"Today"}
-                                    callback={() => { switchPeriod(constants.PERIOD_TYPES[0]) }}
-                                    classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[0] ? styles.active : '', "animation-fade-in-top")} /> */}
-                            <Button title={"Diese Woche"}
-                                callback={() => { switchPeriod(constants.PERIOD_TYPES[1]) }}
-                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[1] ? styles.active : '',)} />
-                            <Button title={"Diesen Monat"}
-                                callback={() => { switchPeriod(constants.PERIOD_TYPES[2]) }}
-                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[2] ? styles.active : '',)} />
-                            <Button title={"Letzten drei Monate"}
-                                callback={() => { switchPeriod(constants.PERIOD_TYPES[3]) }}
-                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[3] ? styles.active : '',)} />
-                            {/* <Button title={"Last year"}
-                                callback={() => { switchPeriod(constants.PERIOD_TYPES[4]) }}
-                                classes={clsx(styles.button, periodType == constants.PERIOD_TYPES[4] ? styles.active : '', "animation-fade-in-top")} /> */}
-
+                            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                                {/* <div>{JSON.stringify(r  esult)}</div> */}
+                                {result.issues && (
+                                    <div style={{ paddingRight: '10px' }}>
+                                        <div>Total number:</div>
+                                        <div>{String(countByDate(result.issues as NestedObject[], () => true))}</div>
+                                    </div>
+                                )}
+                                {result.issues && (
+                                    <div style={{ paddingRight: '10px' }}>
+                                        <div>Resolved number:</div>
+                                        <div>{String(countByDate(result.issues as NestedObject[], resolvedCondition))}</div>
+                                    </div>
+                                )}
+                                {result.issues && (
+                                    <div style={{ paddingRight: '10px' }}>
+                                        <div>In process number:</div>
+                                        <div>{String(countByDate(result.issues as NestedObject[], ticketInPocess))}</div>
+                                    </div>
+                                )}
+                                {result.issues && (
+                                    <div style={{ paddingRight: '10px' }}>
+                                        <div>Waiting for firts responce number:</div>
+                                        <div>{String(countByDate(result.issues as NestedObject[], WaitingForAnswer))}</div>
+                                    </div>
+                                )}
+                            </div>
+                            {constants.PERIOD_TYPES.map((period) => (
+                                <Button title={period.title}
+                                    callback={() => { switchPeriod(period.slug) }}
+                                    classes={clsx(styles.button, periodType.slug == period.slug ? styles.active : '',)} />
+                            ))}
                         </div>
-                        {/* <div>{"Timeline"}</div>
-                    <Button title={"Days"}
-                        callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[0]) }}
-                        classes={clsx(styles.button, timelineType == constants.TIMELINE_INTERVAL[0] ? styles.active : '')} />
-                    <Button title={"Week"}
-                        callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[1]) }}
-                        classes={clsx(styles.button, timelineType == constants.TIMELINE_INTERVAL[1] ? styles.active : '')} />
-                    <Button title={"Month"}
-                        callback={() => { switchTimeline(constants.TIMELINE_INTERVAL[2]) }}
-                        classes={clsx(styles.button, timelineType == constants.TIMELINE_INTERVAL[2] ? styles.active : '')} /> */}
                     </Col>
                 </Row>
                 <Row>

@@ -14,10 +14,10 @@ type Props = {
 
 }
 
-const DropDownList: React.FC<Props> = ({ items, handler, def = undefined, classes = "", style = undefined}) => {
+const DropDownList: React.FC<Props> = ({ items, handler, def = undefined, classes = "", style = undefined }) => {
     const ref = useRef<HTMLDivElement | null>(null);
     const [openedList, setListOpened] = useState(false)
-    const [currentChoice, setcurrentChoice] = useState(def ? def: 0)
+    const [currentChoice, setcurrentChoice] = useState(def ? def : 0)
 
     const itemClick = (key: number) => {
         changeOpening()
@@ -44,12 +44,19 @@ const DropDownList: React.FC<Props> = ({ items, handler, def = undefined, classe
     }, [])
 
     return <div className={clsx(styles.dropDownContainer, classes)} ref={ref} style={style}>
+        <div className={styles.sizingElement}>
+            {items.length > 0 && items.map((item, key) => (
+                <div key={key} className={styles.item}>
+                    <div>{item.title}</div>
+                </div>
+            ))}
+        </div>
         <div className={clsx(styles.dropDownElements, openedList && styles.opened)}>
             <div onClick={changeOpening} className={styles.dropDownSelectedItem}>
                 <span>{items[currentChoice]?.title}</span>
                 <Image src={'/img/drop_down_arrow.svg'} alt={'arrow'} width={24} height={24} className={clsx(styles.dropDownArrow, openedList && styles.opened)} /></div>
             <div className={styles.dropDownList}>
-                {items.length>0 && items.map((item, key) => (
+                {items.length > 0 && items.map((item, key) => (
                     <div key={key} onClick={() => { itemClick(key) }} className={styles.dropDownItem}>
                         <div>{item.title}</div>
                     </div>

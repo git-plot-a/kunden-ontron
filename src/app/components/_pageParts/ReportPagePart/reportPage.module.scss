@@ -29,6 +29,8 @@
   border: none;
   border: 1px solid var(--button-hover-gray) !important;
   transition: border-color 0.2s;
+  white-space: nowrap;
+  height: max-content;
   &:hover{
     background-color: var(--hover-light) !important;
     border: 1px solid var(--hover-light) !important;

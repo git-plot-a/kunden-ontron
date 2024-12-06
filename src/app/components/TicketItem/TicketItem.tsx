@@ -118,7 +118,6 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
         if (ticket.changelog?.histories && ticket.changelog?.histories?.length > 0) {
             ticket.changelog?.histories?.forEach((history) => {
                 const created = history?.created
-                console.log(created)
                 if (history.items && history.items?.length > 0) {
                     history?.items.forEach((item) => {
                         list.push({ title: `Feld ${item.field} wurde geändert${item.fromString || item.toString ? ':' : ''} ${item.fromString ? 'von ' + item.fromString : ''} ${item.toString ? 'in ' + item.toString : ''}.`, date: created })
@@ -177,13 +176,10 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                 minute: '2-digit',
                 hour12: true,
             };
-            const formattedReactionDate = reactionDate.toLocaleString('en-US', options);
-    
-            console.log('Дата реагирования:', formattedReactionDate);
+            const formattedReactionDate = reactionDate.toLocaleString('en-US', options)
     
             return formattedReactionDate;
         } else {
-            console.log('Дата создания отсутствует.');
             return null;
         }
 

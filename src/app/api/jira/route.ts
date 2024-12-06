@@ -85,7 +85,7 @@ export async function GET(req: Request) {
 
     queryUrl += ` AND (${emailQueries})&fields=${fields}&expand=changelog`;
   }
-  queryUrl += `&fields=${fields}&expand=changelog`;
+  queryUrl += `&fields=${fields}&expand=changelog&maxResults=1000&startAt=0`;
 
   try {
     const response = await fetch(queryUrl, {

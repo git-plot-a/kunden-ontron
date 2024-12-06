@@ -5,7 +5,7 @@ const TILES_LIST = [
         callback: () =>{}
     },
     {
-        title: "Dienstleistungs-anfragen",
+        title: "Überblick Tickets Gesamt",
         icon: "/img/tile4.svg",
         callback: () =>{}
     },

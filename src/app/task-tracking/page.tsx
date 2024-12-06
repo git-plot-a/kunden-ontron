@@ -15,33 +15,40 @@ const TaskTrackingPage = () => {
     const router = useRouter()
     const [loading, setLoading] = useState(true)
     const [tickets, setTickets] = useState<Array<Ticket>>([])
+    const [usedTickets, setUsedTickets] = useState<Array<Ticket>>([])
+    const [currentSort, setCurrentSort] = useState<string>('')
 
     useEffect(() => {
         console.log(utils.user.getToken())
         if (!utils.user.getToken()) {
             utils.user.resetAllData()
             router.push('/login')
-        } else {
-            setLoading(false)
         }
     }, [])
 
 
     useEffect(() => {
+        setLoading(true)
+        const params = new URL(window.location.href).searchParams
         const ticketsLoading = async () => {
             const userData = utils.user.getUserData();
             let email = '';
-            if (!Array.isArray(userData.roles) || (!userData.roles.includes("sla_manager") && !userData.roles.includes("administrator"))) {
+            const includesPrivilagedRoles = utils.culculations.checkRoles()
+
+            if (!includesPrivilagedRoles) {
                 email = utils.user.getUserData()?.user_email
             }
+
             const data: object = {
                 userEmail: email,
                 project: userData.project
             }
 
             const result = await utils.jira.apiRequest(data, "GET")
-            console.log(result)
             setTickets(result?.issues)
+            setUsedTickets(result?.issues)
+            filterTicketsList(result?.issues, params)
+            setLoading(false)
         }
 
         ticketsLoading();
@@ -50,8 +57,9 @@ const TaskTrackingPage = () => {
 
 
 
-    const sortingFunction = (val: string) => {
-        const newTicketsList: Array<Ticket> = tickets.map(item => item)
+    const sortingFunction = (val: string, newTicketsArray: Ticket[] | null = null) => {
+        const newTicketsList: Array<Ticket> = newTicketsArray ? newTicketsArray.map(items => items) : usedTickets.map(item => item)
+        setCurrentSort(val)
         switch (val) {
             case 'date':
                 newTicketsList.sort((a, b) => {
@@ -89,10 +97,68 @@ const TaskTrackingPage = () => {
                 });
                 break;
         }
-
-        setTickets(newTicketsList)
+        setUsedTickets(newTicketsList)
 
     }
+
+    const filterTicketsList = (originTickets: Ticket[], params: URLSearchParams) => {
+        let newTickets: Ticket[] = originTickets.map(ticket => ticket)
+
+        const period = params.get('period')
+        if (period) {
+            const startDate: Date | null = utils.culculations.getStartDate(period)
+            console.log(startDate)
+            newTickets = newTickets.reduce((res: Ticket[], item: Ticket) => {
+                const createdDate = new Date(item.fields?.created as string)
+                if (startDate && createdDate >= startDate) {
+                    res.push(item)
+                }
+                return res
+            }, [])
+        }
+        const sort = params.get('sort')
+        if (sort) {
+            newTickets = newTickets.reduce((res: Ticket[], item: Ticket) => {
+                switch (sort) {
+                    case 'all':
+                        res.push(item);
+                        break;
+                    case 'resolved':
+                        if (item.fields?.resolutiondate) {
+                            res.push(item)
+                        }
+                        break;
+                    case 'in_process':
+                        if (item.fields?.customfield_10228?.completedCycles?.length > 0 && !item.fields?.resolutiondate) {
+                            res.push(item)
+                        }
+                        break;
+                    case 'waiting':
+                        if (item.fields?.customfield_10228?.completedCycles?.length == 0) {
+                            res.push(item)
+                        }
+                        break;
+                }
+                return res
+            }, [])
+
+        }
+
+        sortingFunction(currentSort, newTickets)
+    }
+
+    const filter = (val: string, param: string) => {
+        const url = new URL(window.location.href);
+        if (val != 'all') {
+            url.searchParams.set(param, val);
+        }else{
+            url.searchParams.delete(param)
+        }
+
+        window.history.pushState({}, '', url.toString());
+        filterTicketsList(tickets, url.searchParams)
+    }
+
 
     return <>
         {!loading && (<>
@@ -104,7 +170,7 @@ const TaskTrackingPage = () => {
                 <Container>
                     <Row>
                         <Col span={24}>
-                            <TaskList tickets={tickets ? tickets : []} sortingFunction={sortingFunction} />
+                            <TaskList loading={loading} tickets={usedTickets ? usedTickets : []} sortingFunction={sortingFunction} filterFunc={filter} />
                         </Col>
                     </Row>
                 </Container>

@@ -1,13 +1,7 @@
 import global from "@/app/constants/global";
 const TIMELINE_INTERVAL = ["day", "week", "month", "year"];
 
-const PERIOD_TYPES = [
-  "today",
-  "this_week",
-  "this_month",
-  "last_3_month",
-  "last_year",
-];
+const PERIOD_TYPES = global.PERIOD_TYPES
 
 const REQUEST_TYES_DESTRIBUTIONS_TITLE = "Verteilung der Anfragetypen";
 

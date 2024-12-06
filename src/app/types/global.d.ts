@@ -122,22 +122,21 @@ declare global {
     responce_time: string | number;
   };
 
-  
   type EventItem = {
     field: string;
     fromString?: string;
-    toString?: string | null
-  }
+    toString?: string | null;
+  };
 
   type HistoryEvent = {
     created: string;
-    items: Array<EventItem>
-  }
+    items: Array<EventItem>;
+  };
 
   type Ticket = {
     key: string;
     changelog?: {
-      histories: Array<HistoryEvent>
+      histories: Array<HistoryEvent>;
     };
     fields: {
       customfield_10244: string;
@@ -147,7 +146,10 @@ declare global {
       };
       customfield_10251: {
         id: string;
-      }
+      };
+      customfield_10228: {
+        completedCycles: Object[]
+      };
       resolutiondate: string | null;
       created: string | null;
       priority: {
@@ -156,6 +158,22 @@ declare global {
       };
       timetracking: Array<object>;
     };
+  };
+
+  type NestedObject = {
+    [key: string]:
+      | NestedObject
+      | string
+      | number
+      | boolean
+      | null
+      | undefined
+      | Array<NestedObject>;
+  };
+
+  type DropDownListItems = {
+    title: string;
+    value: string;
   };
 }
 
