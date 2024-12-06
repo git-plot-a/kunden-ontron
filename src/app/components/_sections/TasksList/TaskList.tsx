@@ -3,8 +3,6 @@ import TicketItem from "../../TicketItem/TicketItem"
 import constants from "./constants"
 import styles from "./taskList.module.scss"
 import DropDownList from "../../DropDownList/DropDownList"
-import utils from "@/app/utils";
-import { Ticks } from "chart.js";
 
 
 
