@@ -148,7 +148,7 @@ declare global {
         id: string;
       };
       customfield_10228: {
-        completedCycles: Object[]
+        completedCycles: unknown[]
       };
       resolutiondate: string | null;
       created: string | null;
