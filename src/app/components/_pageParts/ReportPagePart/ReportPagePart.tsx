@@ -463,8 +463,8 @@ const ReportPagePart = () => {
                                     </div>
                                 )}
                             </div>
-                            {constants.PERIOD_TYPES.map((period) => (
-                                <Button title={period.title}
+                            {constants.PERIOD_TYPES.map((period, key) => (
+                                <Button title={period.title} key={key}
                                     callback={() => { switchPeriod(period.slug) }}
                                     classes={clsx(styles.button, periodType.slug == period.slug ? styles.active : '',)} />
                             ))}
