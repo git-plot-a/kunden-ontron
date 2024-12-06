@@ -31,7 +31,7 @@ const REQUEST_TYPES: Array<DropDownList> = [
     value: "15",
   },
   {
-    title: "Vorfall",
+    title: "Incident",
     value: "14",
   },
   {

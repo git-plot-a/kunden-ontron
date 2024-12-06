@@ -98,7 +98,7 @@ const TaskTrackingPage = () => {
         {!loading && (<>
             <Header currentPage="task-tracking" />
             <section id="top-offer">
-                <TopOfferSubPages title={<>Dienstleistungsanfragen</>} imageUrl="/img/trackingOffer.png" />
+                <TopOfferSubPages title={<>Überblick Tickets Gesamt</>} imageUrl="/img/trackingOffer.png" />
             </section>
             <section style={{ paddingBottom: '224px' }}>
                 <Container>

@@ -23,9 +23,9 @@ const LOADING_IS_IN_PROCESS =
 
 const GENERAL_REQUEST_QUNATITY = "Gesamtzahl der Anfragen";
 
-const RESOLVED_TICKETS_TITLE = "Aufgelöste Tickets";
+const RESOLVED_TICKETS_TITLE = "Gelöste Tickets";
 
-const RESOLVED_ON_TIME_TITLE = 'Rechtzeitig aufgelöst'
+const RESOLVED_ON_TIME_TITLE = 'Rechtzeitig gelöst'
 
 const RESOLVED_NOT_ON_TIME_TITLE = 'Nicht fristgerecht gelöste Tickets'
 
