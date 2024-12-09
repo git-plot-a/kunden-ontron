@@ -315,8 +315,10 @@ const ReportPagePart = () => {
 
             const resultData: NestedObject = await utils.jira.apiRequest(data, "GET")
             if (resultData && (resultData.issues as NestedObject[])?.length > 0) {
-                updateAllDateDiagrams(resultData)
                 setResult(resultData)
+                setTimeout(() => {
+                    updateAllDateDiagrams(resultData)
+                }, 300)
             }
 
             setLoading(false)
@@ -436,16 +438,16 @@ const ReportPagePart = () => {
     const redirectLink = (status: string = '') => {
         const period = periodType.slug
         let link = `/task-tracking`
-        if(period || status){
-            link+='?'
-            if(period){
-                link+=`period=${period}`
-                if(status){
-                    link+=`&sort=${status}`
+        if (period || status) {
+            link += '?'
+            if (period) {
+                link += `period=${period}`
+                if (status) {
+                    link += `&sort=${status}`
                 }
-            }else{
-                if(status){
-                    link+=`sort=${status}`
+            } else {
+                if (status) {
+                    link += `sort=${status}`
                 }
             }
         }
@@ -476,19 +478,19 @@ const ReportPagePart = () => {
                             <div className={clsx(styles.diagramItem, styles.diagramItemDounat)} style={{ width: '100%', height: '486px', marginTop: '-85px' }}>
                                 <div className={styles.NumbersConatiner}>
                                     {result.issues && (
-                                        <div className={styles.valueItem} onClick={()=>{redirectLink()}}>
+                                        <div className={styles.valueItem} onClick={() => { redirectLink() }}>
                                             <div className={styles.valueTitle}>{constants.TOTAL_NUMBER}</div>
                                             <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], () => true))}</div>
                                         </div>
                                     )}
                                     {result.issues && (
-                                        <div className={styles.valueItem} onClick={()=>{redirectLink('opened')}}>
+                                        <div className={styles.valueItem} onClick={() => { redirectLink('opened') }}>
                                             <div className={styles.valueTitle}>{constants.TOTAL_NUMBER_OPENED}</div>
                                             <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], WaitingForAnswer) + countByDate(result.issues as NestedObject[], ticketInPocess))}</div>
                                         </div>
                                     )}
                                     {result.issues && (
-                                        <div className={styles.valueItem} onClick={()=>{redirectLink('resolveds')}}>
+                                        <div className={styles.valueItem} onClick={() => { redirectLink('resolveds') }}>
                                             <div className={styles.valueTitle}>{constants.RESOLVED_TICKETS}</div>
                                             <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], resolvedCondition))}</div>
                                         </div>
