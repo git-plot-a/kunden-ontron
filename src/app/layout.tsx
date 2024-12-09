@@ -6,7 +6,6 @@ import { poppins } from "./fonts"
 import { useScrollManager } from "@/app/hooks/ScrollManager"
 import useAnimation from '@/app/hooks/Animation/Animation';
 import "./globals.scss";
-import Footer from "./components/_sections/Footer/Footer";
 
 
 
