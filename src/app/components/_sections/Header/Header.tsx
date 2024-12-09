@@ -88,7 +88,7 @@ const Header: React.FC<Props> = ({ currentPage = "home" }) => {
                                 <div className={styles.role}>{utils.user.getUserData().roles[0].title}</div>
                             </div>
                             <div className={styles.buttonsPart}>
-                                <StandartButton title={'Anmelden'} callback={logOut} image="/img/logout.svg" active={false}/>
+                                <StandartButton title={'Anmelden'} callback={logOut} image="/img/logout.svg" active={false} classes={styles.logOutButton}/>
                             </div>
                         </div>
                     )}
