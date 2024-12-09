@@ -29,6 +29,12 @@ const NOT_ENOUGH_DATA_FOR_DAIAGRAM = 'Unzureichende Daten für das Diagramm...'
 
 const REQUEST_TYPES = global.REQUEST_TYPES
 
+const TOTAL_NUMBER = 'Gesamtzahl der Tickets:'
+
+const TOTAL_NUMBER_OPENED = 'Gesamtzahl der offenen Tickets'
+
+const RESOLVED_TICKETS = 'Gesamtzahl der gelösten Tickets:'
+
 //test
 
 const DOUGHNUT = {
@@ -236,5 +242,8 @@ export default {
   RESOLVED_NOT_ON_TIME_TITLE,
   AVERAGE_TIME,
   NOT_ENOUGH_DATA_FOR_DAIAGRAM,
-  REQUEST_TYPES
+  REQUEST_TYPES,
+  TOTAL_NUMBER,
+  TOTAL_NUMBER_OPENED,
+  RESOLVED_TICKETS
 };

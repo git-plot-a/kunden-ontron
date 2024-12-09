@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Header from "../components/_sections/Header/Header"
 import Footer from "../components/_sections/Footer/Footer"
 import TopOfferSubPages from "../components/_sections/TopOfferSubPages/TopOfferSubPages"
@@ -13,6 +13,7 @@ import utils from "../utils"
 
 const TaskTrackingPage = () => {
     const router = useRouter()
+    const searchParams = useSearchParams();
     const [loading, setLoading] = useState(true)
     const [tickets, setTickets] = useState<Array<Ticket>>([])
     const [usedTickets, setUsedTickets] = useState<Array<Ticket>>([])
@@ -53,8 +54,6 @@ const TaskTrackingPage = () => {
 
         ticketsLoading();
     }, [])
-
-
 
 
     const sortingFunction = (val: string, newTicketsArray: Ticket[] | null = null) => {
@@ -138,6 +137,11 @@ const TaskTrackingPage = () => {
                             res.push(item)
                         }
                         break;
+                    case 'opened':
+                        if (item.fields?.customfield_10228?.completedCycles?.length == 0 || (utils.culculations.firstResponceTimeInMilliseconds(item as NestedObject) > 0 && !item.fields?.resolutiondate)) {
+                            res.push(item)
+                        }
+                        break;
                 }
                 return res
             }, [])
@@ -151,7 +155,7 @@ const TaskTrackingPage = () => {
         const url = new URL(window.location.href);
         if (val != 'all') {
             url.searchParams.set(param, val);
-        }else{
+        } else {
             url.searchParams.delete(param)
         }
 
@@ -159,6 +163,11 @@ const TaskTrackingPage = () => {
         filterTicketsList(tickets, url.searchParams)
     }
 
+
+    const getParam = (paramName: string) => {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(paramName)
+    }
 
     return <>
         {!loading && (<>
@@ -170,7 +179,7 @@ const TaskTrackingPage = () => {
                 <Container>
                     <Row>
                         <Col span={24}>
-                            <TaskList loading={loading} tickets={usedTickets ? usedTickets : []} sortingFunction={sortingFunction} filterFunc={filter} />
+                            <TaskList loading={loading} tickets={usedTickets ? usedTickets : []} sortingFunction={sortingFunction} filterFunc={filter} sort={getParam('sort') ? getParam('sort') : null} period={getParam('period') ? getParam('period') : null}/>
                         </Col>
                     </Row>
                 </Container>

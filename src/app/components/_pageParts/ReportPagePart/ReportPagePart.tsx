@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import Container from '../../_layout/Container/Container';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
@@ -32,6 +33,7 @@ ChartJS.defaults.font = {
 };
 
 const ReportPagePart = () => {
+    const router = useRouter()
     const [loading, setLoading] = useState(true)
     const [periodType, setPeriodType] = useState(constants.PERIOD_TYPES[1])
     const [result, setResult] = useState<NestedObject>({})
@@ -180,7 +182,7 @@ const ReportPagePart = () => {
                     const currentTime = utils.culculations.firstResponceTimeInMilliseconds(item)
                     const created: Date = gerCurrentData((item?.fields as NestedObject).created as string)
                     if (currentTime &&
-                        status && 
+                        status &&
                         status != 10199 &&
                         created >= startInterval &&
                         created <= finishInterval &&
@@ -258,7 +260,7 @@ const ReportPagePart = () => {
 
                         const currentPrioritiy: NestedObject = ((item?.fields as NestedObject)?.priority as NestedObject) as NestedObject
                         const currentType: NestedObject = ((item?.fields as NestedObject)?.customfield_10010 as NestedObject)?.requestType as NestedObject
-                        if (currentPrioritiy  && prioritiesList.filter(priority => priority.value == currentPrioritiy.id).length == 0) {
+                        if (currentPrioritiy && prioritiesList.filter(priority => priority.value == currentPrioritiy.id).length == 0) {
                             const localName = constants.PRIORITIES.filter(priority => priority.value == currentPrioritiy.id)
                             prioritiesList.push({
                                 title: (localName.length > 0 ? localName[0].title : currentPrioritiy.name) as string,
@@ -389,7 +391,7 @@ const ReportPagePart = () => {
 
 
     const switchPeriod = (selectedPeriodType: string) => {
-        const selectedPeriod = constants.PERIOD_TYPES.filter((type)=>type.slug == selectedPeriodType)
+        const selectedPeriod = constants.PERIOD_TYPES.filter((type) => type.slug == selectedPeriodType)
         if (selectedPeriod.length > 0) {
             setPeriodType(selectedPeriod[0])
             setDropdownLists(result, selectedPeriod[0].slug)
@@ -431,6 +433,26 @@ const ReportPagePart = () => {
     }, [periodType])
 
 
+    const redirectLink = (status: string = '') => {
+        const period = periodType.slug
+        let link = `/task-tracking`
+        if(period || status){
+            link+='?'
+            if(period){
+                link+=`period=${period}`
+                if(status){
+                    link+=`&sort=${status}`
+                }
+            }else{
+                if(status){
+                    link+=`sort=${status}`
+                }
+            }
+        }
+        router.push(link)
+
+    }
+
     return <Container classes={styles.mainContainer}>{loading ?
         (
             <div className={clsx(styles.title, styles.loading, "animation-fade-in", "short-duration")}>{constants.LOADING_IS_IN_PROCESS}</div>
@@ -439,33 +461,6 @@ const ReportPagePart = () => {
                 <Row>
                     <Col span={24}>
                         <div className={styles.finterButtonsContainer}>
-                            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                                {/* <div>{JSON.stringify(r  esult)}</div> */}
-                                {result.issues && (
-                                    <div style={{ paddingRight: '10px' }}>
-                                        <div>Total number:</div>
-                                        <div>{String(countByDate(result.issues as NestedObject[], () => true))}</div>
-                                    </div>
-                                )}
-                                {result.issues && (
-                                    <div style={{ paddingRight: '10px' }}>
-                                        <div>Resolved number:</div>
-                                        <div>{String(countByDate(result.issues as NestedObject[], resolvedCondition))}</div>
-                                    </div>
-                                )}
-                                {result.issues && (
-                                    <div style={{ paddingRight: '10px' }}>
-                                        <div>In process number:</div>
-                                        <div>{String(countByDate(result.issues as NestedObject[], ticketInPocess))}</div>
-                                    </div>
-                                )}
-                                {result.issues && (
-                                    <div style={{ paddingRight: '10px' }}>
-                                        <div>Waiting for firts responce number:</div>
-                                        <div>{String(countByDate(result.issues as NestedObject[], WaitingForAnswer))}</div>
-                                    </div>
-                                )}
-                            </div>
                             {constants.PERIOD_TYPES.map((period, key) => (
                                 <Button title={period.title} key={key}
                                     callback={() => { switchPeriod(period.slug) }}
@@ -475,6 +470,39 @@ const ReportPagePart = () => {
                     </Col>
                 </Row>
                 <Row>
+                    <Col span={12}>
+                        <div className={clsx(styles.diagramContainer, styles.small)} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-center' }}>
+                            <div className={styles.diagramTitle}>{"Allgemeine Statistik"}</div>
+                            <div className={clsx(styles.diagramItem, styles.diagramItemDounat)} style={{ width: '100%', height: '486px', marginTop: '-85px' }}>
+                                <div className={styles.NumbersConatiner}>
+                                    {result.issues && (
+                                        <div className={styles.valueItem} onClick={()=>{redirectLink()}}>
+                                            <div className={styles.valueTitle}>{constants.TOTAL_NUMBER}</div>
+                                            <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], () => true))}</div>
+                                        </div>
+                                    )}
+                                    {result.issues && (
+                                        <div className={styles.valueItem} onClick={()=>{redirectLink('opened')}}>
+                                            <div className={styles.valueTitle}>{constants.TOTAL_NUMBER_OPENED}</div>
+                                            <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], WaitingForAnswer) + countByDate(result.issues as NestedObject[], ticketInPocess))}</div>
+                                        </div>
+                                    )}
+                                    {result.issues && (
+                                        <div className={styles.valueItem} onClick={()=>{redirectLink('resolveds')}}>
+                                            <div className={styles.valueTitle}>{constants.RESOLVED_TICKETS}</div>
+                                            <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], resolvedCondition))}</div>
+                                        </div>
+                                    )}
+                                    {/* {result.issues && (
+                                        <div className={styles.valueItem} >
+                                            <div className={styles.valueTitle}>In process number:</div>
+                                            <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], ticketInPocess))}</div>
+                                        </div>
+                                    )} */}
+                                </div>
+                            </div>
+                        </div>
+                    </Col>
                     <Col span={12}>
                         <div className={clsx(styles.diagramContainer, styles.small)} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-center' }}>
                             <div className={styles.diagramTitle}>{constants.REQUEST_TYES_DESTRIBUTIONS_TITLE}</div>
@@ -508,12 +536,12 @@ const ReportPagePart = () => {
                             </div>
                         </div>
                     </Col>
-                    <Col span={24}>
-                        <div className={clsx(styles.diagramContainer, styles.big)}>
+                    <Col span={12}>
+                        <div className={clsx(styles.diagramContainer, styles.small)}>
                             <div className={styles.diagramTitle}>{constants.GENERAL_REQUEST_QUNATITY}</div>
-                            <div className={styles.diagramItem} style={{ height: '420px', width: '100%' }}>
+                            <div className={styles.diagramItem} style={{ height: '486px', width: '100%' }}>
                                 {generalResuestQunatity.datasets?.length > 0 && generalResuestQunatity.datasets[0]?.data?.length > 0 && calculateSumm(generalResuestQunatity.datasets[0]?.data) > 0 ? (
-                                    <Line data={generalResuestQunatity} options={exumpleLine2Options} width={1250} height={420} />
+                                    <Line data={generalResuestQunatity} options={exumpleLine2Options} />
                                 ) : (
                                     <div className={styles.noData}>
                                         {constants.NOT_ENOUGH_DATA_FOR_DAIAGRAM}

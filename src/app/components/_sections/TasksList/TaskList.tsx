@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import TicketItem from "../../TicketItem/TicketItem"
 import constants from "./constants"
 import styles from "./taskList.module.scss"
@@ -10,10 +10,12 @@ type Props = {
     tickets: Array<Ticket>,
     loading?: boolean,
     sortingFunction: (val: string) => void
-    filterFunc: (val: string, param: string) => void
+    filterFunc: (val: string, param: string) => void,
+    sort?: string | null,
+    period?: string | null
 }
 
-const TaskList: React.FC<Props> = ({ tickets, loading = true, sortingFunction = () => { }, filterFunc = () => { } }) => {
+const TaskList: React.FC<Props> = ({ tickets, loading = true, sortingFunction = () => { }, filterFunc = () => { }, sort = null, period = null }) => {
 
     const items: Array<DropDownListItems> = [
         {
@@ -46,6 +48,10 @@ const TaskList: React.FC<Props> = ({ tickets, loading = true, sortingFunction = 
         {
             title: 'Anhängig',
             value: 'waiting'
+        },
+        {
+            title: 'Offene',
+            value: 'opened'
         },
     ]
 
@@ -89,13 +95,18 @@ const TaskList: React.FC<Props> = ({ tickets, loading = true, sortingFunction = 
         }
     }
 
+    const getindex =  (list: Array<DropDownListItems>, val: string) => {
+        return list.reduce((index, item, key) => item.value == val ? key : index, -1)
+    }
+
+
     return <div>
         <h2 className={styles.tasksTitle}>{constants.TITLE}</h2>
         <div className={styles.toolsSection}>
             <div className={styles.quantity}>{`${tickets.length} ${constants.QUANTITY_TITLE}`}</div>
             <div className={styles.drowDownListsArea}>
-                <DropDownList items={filterItems} handler={selectFilter} classes={styles.sortList} />
-                <DropDownList items={periodItems} handler={selectPeriod} classes={styles.sortList} />
+                <DropDownList items={filterItems} handler={selectFilter} classes={styles.sortList} def={sort && getindex(filterItems, sort) > -1 ? getindex(filterItems, sort) : 0 }/>
+                <DropDownList items={periodItems} handler={selectPeriod} classes={styles.sortList} def={period && getindex(periodItems, period) > -1 ? getindex(periodItems, period) : 0 }/>
                 <DropDownList items={items} handler={dropDownHandler} def={0} classes={styles.sortList} />
             </div>
         </div>

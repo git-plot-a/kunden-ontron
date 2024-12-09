@@ -163,6 +163,41 @@
  margin-top: 10px;
 }
 
+.NumbersConatiner{
+  padding-top: 66px;
+  width: 100%;
+  .valueItem{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: bottom;
+    padding-top: 30px;
+    cursor: pointer;
+    transition: border-bottom 0.2s;
+    &:hover{
+      border-bottom: 1px solid var(--start-back-gradient);
+      .valueTitle{
+        color: var(--start-back-gradient);
+      }  
+    }
+    .valueTitle{
+      font-size: 14px;
+      line-height: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: var(--most-dark);
+      transition: color 0.2s;
+    }
+    .value{
+      color: var(--start-back-gradient);
+      font-size: 64px;
+      line-height: 64px;
+      font-weight: 700;
+    }
+  }
+}
+
 @keyframes blink {
   0% {
     opacity: 1;
