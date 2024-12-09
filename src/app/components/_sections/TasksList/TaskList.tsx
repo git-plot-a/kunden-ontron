@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import TicketItem from "../../TicketItem/TicketItem"
 import constants from "./constants"
 import styles from "./taskList.module.scss"
