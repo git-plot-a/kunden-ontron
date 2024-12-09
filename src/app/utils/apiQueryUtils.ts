@@ -39,12 +39,10 @@ const fetchData = async (
 
       if(!response.ok){
         const errorData = await response.json();
-        console.log('sss')
         return { code: response.status, message: errorData.message || "An error occurred" };
       }
       return response.json();
     } catch (error) {
-      console.log('sss')
       // return {code: "error", message: error};
     }
   } else {

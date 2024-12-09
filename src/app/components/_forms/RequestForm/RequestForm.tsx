@@ -84,6 +84,7 @@ const RequestForm: React.FC<Props> = ({ handler, services, setChosenServiceId })
             }
             return res
         }, [])
+        console.log(res)
         return res
     }
 

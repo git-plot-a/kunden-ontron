@@ -129,7 +129,7 @@ const TaskTrackingPage = () => {
                         }
                         break;
                     case 'in_process':
-                        if (item.fields?.customfield_10228?.completedCycles?.length > 0 && !item.fields?.resolutiondate) {
+                        if (utils.culculations.firstResponceTimeInMilliseconds(item as NestedObject) > 0 && !item.fields?.resolutiondate) {
                             res.push(item)
                         }
                         break;

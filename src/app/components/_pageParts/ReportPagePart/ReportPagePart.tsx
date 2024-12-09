@@ -176,9 +176,12 @@ const ReportPagePart = () => {
                 resultData?.issues?.forEach((item) => {
                     const currentType = ((item?.fields as NestedObject).customfield_10010 as NestedObject)?.requestType as NestedObject
                     const currentPriority = (item?.fields as NestedObject).priority as NestedObject
-                    const currentTime = ((((item?.fields as NestedObject)?.customfield_10228 as NestedObject)?.completedCycles as NestedObject[])[0]?.elapsedTime as NestedObject)?.millis as number
+                    const status = ((item?.fields as NestedObject).status as NestedObject)?.id as number
+                    const currentTime = utils.culculations.firstResponceTimeInMilliseconds(item)
                     const created: Date = gerCurrentData((item?.fields as NestedObject).created as string)
                     if (currentTime &&
+                        status && 
+                        status != 10199 &&
                         created >= startInterval &&
                         created <= finishInterval &&
                         currentType?.id == avarageTimeTypeValue &&
@@ -204,6 +207,8 @@ const ReportPagePart = () => {
 
 
     }
+
+
     const gerCurrentData = (value: string) => {
         const createdDate: Date = new Date(value)
         createdDate.setHours(0);
@@ -247,11 +252,13 @@ const ReportPagePart = () => {
                     createdDate > (startDate as Date) &&
                     createdDate <= now
                 ) {
-                    const currentTime = ((((item?.fields as NestedObject)?.customfield_10228 as NestedObject)?.completedCycles as NestedObject[])[0]?.elapsedTime as NestedObject)?.millis as number
-                    if (currentTime) {
+                    const currentStatus: number = ((item?.changelog as NestedObject)?.histories as NestedObject)?.id as number
+                    if (currentStatus != 10199) {
+                        console.log(item)
+
                         const currentPrioritiy: NestedObject = ((item?.fields as NestedObject)?.priority as NestedObject) as NestedObject
                         const currentType: NestedObject = ((item?.fields as NestedObject)?.customfield_10010 as NestedObject)?.requestType as NestedObject
-                        if (currentPrioritiy && prioritiesList.filter(priority => priority.value == currentPrioritiy.id).length == 0) {
+                        if (currentPrioritiy  && prioritiesList.filter(priority => priority.value == currentPrioritiy.id).length == 0) {
                             const localName = constants.PRIORITIES.filter(priority => priority.value == currentPrioritiy.id)
                             prioritiesList.push({
                                 title: (localName.length > 0 ? localName[0].title : currentPrioritiy.name) as string,
@@ -270,10 +277,6 @@ const ReportPagePart = () => {
                 }
             })
         }
-        // console.log(prioritiesList)
-        // console.log(requestTypeList)
-        // console.log(prioritiesList.filter(val => avarageTimeProprityValue == val.value))
-        // console.log(requestTypeList.filter(val => avarageTimeTypeValue == val.value))
         if (prioritiesList.filter(val => avarageTimeProprityValue == val.value).length == 0) {
             setAvarageTimeProprityValue(prioritiesList[0]?.value)
         }
@@ -304,7 +307,7 @@ const ReportPagePart = () => {
             }
             const data: object = {
                 project: userData.project,
-                fields: 'customfield_10010,status,resolutiondate,customfield_10228,customfield_10227,created,priority',
+                fields: 'customfield_10010,status,resolutiondate,customfield_10228,customfield_10227,created,priority,summary',
                 userEmail: email
             }
 

@@ -38,9 +38,32 @@ const getStartDate = (period: string): Date | null => {
     }
 };
 
+const firstResponceTimeInMilliseconds = (item: NestedObject) => {
+    const historyTime = (item.changelog as NestedObject)?.histories as NestedObject[]
+    const startDateTime = (item.fields as NestedObject)?.created ? new Date((item.fields as NestedObject)?.created as string) : null
+    let firstResponceTime = 0
+    if(startDateTime && historyTime.length > 0){
+        historyTime.forEach((event)=>{
+            const eventsItems: NestedObject[] = event.items as NestedObject[]
+            if(eventsItems.length > 0){
+                eventsItems.forEach(item=>{
+                    if(item.from as number == 10199 && item.to as number == 10234){
+                        const eventTime = event.created ? new Date(event.created as string) : null
+                        if(eventTime){
+                            firstResponceTime = eventTime.getTime() - startDateTime.getTime()
+                        }
+                    }
+                })
+            }
+        })
+    }
+    return firstResponceTime
+}
+
 export default {
     processResponceTime,
     processTarif,
     checkRoles,
-    getStartDate
+    getStartDate,
+    firstResponceTimeInMilliseconds
 };
