@@ -240,6 +240,10 @@ canvas{
   .specific-padding {
     padding-top: 21px;
   }
+  h1{
+    font-size: 38px;
+    line-height: 48px;
+  }
 }
 
 @media (max-width: 500px) {
@@ -259,5 +263,9 @@ canvas{
 
   .specific-padding {
     padding-top: 0px;
+  }
+  h1{
+    font-size: 24px;
+    line-height: 38px;
   }
 }
