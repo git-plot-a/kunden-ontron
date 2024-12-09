@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import Header from "../components/_sections/Header/Header"
 import Footer from "../components/_sections/Footer/Footer"
 import TopOfferSubPages from "../components/_sections/TopOfferSubPages/TopOfferSubPages"
@@ -13,7 +13,6 @@ import utils from "../utils"
 
 const TaskTrackingPage = () => {
     const router = useRouter()
-    const searchParams = useSearchParams();
     const [loading, setLoading] = useState(true)
     const [tickets, setTickets] = useState<Array<Ticket>>([])
     const [usedTickets, setUsedTickets] = useState<Array<Ticket>>([])
