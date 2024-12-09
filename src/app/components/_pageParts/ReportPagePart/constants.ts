@@ -25,7 +25,7 @@ const RESOLVED_NOT_ON_TIME_TITLE = 'Nicht fristgerecht gelöste Tickets'
 
 const AVERAGE_TIME = 'Durchschnittlicher Zeitaufwand in Stunden'
 
-const NOT_ENOUGH_DATA_FOR_DAIAGRAM = 'Unzureichende Daten für das Diagramm...'
+const NOT_ENOUGH_DATA_FOR_DAIAGRAM = 'Unzureichende Daten für das Diagramm'
 
 const REQUEST_TYPES = global.REQUEST_TYPES
 

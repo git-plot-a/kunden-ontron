@@ -1,11 +1,12 @@
 "use client"
 
 import clsx from "clsx"
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { poppins } from "./fonts"
 import { useScrollManager } from "@/app/hooks/ScrollManager"
 import useAnimation from '@/app/hooks/Animation/Animation';
 import "./globals.scss";
+import Footer from "./components/_sections/Footer/Footer";
 
 
 
@@ -17,6 +18,25 @@ export default function RootLayout({
 
   useScrollManager()
   useAnimation()
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1193); // Например, для ширины менее 768px
+    };
+
+    // Вызываем обработчик один раз при монтировании
+    handleResize();
+
+    // Добавляем обработчик события resize
+    window.addEventListener("resize", handleResize);
+
+    // Убираем обработчик при размонтировании
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <html lang="de">
@@ -30,12 +50,17 @@ export default function RootLayout({
       </head>
       <body className={clsx(poppins.variable)}>
         <main className={"main"}>
-          <Suspense fallback={<div>Loading...</div>}>
-            {children}
+          {isSmallScreen ? (<div className={"mobileVrsion"}>
+            <h1 className="mobileTitle">Die mobile Version ist noch nicht verfügbar
+            </h1>
+          </div>) : (
+            <Suspense fallback={<div>Loading...</div>}>
+              {children}
 
-          </Suspense>
+            </Suspense>
+          )}
         </main>
-      </body>
-    </html>
+      </body >
+    </html >
   );
 }
