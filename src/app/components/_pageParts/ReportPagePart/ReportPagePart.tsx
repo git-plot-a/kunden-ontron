@@ -490,7 +490,7 @@ const ReportPagePart = () => {
                                         </div>
                                     )}
                                     {result.issues && (
-                                        <div className={styles.valueItem} onClick={() => { redirectLink('resolveds') }}>
+                                        <div className={styles.valueItem} onClick={() => { redirectLink('resolved') }}>
                                             <div className={styles.valueTitle}>{constants.RESOLVED_TICKETS}</div>
                                             <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], resolvedCondition))}</div>
                                         </div>
