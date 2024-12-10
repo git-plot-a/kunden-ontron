@@ -14,6 +14,7 @@ const REQUEST_TYPES: Array<DropDownList> = [
   {
     title: "Eine Frage stellen",
     value: "8",
+    issuetype: "10171",
     description: "Haben Sie eine Frage? Reichen Sie sie hier ein.",
   },
   // {
@@ -28,15 +29,18 @@ const REQUEST_TYPES: Array<DropDownList> = [
   // },
   {
     title: "Serviceanfrage",
+    issuetype: "10168",
     value: "15",
   },
   {
     title: "Incident",
     value: "14",
+    issuetype: "10175",
   },
   {
     title: "Feedback oder Anregung",
     value: "13",
+    issuetype: "10176",
   },
 ];
 

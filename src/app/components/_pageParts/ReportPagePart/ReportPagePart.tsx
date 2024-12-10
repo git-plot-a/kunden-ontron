@@ -38,9 +38,9 @@ const ReportPagePart = () => {
     const [periodType, setPeriodType] = useState(constants.PERIOD_TYPES[1])
     const [result, setResult] = useState<NestedObject>({})
     const [priorities, setPriorities] = useState<DropDownListItems[]>([])
-    const [requestTypes, setRequesTypes] = useState<DropDownListItems[]>([])
+    // const [requestTypes, setRequesTypes] = useState<DropDownListItems[]>([])
     const [avarageTimeProprityValue, setAvarageTimeProprityValue] = useState<string>('')
-    const [avarageTimeTypeValue, setAvarageTimeTypeValue] = useState<string>('')
+    // const [avarageTimeTypeValue, setAvarageTimeTypeValue] = useState<string>('')
     const animationActivation = useAnimation()
     //how many equest were solved, how many were solven on time
     const [resolvedQuantity, setResolvedQuantity] = useState(constants.OPTIONS_BAR.data)
@@ -65,7 +65,7 @@ const ReportPagePart = () => {
             const res = resultData?.issues?.reduce((list, item) => {
                 const createdDate = gerCurrentData((item?.fields as NestedObject)?.created as string)
                 if (startDate && createdDate && createdDate > startDate && createdDate <= now) {
-                    const typeData = ((item?.fields as NestedObject).customfield_10010 as NestedObject)?.requestType as NestedObject
+                    const typeData = (item?.fields as NestedObject).issuetype as NestedObject
                     if (typeData?.id) {
                         list.push(typeData?.id as string)
                     }
@@ -74,7 +74,7 @@ const ReportPagePart = () => {
             }, [] as Array<string | number>)
             const labels: string[] = []
             const typesData = res.reduce((dt, item) => {
-                const needed_type = constants.REQUEST_TYPES.filter(type => type.value == item);
+                const needed_type = constants.REQUEST_TYPES.filter(type => type.issuetype == item);
                 let index = -1;
                 if (needed_type.length > 0) {
                     if (!labels.includes(needed_type[0].title)) {
@@ -103,6 +103,7 @@ const ReportPagePart = () => {
     }
 
     const resolutionQuantity = (resultData: NestedObject) => {
+        console.log(resultData)
         const labels: string[] = []
         const notOnTimeResolved: number[] = []
         const onTimeResolved: number[] = []
@@ -112,10 +113,10 @@ const ReportPagePart = () => {
             if (Array.isArray(resultData?.issues)) {
                 resultData?.issues?.forEach((item) => {
                     const resolution: Date = gerCurrentData((item?.fields as NestedObject).resolutiondate as string)
-                    console.log(item)
-                    console.log(resolution)
+                    
                     if (resolution > startInterval && resolution <= finishInterval) {
                         const timeleft: number = ((((item?.fields as NestedObject)?.customfield_10227 as NestedObject)?.completedCycles as NestedObject[])[0]?.remainingTime as NestedObject)?.millis as number
+                        console.log(timeleft)
                         if (timeleft < 0) {
                             resolvedNotOnTimeQuantity++
                         } else {
@@ -127,17 +128,19 @@ const ReportPagePart = () => {
             notOnTimeResolved.push(resolvedNotOnTimeQuantity)
             onTimeResolved.push(resolvedOnTimeQuantity)
             labels.push(intervalName);
-
         }
 
         divideData(periodType.slug, constants.TIMELINE_INTERVAL[0], addToPeriod)
-
+        console.log(notOnTimeResolved)
+        console.log(onTimeResolved)
+        console.log(resolvedQuantity.datasets)
+        console.log(labels)
         setResolvedQuantity({
             ...resolvedQuantity,
             labels: labels,
             datasets: [
-                { ...resolvedQuantity.datasets[1], data: onTimeResolved, label: constants.RESOLVED_ON_TIME_TITLE },
-                { ...resolvedQuantity.datasets[0], data: notOnTimeResolved, label: constants.RESOLVED_NOT_ON_TIME_TITLE },
+                { ...resolvedQuantity.datasets[1], data: onTimeResolved, label: constants.RESOLVED_ON_TIME_TITLE, backgroundColor: "#009EE3" },
+                { ...resolvedQuantity.datasets[0], data: notOnTimeResolved, label: constants.RESOLVED_NOT_ON_TIME_TITLE, backgroundColor: "#FF9051" },
             ]
         });
     }
@@ -178,17 +181,17 @@ const ReportPagePart = () => {
             const timeValues: number[] = []
             if (Array.isArray(resultData?.issues)) {
                 resultData?.issues?.forEach((item) => {
-                    const currentType = ((item?.fields as NestedObject).customfield_10010 as NestedObject)?.requestType as NestedObject
+                    // const currentType = ((item?.fields as NestedObject).customfield_10010 as NestedObject)?.requestType as NestedObject
                     const currentPriority = (item?.fields as NestedObject).priority as NestedObject
                     const status = ((item?.fields as NestedObject).status as NestedObject)?.id as number
                     const currentTime = utils.culculations.firstResponceTimeInMilliseconds(item)
                     const created: Date = gerCurrentData((item?.fields as NestedObject).created as string)
+                    // console.log(currentPriority.id, status, currentTime, created)
                     if (currentTime &&
                         status &&
                         status != 10199 &&
-                        created >= startInterval &&
+                        created > startInterval &&
                         created <= finishInterval &&
-                        currentType?.id == avarageTimeTypeValue &&
                         currentPriority?.id == avarageTimeProprityValue
                     ) {
                         timeValues.push(millisToHours(currentTime))
@@ -248,7 +251,6 @@ const ReportPagePart = () => {
         const startDate = utils.culculations.getStartDate(selectedPeriodType)
         const now = new Date();
         const prioritiesList: DropDownListItems[] = []
-        const requestTypeList: DropDownListItems[] = []
         if (Array.isArray(resultData?.issues)) {
             resultData?.issues?.forEach((item) => {
                 const createdDate = gerCurrentData((item?.fields as NestedObject)?.created as string)
@@ -258,10 +260,14 @@ const ReportPagePart = () => {
                 ) {
                     const currentStatus: number = ((item?.changelog as NestedObject)?.histories as NestedObject)?.id as number
                     if (currentStatus != 10199) {
-                        console.log(item)
 
                         const currentPrioritiy: NestedObject = ((item?.fields as NestedObject)?.priority as NestedObject) as NestedObject
-                        const currentType: NestedObject = ((item?.fields as NestedObject)?.customfield_10010 as NestedObject)?.requestType as NestedObject
+                        let currentType: NestedObject = ((item?.fields as NestedObject)?.customfield_10010 as NestedObject)?.requestType as NestedObject
+
+                        if (!currentType) {
+                            currentType = { id: 0 }
+                        }
+
                         if (currentPrioritiy && prioritiesList.filter(priority => priority.value == currentPrioritiy.id).length == 0) {
                             const localName = constants.PRIORITIES.filter(priority => priority.value == currentPrioritiy.id)
                             prioritiesList.push({
@@ -270,13 +276,6 @@ const ReportPagePart = () => {
                             })
 
                         }
-                        if (currentType && requestTypeList.filter(type => type.value == currentType.id).length == 0) {
-                            const localName = constants.REQUEST_TYPES.filter(type => type.value == currentType.id)
-                            requestTypeList.push({
-                                title: (localName.length > 0 ? localName[0].title : currentType.name) as string,
-                                value: currentType.id as string
-                            })
-                        }
                     }
                 }
             })
@@ -284,20 +283,17 @@ const ReportPagePart = () => {
         if (prioritiesList.filter(val => avarageTimeProprityValue == val.value).length == 0) {
             setAvarageTimeProprityValue(prioritiesList[0]?.value)
         }
-        if (requestTypeList.filter(val => avarageTimeTypeValue == val.value).length == 0) {
-            setAvarageTimeTypeValue(requestTypeList[0]?.value)
-        }
         setPriorities(prioritiesList)
-        setRequesTypes(requestTypeList)
     }
 
 
     const updateAllDateDiagrams = (resultData: NestedObject) => {
+        console.log('genetal aupdate')
         typesProccess(resultData)
         resolutionQuantity(resultData)
         generalQuantity(resultData)
         setDropdownLists(resultData)
-        avarageTime(resultData)
+        // avarageTime(resultData)
     }
 
     useEffect(() => {
@@ -311,19 +307,21 @@ const ReportPagePart = () => {
             }
             const data: object = {
                 project: userData.project,
-                fields: 'customfield_10010,status,resolutiondate,customfield_10228,customfield_10227,created,priority,summary',
+                fields: 'customfield_10010,status,issuetype,resolutiondate,customfield_10228,customfield_10227,created,priority,summary',
                 userEmail: email
             }
 
             const resultData: NestedObject = await utils.jira.apiRequest(data, "GET")
             if (resultData && (resultData.issues as NestedObject[])?.length > 0) {
                 setResult(resultData)
-                setTimeout(() => {
+                // setTimeout (()=>{
+                    console.log('result is uploaded')
                     updateAllDateDiagrams(resultData)
-                }, 300)
+                    setLoading(false)
+                // }, 300)
+            } else {
+                setLoading(false)
             }
-
-            setLoading(false)
             setTimeout(() => {
                 animationActivation()
             }, 500)
@@ -332,8 +330,11 @@ const ReportPagePart = () => {
     }, [])
 
     useEffect(() => {
-        avarageTime(result)
-    }, [avarageTimeProprityValue, avarageTimeTypeValue])
+        if(avarageTimeProprityValue && avarageTimeProprityValue){
+            console.log('Time period update')
+            avarageTime(result)
+        }
+    }, [avarageTimeProprityValue])
 
 
 
@@ -349,11 +350,10 @@ const ReportPagePart = () => {
             date.toLocaleDateString('en-US', {
                 day: 'numeric',
                 month: 'short',
-                // year: 'numeric',
             });
 
         switch (interval) {
-            case constants.TIMELINE_INTERVAL[0]: {
+            case 'day': {
                 const currentDate = new Date(startPeriodDate);
                 while (currentDate <= now) {
                     const prevData = new Date(currentDate.getTime())
@@ -362,7 +362,7 @@ const ReportPagePart = () => {
                 }
                 break;
             }
-            case constants.TIMELINE_INTERVAL[1]: {
+            case 'week': {
                 const currentDate = new Date(startPeriodDate);
                 while (currentDate <= now) {
                     const prevData = new Date(currentDate.getTime())
@@ -371,7 +371,7 @@ const ReportPagePart = () => {
                 }
                 break;
             }
-            case constants.TIMELINE_INTERVAL[2]: {
+            case 'month': {
                 const currentDate = new Date(startPeriodDate);
                 while (currentDate <= now) {
                     const prevData = new Date(currentDate.getTime())
@@ -380,7 +380,7 @@ const ReportPagePart = () => {
                 }
                 break;
             }
-            case constants.TIMELINE_INTERVAL[3]: {
+            case 'year': {
                 const currentDate = new Date(startPeriodDate);
                 while (currentDate <= now) {
                     const prevData = new Date(currentDate.getTime())
@@ -433,6 +433,7 @@ const ReportPagePart = () => {
 
     useEffect(() => {
         updateAllDateDiagrams(result as NestedObject)
+        avarageTime(result)
         animationActivation()
     }, [periodType])
 
@@ -497,12 +498,6 @@ const ReportPagePart = () => {
                                             <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], resolvedCondition))}</div>
                                         </div>
                                     )}
-                                    {/* {result.issues && (
-                                        <div className={styles.valueItem} >
-                                            <div className={styles.valueTitle}>In process number:</div>
-                                            <div className={styles.value}>{String(countByDate(result.issues as NestedObject[], ticketInPocess))}</div>
-                                        </div>
-                                    )} */}
                                 </div>
                             </div>
                         </div>
@@ -526,7 +521,6 @@ const ReportPagePart = () => {
                             <div className={styles.diagramTitle}>{constants.AVERAGETIME_TO_RESPONCE}</div>
                             <div className={styles.dropdownContainer}>
                                 <DropDownListMinimized items={priorities} handler={setAvarageTimeProprityValue} />
-                                <DropDownListMinimized items={requestTypes} handler={setAvarageTimeTypeValue} />
                             </div>
                             <div className={styles.diagramItem}>
                                 {avarageTimeVal.datasets?.length > 0 && avarageTimeVal.datasets[0]?.data?.length > 0 && calculateSumm(avarageTimeVal.datasets[0]?.data) > 0 ? (
@@ -560,7 +554,7 @@ const ReportPagePart = () => {
                             <div className={styles.diagramItem} style={{ height: '420px', width: '100%' }}>
                                 {resolvedQuantity.datasets?.length > 0 &&
                                     resolvedQuantity.datasets[0]?.data?.length > 0 &&
-                                    calculateSumm(resolvedQuantity.datasets[0]?.data) > 0 &&
+                                    calculateSumm(resolvedQuantity.datasets[0]?.data) > 0 ||
                                     resolvedQuantity.datasets[1]?.data?.length &&
                                     calculateSumm(resolvedQuantity.datasets[1]?.data) > 0
                                     ? (
