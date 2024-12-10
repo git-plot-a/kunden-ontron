@@ -110,6 +110,10 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                         console.log(requestType)
                         if (requestType) {
                             setTarifData({ ...res[0], responce_time: requestType })
+                        }else{
+                            if(res[0].responce_time){
+                                setTarifData({ ...res[0], responce_time: res[0].responce_time})
+                            }
                         }
                     }else{
                         console.log(requestType)
