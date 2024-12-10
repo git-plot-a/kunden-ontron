@@ -91,16 +91,35 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
 
     useEffect(() => {
         const getTarifInfo = async () => {
+
             const jira_id = ticket.fields?.customfield_10251?.id
-            if(jira_id){
-                const res = await fetchData(`${api.custom.PREVIEW_CARDS}/${jira_id}`,'GET', {}, null, true)
-                if(res && res.length > 0){
-                    setTarifData(res[0])
+            console.log(jira_id)
+            if (jira_id) {
+                const res = await fetchData(`${api.custom.PREVIEW_CARDS}/${jira_id}`, 'GET', {}, null, true)
+                console.log(res)
+                if (res && res.length > 0) {
+                    let requestType: number = ((((ticket.fields as NestedObject)?.customfield_10227 as NestedObject)?.ongoingCycle as NestedObject)?.goalDuration as NestedObject)?.millis as number
+                    if (!requestType) {
+                        const completedCercles: NestedObject[] = (((ticket.fields as NestedObject)?.customfield_10227 as NestedObject)?.ongoingCycle as NestedObject)?.completedCycles as NestedObject[]
+                        requestType = completedCercles.reduce((timeValue: number, item: NestedObject) => { 
+                            if((item.goalDuration as NestedObject)?.millis){
+                                return (((item.goalDuration as NestedObject)?.millis as number)  / (1000 * 60 * 60))
+                            }
+                            return timeValue
+                        }, 0)
+                        console.log(requestType)
+                        if (requestType) {
+                            setTarifData({ ...res[0], responce_time: requestType })
+                        }
+                    }else{
+                        console.log(requestType)
+                        setTarifData({ ...res[0], responce_time: (requestType / (1000 * 60 * 60)) })
+                    }
                 }
             }
         }
 
-        if(!tarifData && isOpened){
+        if (!tarifData && isOpened) {
             getTarifInfo()
         }
 
@@ -151,14 +170,14 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
         return name ? name : priorityName
     }
 
-    const firstReactionCulculation = (firstReaction: number) =>{
-        if(ticket?.fields?.created){
-            const createdDate  = new Date(ticket?.fields?.created)
+    const firstReactionCulculation = (firstReaction: number) => {
+        if (ticket?.fields?.created) {
+            const createdDate = new Date(ticket?.fields?.created)
             const reactionDate = new Date(createdDate.getTime() + firstReaction * 60 * 60 * 1000);
-            
-            const WORK_START_HOUR = 8; 
+
+            const WORK_START_HOUR = 8;
             const WORK_END_HOUR = 17;
-    
+
             while (reactionDate.getHours() < WORK_START_HOUR || reactionDate.getHours() >= WORK_END_HOUR) {
                 if (reactionDate.getHours() < WORK_START_HOUR) {
                     reactionDate.setHours(WORK_START_HOUR, 0, 0, 0);
@@ -167,7 +186,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                     reactionDate.setHours(WORK_START_HOUR, 0, 0, 0);
                 }
             }
-    
+
 
             const options: Intl.DateTimeFormatOptions = {
                 month: 'short',
@@ -177,7 +196,7 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                 hour12: true,
             };
             const formattedReactionDate = reactionDate.toLocaleString('en-US', options)
-    
+
             return formattedReactionDate;
         } else {
             return null;
@@ -204,13 +223,13 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                         <div className={clsx(styles.lineData, styles.bold)}>
                             <div className={styles.value}>{firstReactionCulculation(tarifData?.responce_time as number)}</div>
                             <div className={styles.estimation} ref={estimationLink} onMouseOver={showPopup}>
-                                <span dangerouslySetInnerHTML={{__html: utils.culculations.processResponceTime(tarifData?.responce_time as number, constants.FIRST_RESPONCE) }}/>
+                                <span dangerouslySetInnerHTML={{ __html: utils.culculations.processResponceTime(tarifData?.responce_time as number, constants.FIRST_RESPONCE) }} />
                                 {popUpVisible && (
                                     <div className={clsx(styles.popup, popUpVisible ? styles.opened : '')} ref={popup}>
                                         <div className={clsx(styles.image, styles[tarifData.levels.label])}>
                                             <Image src={`/img/support_lvl_${tarifData.levels.label}.svg`} alt="support level" height={81} width={81} />
                                         </div>
-                                        <div className={styles.text} dangerouslySetInnerHTML={{__html: utils.culculations.processTarif(tarifData?.levels.label as string, constants.SUPPORT_LEVEL)}}/>
+                                        <div className={styles.text} dangerouslySetInnerHTML={{ __html: utils.culculations.processTarif(tarifData?.levels.label as string, constants.SUPPORT_LEVEL) }} />
                                     </div>
                                 )}
                             </div>
