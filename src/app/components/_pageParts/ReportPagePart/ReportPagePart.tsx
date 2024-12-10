@@ -112,7 +112,9 @@ const ReportPagePart = () => {
             if (Array.isArray(resultData?.issues)) {
                 resultData?.issues?.forEach((item) => {
                     const resolution: Date = gerCurrentData((item?.fields as NestedObject).resolutiondate as string)
-                    if (resolution >= startInterval && resolution <= finishInterval) {
+                    console.log(item)
+                    console.log(resolution)
+                    if (resolution > startInterval && resolution <= finishInterval) {
                         const timeleft: number = ((((item?.fields as NestedObject)?.customfield_10227 as NestedObject)?.completedCycles as NestedObject[])[0]?.remainingTime as NestedObject)?.millis as number
                         if (timeleft < 0) {
                             resolvedNotOnTimeQuantity++
