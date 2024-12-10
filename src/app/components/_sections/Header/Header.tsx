@@ -77,7 +77,7 @@ const Header: React.FC<Props> = ({ currentPage = "home" }) => {
                             }
                         })}
                         <li className={clsx("animation-fade-in animation-fade-in middle-duration immidiate-show", styles.buttomContainer)} style={{ transitionDelay: `${(menuList.length - 1) * 0.1}s` }}>
-                            <StandartButton title={menuList[menuList.length - 1].title} link={menuList[menuList.length - 1].link} callback={openPopUp} active={currentPage == menuList[menuList.length - 1].id} image={menuList[menuList.length - 1].img} classes={styles.buttomContainer} />
+                            <StandartButton title={utils.user.getUserData()?.user_email} link={menuList[menuList.length - 1].link} callback={openPopUp} active={currentPage == menuList[menuList.length - 1].id} image={menuList[menuList.length - 1].img} classes={clsx(styles.buttomContainer, showPopUp ? styles.active : '')} />
                         </li>
                     </ul>
                     {showPopUp && (

@@ -36,12 +36,16 @@
       }
       .buttomContainer {
         span {
-          filter: grayscale(1);
+          color: var(--most-dark);
+          filter: none;
+          transition: color 0.2s;
         }
-        &:hover {
-          background-color: transparent;
+        &:hover, &.active {
+          opacity: 1 !important;
+          background-color: var(--hover-light);
           span {
-            filter: grayscale(0);
+            // filter: grayscale(0);
+            color: var(--silver-service-level)
           }
         }
         &:active,
@@ -85,7 +89,7 @@
     padding: 24px;
     .role{
       padding-top: 10px;
-      color: #3CB5EA;
+      color: var(--silver-service-level);
     }
     b{
       font-weight: 700;
