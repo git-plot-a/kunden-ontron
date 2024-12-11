@@ -40,6 +40,7 @@ const PlatformsPage = () => {
     const tocken = utils.user.getToken()
     const getPreviewServices = async () => {
       const servicesRes: Array<ExtendedService> = await fetchData(`${api.custom.SERVICE_PREVIEWS}/all`, "GET", {}, null, true)
+      console.log(servicesRes)
       setServices(servicesRes)
     }
 
