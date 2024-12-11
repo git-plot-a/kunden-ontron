@@ -77,6 +77,7 @@ declare global {
   //   };
   // };
   interface Service {
+    id: string | number,
     title: string;
     icon?: string;
     contractEndData?: string;

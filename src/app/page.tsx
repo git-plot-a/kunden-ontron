@@ -20,7 +20,7 @@ const HomePage = () => {
   const [services, setServices] = useState<Array<Service>>([])
   const [loading, setLoading] = useState(true)
   const { fetchData } = useSendQuery()
-  const activateAnimaiton  = useAnimation()
+  const activateAnimaiton = useAnimation()
 
 
 
@@ -37,7 +37,7 @@ const HomePage = () => {
   useEffect(() => {
     const tocken = utils.user.getToken()
     const getPreviewServices = async () => {
-      const servicesRes: Array<Service>  =  await fetchData(api.custom.SERVICE_PREVIEWS, "GET", {}, null, true)    
+      const servicesRes: Array<Service> = await fetchData(api.custom.SERVICE_PREVIEWS, "GET", {}, null, true)
       setServices(servicesRes)
     }
 
@@ -61,10 +61,15 @@ const HomePage = () => {
   return <>{!loading && (
     <>
       <Header currentPage='home' />
-      <TopOffer title={'<span>Willkommen,</span><br />Erzgebirgsklinikum!'}/>
+      <TopOffer title={'<span>Willkommen,</span><br />Erzgebirgsklinikum!'} />
       <Container>
         <TilesSection />
-        <ProductList services={services} />
+        <ProductList services={services.reduce((updatedServices: Service[], serv) => {
+          if (serv?.id != 223) {
+            updatedServices.push(serv)
+          }
+          return updatedServices
+        }, []) as Service[]} />
       </Container>
       <Footer />
     </>
