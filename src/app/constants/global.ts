@@ -1,6 +1,5 @@
-const URL_STANDART =
-  "https://server.kunden.ontron.wissen-lernen.eu/wp-json/wp/v2";
-const URL_CUSTOM = "https://server.kunden.ontron.wissen-lernen.eu";
+const URL_STANDART = `${process.env.NEXT_PUBLIC_SEVER_URL as string}/wp-json/wp/v2`
+const URL_CUSTOM = process.env.NEXT_PUBLIC_SEVER_URL as string;
 const MAX_LOADING_FILE_SIZE = 10485760;
 const BYTES_IN_MB = 1048576;
 
