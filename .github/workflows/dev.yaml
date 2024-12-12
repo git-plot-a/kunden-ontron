@@ -1,0 +1,31 @@
+name: dev redeploy
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+    
+      - name: redeploy on stage server
+        env:
+            PRIVATE_KEY:  ${{ secrets.PRIVATE_KEY_DEV  }}
+            HOSTNAME :    ${{ secrets.SSH_HOST_DEV  }}
+            USER_NAME :   ${{ secrets.SSH_USER_DEV  }}
+            
+        run: |
+          echo "$PRIVATE_KEY" > private_key && 
+          chmod 600 private_key
+          
+          ssh -o StrictHostKeyChecking=off -i private_key ${USER_NAME}@${HOSTNAME} '
+            cd /data/kunden-ontron-site &&
+            git fetch --all &&
+            git checkout dev &&
+            git reset --hard origin/dev &&
+            git pull origin dev &&
+            bash deploy/init-dev.bash
+          '

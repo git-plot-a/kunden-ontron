@@ -1,0 +1,44 @@
+.animation-fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  &.short-duration {
+    transition: opacity 0.2s ease-out, transform 0.3s ease-out;
+  }
+
+  &.middle-duration {
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+
+  &.long-duration {
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  &-top {
+    transform: translateY(-30px);
+  }
+  &-bottom {
+    transform: translateY(30px);
+  }
+  &-left {
+    transform: translateX(-30px);
+  }
+  &-right {
+    transform: translateX(30px);
+  }
+
+  &.animation-visible {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  &-right,
+  &-left,
+  &-bottom,
+  &-top {
+    opacity: 0;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    &.animation-visible {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+}

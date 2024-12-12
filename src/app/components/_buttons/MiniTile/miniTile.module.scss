@@ -1,0 +1,149 @@
+.container {
+  width: 266px;
+  perspective: 1000px; 
+  transition: transform 0.3s;
+  &:hover{
+    transform: scale(1.05);
+  }
+  &.hovered{
+    transition: transform 0.2s;
+    transition-delay: 0s !important;
+  }
+}
+.status {
+  &Container {
+    display: flex;
+    justify-content: flex-end;
+    min-height: 17px;
+    position: absolute;
+    right: 15px;
+    top: 12px
+  }
+  &Item {
+    display: flex;
+    width: max-content;
+    background-color: var(--most-light);
+    border-radius: 16px;
+    padding: 1px 6px;
+    font-size: 10px;
+    line-height: 15px;
+    color: var(--semi-light-gray);
+    .indicator {
+      height: 8px;
+      width: 8px;
+      border-radius: 9px;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: 8px;
+      animation: blink 4s infinite;
+      //TODO: добавить задержку, чтоб они мигали не одновременно
+      &.live {
+        background-color: var(--sucess-green);
+      }
+      &.paused {
+        background-color: var(--semi-denger-level);
+      }
+      &.off {
+        background-color: var(--error);
+      }
+    }
+  }
+}
+
+.service {
+  &Container {
+    display: flex;
+    justify-content: flex-start;
+  }
+  &Icon {
+    margin-right: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 70px;
+    width: 70px;
+  }
+  &Text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    h5 {
+      font-size: 14px;
+      line-height: 32px;
+      color: var(--dark-text);
+      font-weight: 700;
+      margin: 0;
+      margin-bottom: auto;
+      margin-top: auto;
+      display: block;
+    }
+    .updated {
+      font-size: 14px;
+      line-height: 18px;
+      color: var(--light-gray-text);
+    }
+  }
+}
+
+.flippInner {
+  position: relative;
+  width: 266px;
+  height: 94px;
+
+  &.flipped {
+    .frontSide {
+      transform: rotateY(180deg);
+      z-index: 1;
+    }
+    .backSide {
+      transform: rotateY(0deg);
+      z-index: 2;
+    }
+  }
+
+  .frontSide,
+  .backSide {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    transform-style: preserve-3d;
+    transition: transform 0.4s linear, z-index 0.2s linear 0.1s;
+    &:hover, &:active, &:focus{
+      cursor: pointer;
+    }
+  }
+
+  .frontSide {
+    z-index: 2;
+    background-color: var(--light-gray);
+    padding: 12px;
+  }
+
+  .backSide {
+    z-index: 1;
+    transform: rotateY(180deg);
+    background-color: var(--most-light);
+    padding: 2.5px 8px 13px 18px;
+    border: 1px solid var(--pale-border-gray);
+  }
+
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

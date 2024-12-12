@@ -1,0 +1,133 @@
+.form {
+  &Container {
+    background: linear-gradient(
+      to right,
+      var(--start-back-gradient),
+      var(--finish-back-gradient)
+    );
+    padding: 67px;
+    padding-bottom: 45px;
+    border-radius: 32px;
+    position: relative;
+    transition: background 0.2s;
+    &.resultingBack {
+      background: linear-gradient(
+        0deg,
+        #079fe4 0.94%,
+        #12a6e4 15.16%,
+        #2fb7e5 40.14%,
+        #5ed4e5 72.68%,
+        #7ce6e6 91.05%
+      );
+    }
+    &.usualBlack {
+      background: linear-gradient(90.05deg, #07a1e4 14.68%, #56bfec 85.09%);
+    }
+  }
+  &Title {
+    font-size: 44px;
+    line-height: 68px;
+    font-weight: 600;
+    color: var(--most-light);
+    text-align: center;
+    margin-top: 148px;
+    &Block {
+      position: absolute;
+      width: -webkit-fill-available;
+      width: -moz-available;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      margin-top: auto;
+      margin-bottom: auto;
+      width: 43%;
+      // max-width: calc(41.6% - 88px);
+      // min-width: calc(41.6% - 88px);
+      height: max-content;
+      &.fullSize {
+        width: -webkit-fill-available;
+        width: -moz-available;
+        position: relative;
+        left: 0;
+        .formTitleImage {
+          margin-top: -67px;
+        }
+        .formTitle {
+          margin-top: -15px;
+        }
+      }
+    }
+    &Image {
+      text-align: center;
+      // margin-top: 28px;
+    }
+    span{
+      font-weight: 600;
+      background-color: transparent !important;
+    }
+  }
+}
+
+.aditionalInfo {
+  font-size: 16px;
+  line-height: 32px;
+  text-align: center;
+  font-weight: 400;
+  color: var(--most-light);
+  margin-top: 78px;
+  margin-bottom: 60px;
+  span {
+    background-color: #ff9c51;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 6px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  a {
+    color: var(--most-light);
+    text-decoration: underline;
+    font-weight: 400;
+  }
+}
+
+.formTitleContiner {
+  max-height: 620px;
+  position: relative;
+}
+.decoreElement {
+  position: absolute;
+  animation: sparklin 3s linear infinite alternate;
+  &.small {
+    top: 97px;
+    left: 191px;
+  }
+  &.big {
+    top: 138px;
+    left: 235px;
+    animation-direction: alternate-reverse;
+  }
+}
+
+
+.Golden {
+  background-color: var(--gold-service-level);
+}
+
+.Silber {
+  background-color: var(--silver-service-level);
+}
+
+.Bronze {
+  background-color: var(--bronze-service-level);
+}
+
+
+@keyframes sparklin {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

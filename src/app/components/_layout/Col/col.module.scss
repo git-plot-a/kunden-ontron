@@ -1,0 +1,172 @@
+.column {
+  width: max-content;
+  max-width: 100%;
+  margin-left: 12px;
+  margin-right: 12px;
+  &-span-1 {
+    width: calc(100% / 24 * 1 - 24px);
+    max-width: calc(100% / 24 * 1 - 24px);
+    min-width: calc(100% / 24 * 1 - 24px);
+  }
+
+  &-span-2 {
+    width: calc(100% / 24 * 2 - 24px);
+    max-width: calc(100% / 24 * 2 - 24px);
+    min-width: calc(100% / 24 * 2 - 24px);
+  }
+
+  &-span-3 {
+    width: calc(100% / 24 * 3 - 24px);
+    max-width: calc(100% / 24 * 3 - 24px);
+    min-width: calc(100% / 24 * 3 - 24px);
+  }
+
+  &-span-4 {
+    width: calc(100% / 24 * 4 - 24px);
+    max-width: calc(100% / 24 * 4 - 24px);
+    min-width: calc(100% / 24 * 4 - 24px);
+  }
+
+  &-span-5 {
+    width: calc(100% / 24 * 5 - 24px);
+    max-width: calc(100% / 24 * 5 - 24px);
+    min-width: calc(100% / 24 * 5 - 24px);
+  }
+
+  &-span-6 {
+    width: calc(100% / 24 * 6 - 24px);
+    max-width: calc(100% / 24 * 6 - 24px);
+    min-width: calc(100% / 24 * 6 - 24px);
+  }
+
+  &-span-7 {
+    width: calc(100% / 24 * 7 - 24px);
+    max-width: calc(100% / 24 * 7 - 24px);
+    min-width: calc(100% / 24 * 7 - 24px);
+  }
+
+  &-span-8 {
+    width: calc(100% / 24 * 8 - 24px);
+    max-width: calc(100% / 24 * 8 - 24px);
+    min-width: calc(100% / 24 * 8 - 24px);
+  }
+
+  &-span-9 {
+    width: calc(100% / 24 * 9 - 24px);
+    max-width: calc(100% / 24 * 9 - 24px);
+    min-width: calc(100% / 24 * 9 - 24px);
+  }
+
+  &-span-10 {
+    width: calc(100% / 24 * 10 - 24px);
+    max-width: calc(100% / 24 * 10 - 24px);
+    min-width: calc(100% / 24 * 10 - 24px);
+  }
+
+  &-span-11 {
+    width: calc(100% / 24 * 11 - 24px);
+    max-width: calc(100% / 24 * 11 - 24px);
+    min-width: calc(100% / 24 * 11 - 24px);
+  }
+
+  &-span-12 {
+    width: calc(100% / 24 * 12 - 24px);
+    max-width: calc(100% / 24 * 12 - 24px);
+    min-width: calc(100% / 24 * 12 - 24px);
+  }
+
+  &-span-13 {
+    width: calc(100% / 24 * 13 - 24px);
+    max-width: calc(100% / 24 * 13 - 24px);
+    min-width: calc(100% / 24 * 13 - 24px);
+  }
+
+  &-span-14 {
+    width: calc(100% / 24 * 14 - 24px);
+    max-width: calc(100% / 24 * 14 - 24px);
+    min-width: calc(100% / 24 * 14 - 24px);
+  }
+
+  &-span-15 {
+    width: calc(100% / 24 * 15 - 24px);
+    max-width: calc(100% / 24 * 15 - 24px);
+    min-width: calc(100% / 24 * 15 - 24px);
+  }
+
+  &-span-16 {
+    width: calc(100% / 24 * 16 - 24px);
+    max-width: calc(100% / 24 * 16 - 24px);
+    min-width: calc(100% / 24 * 16 - 24px);
+  }
+
+  &-span-17 {
+    width: calc(100% / 24 * 17 - 24px);
+    max-width: calc(100% / 24 * 17 - 24px);
+    min-width: calc(100% / 24 * 17 - 24px);
+  }
+
+  &-span-18 {
+    width: calc(100% / 24 * 18 - 24px);
+    max-width: calc(100% / 24 * 18 - 24px);
+    min-width: calc(100% / 24 * 18 - 24px);
+  }
+
+  &-span-19 {
+    width: calc(100% / 24 * 19 - 24px);
+    max-width: calc(100% / 24 * 19 - 24px);
+    min-width: calc(100% / 24 * 19 - 24px);
+  }
+
+  &-span-20 {
+    width: calc(100% / 24 * 20 - 24px);
+    max-width: calc(100% / 24 * 20 - 24px);
+    min-width: calc(100% / 24 * 20 - 24px);
+  }
+
+  &-span-21 {
+    width: calc(100% / 24 * 21 - 24px);
+    max-width: calc(100% / 24 * 21 - 24px);
+    min-width: calc(100% / 24 * 21 - 24px);
+  }
+
+  &-span-22 {
+    width: calc(100% / 24 * 22 - 24px);
+    max-width: calc(100% / 24 * 22 - 24px);
+    min-width: calc(100% / 24 * 22 - 24px);
+  }
+
+  &-span-23 {
+    width: calc(100% / 24 * 23 - 24px);
+    max-width: calc(100% / 24 * 23 - 24px);
+    min-width: calc(100% / 24 * 23 - 24px);
+  }
+
+  &-span-24 {
+    width: calc(100% / 24 * 24 - 24px);
+    max-width: calc(100% / 24 * 24 - 24px);
+    min-width: calc(100% / 24 * 24 - 24px);
+  }
+}
+
+@media (max-width: 900px) {
+  .column {
+    &-span-sm-12 {
+      width: calc(49.92% - 24px);
+      max-width: calc(49.92% - 24px);
+      min-width: calc(49.92% - 24px);
+    }
+    &-span-sm-24 {
+      width: calc(100% - 24px);
+      max-width: calc(100% - 24px);
+      min-width: calc(100% - 24px);
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .column {
+    width: calc(100vw - 24px);
+    max-width: none;
+    min-width: auto;
+  }
+}

@@ -1,0 +1,35 @@
+.container {
+  min-height: 296px;
+  position: relative;
+  margin-top: 28px;
+}
+.title {
+  font-size: 44px;
+  line-height: 64px;
+  font-weight: 600;
+  padding-left: 50px;
+  margin: 0;
+  padding-top: 50px;
+  color: var(--most-light);
+  cursor: default;
+  span {
+    font-weight: 600;
+    background: linear-gradient(90deg, #3cb5ea 73.5%, #4cbbea 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.backContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: linear-gradient(85.29deg, #009ee3 36.06%, #67c5ee 122.68%),
+    linear-gradient(0deg, #000000, #000000),
+    linear-gradient(90deg, #009ee3 0%, #67c5ee 100%);
+  border-radius: 24px;
+  overflow: hidden;
+  height: 100%;
+}

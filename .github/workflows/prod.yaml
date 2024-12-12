@@ -1,0 +1,31 @@
+name: prod redeploy
+
+on:
+  push:
+    branches: [ prod ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+    
+      - name: redeploy on prod server
+        env:
+            PRIVATE_KEY:  ${{ secrets.PRIVATE_KEY  }}
+            HOSTNAME :    ${{ secrets.SSH_HOST  }}
+            USER_NAME :   ${{ secrets.SSH_USER  }}
+            
+        run: |
+          echo "$PRIVATE_KEY" > private_key && 
+          chmod 600 private_key
+          
+          ssh -o StrictHostKeyChecking=off -i private_key ${USER_NAME}@${HOSTNAME} '
+            cd /data/frontend-kunden &&
+            git fetch --all &&
+            git checkout prod &&
+            git reset --hard origin/prod &&
+            git pull origin prod &&
+            bash deploy/init.bash
+          '

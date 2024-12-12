@@ -1,0 +1,23 @@
+.container{
+    // padding-top: 136px;
+}
+.title{
+    font-size: 44px;
+    line-height: 64px;
+    font-weight: 600;
+    color: var(--dark-text);
+    cursor: default;
+    span{
+        font-weight: 600;
+        background: linear-gradient(90deg, #3CB5EA 73.5%, #4cbbea 100%);
+        -webkit-background-clip: text; 
+        background-clip: text;
+        color: transparent;
+    }
+}
+.imageContainer{
+    text-align: right;
+    margin-top: -26px;
+    margin-right: 4%;
+    height: 98%;
+}

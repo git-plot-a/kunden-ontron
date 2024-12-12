@@ -1,0 +1,138 @@
+.container {
+  vertical-align: middle;
+  padding-top: 33px;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  background-color: white;
+  width: 100vw !important;
+  margin: 0 !important;
+  max-width: 100vw !important;
+  padding-left: calc((100vw - 1160px) / 2);
+  padding-right: calc((100vw - 1160px) / 2);
+  z-index: 1000;
+  .menuContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    margin-top: 4px;
+    margin-right: -12px;
+    li {
+      list-style-type: none;
+      margin-left: 24px;
+      // transition: transform 0.2s;
+      // &:active,
+      // &:focus {
+      //   transform: scale(0.96);
+      // }
+      .button {
+        height: 45px;
+      }
+      .buttonImage {
+        &:hover {
+          background-color: transparent;
+        }
+      }
+      .buttomContainer {
+        span {
+          color: var(--most-dark);
+          filter: none;
+          transition: color 0.2s;
+        }
+        &:hover, &.active {
+          opacity: 1 !important;
+          background-color: var(--hover-light);
+          span {
+            // filter: grayscale(0);
+            color: var(--silver-service-level)
+          }
+        }
+        &:active,
+        &:focus {
+          span {
+            filter: grayscale(0);
+          }
+        }
+      }
+    }
+  }
+
+  .logo {
+    width: 132px;
+    height: auto;
+    margin: 12px 0px;
+    &Container {
+      vertical-align: middle;
+    }
+    a {
+      line-height: 32px;
+    }
+  }
+}
+.smallParts{
+  position: relative;
+}
+
+.popUpBack {
+  right: 0;
+  width: max-content;
+  position: absolute;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 0 12px #00000029;
+  cursor: default;
+  font-size: 16px;
+  line-height: 32px;
+  .infoPart{
+    background-color: #F2F2F3;
+    padding: 24px;
+    .role{
+      padding-top: 10px;
+      color: var(--silver-service-level);
+    }
+    b{
+      font-weight: 700;
+    }
+  }
+  .buttonsPart{
+    background-color: var(--most-light);
+    padding: 12px 24px;
+  }
+
+}
+
+.logOutButton{
+  margin-left: -12px;
+}
+
+@media (max-width: 650px) {
+  .smallParts {
+    width: max-content !important;
+  }
+  .container {
+    .mobileContainer {
+      justify-content: space-between;
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding-top: 20px;
+    .menuContainer {
+      padding: 0;
+      margin: 0;
+      margin: 2px;
+      li {
+        margin-left: 24px;
+      }
+    }
+    .logo {
+      width: 82px;
+      height: auto;
+      // margin: 9px auto
+    }
+  }
+}
