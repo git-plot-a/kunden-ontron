@@ -17,6 +17,7 @@ import 'typeface-roboto';
 
 const HomePage = () => {
   const router = useRouter()
+  
   const [services, setServices] = useState<Array<Service>>([])
   const [loading, setLoading] = useState(true)
   const { fetchData } = useSendQuery()
