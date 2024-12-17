@@ -7,7 +7,6 @@ import styles from "./ticketItem.module.scss"
 import useSendQuery from "@/app/hooks/sendQuery/sendQuery"
 import utils from "@/app/utils"
 import api from "../../api/crud"
-import { string } from "yup"
 
 type Props = {
     ticket: Ticket,
