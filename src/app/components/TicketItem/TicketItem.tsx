@@ -96,27 +96,24 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
             console.log(jira_id)
             if (jira_id) {
                 const res = await fetchData(`${api.custom.PREVIEW_CARDS}/${jira_id}`, 'GET', {}, null, true)
-                console.log(res)
                 if (res && res.length > 0) {
                     let requestType: number = ((((ticket.fields as NestedObject)?.customfield_10227 as NestedObject)?.ongoingCycle as NestedObject)?.goalDuration as NestedObject)?.millis as number
                     if (!requestType) {
                         const completedCercles: NestedObject[] = (((ticket.fields as NestedObject)?.customfield_10227 as NestedObject)?.ongoingCycle as NestedObject)?.completedCycles as NestedObject[]
-                        requestType = completedCercles.reduce((timeValue: number, item: NestedObject) => { 
-                            if((item.goalDuration as NestedObject)?.millis){
-                                return (((item.goalDuration as NestedObject)?.millis as number)  / (1000 * 60 * 60))
+                        requestType = completedCercles.reduce((timeValue: number, item: NestedObject) => {
+                            if ((item.goalDuration as NestedObject)?.millis) {
+                                return (((item.goalDuration as NestedObject)?.millis as number) / (1000 * 60 * 60))
                             }
                             return timeValue
                         }, 0)
-                        console.log(requestType)
                         if (requestType) {
                             setTarifData({ ...res[0], responce_time: requestType })
-                        }else{
-                            if(res[0].responce_time){
-                                setTarifData({ ...res[0], responce_time: res[0].responce_time})
+                        } else {
+                            if (res[0].responce_time) {
+                                setTarifData({ ...res[0], responce_time: res[0].responce_time })
                             }
                         }
-                    }else{
-                        console.log(requestType)
+                    } else {
                         setTarifData({ ...res[0], responce_time: (requestType / (1000 * 60 * 60)) })
                     }
                 }
@@ -208,6 +205,52 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
 
     }
 
+    const processText = (content: DescriptionSection) => {
+        let description: string = "" as string
+            (content.content as NestedObject[]).forEach((line:NestedObject)=> {
+                if (line.type == 'text') {
+                    description += `<p><span>${line.text}</span></p>`
+                }
+            })
+        return description
+    }
+
+    const processBulletList = (section: DescriptionSection) => {
+        let description: string = ''
+        description += "<ul>" as string
+        section.content.forEach(line => {
+            if (line.type == "listItem" && line.content && (line.content as NestedObject[]).length > 0) {
+                description += "<li>" as string
+                (line.content as NestedObject[]).forEach(bulletItem => {
+                    if (bulletItem.type === 'paragraph' && (bulletItem.content as NestedObject[]).length > 0) {
+                        description+= processText(bulletItem as DescriptionSection)
+                    }
+                    if (bulletItem.type === "bulletList" && bulletItem.content && (bulletItem.content as NestedObject[]).length > 0) {
+                        description += processBulletList(bulletItem as DescriptionSection)
+                    }
+                })
+                 description += "</li>"
+
+            }
+        })
+        description += "</ul>"
+        return description
+    }
+
+    //Only text is processed
+    const descriptionProcess = (content: Array<DescriptionSection>) => {
+        let description: string = ''
+        console.log(content)
+        content.forEach(section => {
+            if (section.type == "paragraph" && section.content && Array.isArray(section.content) && section.content.length > 0) {
+                description += processText(section)
+            }
+            if (section.type == "bulletList" && section.content && (section.content as NestedObject[]).length > 0) {
+                description += processBulletList(section)
+            }
+        })
+        return description
+    }
 
 
     return <div className={clsx(styles.tasksItem, isOpened ? styles.opened : '', classes)} style={style} ref={animatedElement}>
@@ -240,21 +283,15 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                         </div>
                     </div>
                 )}
-                {/* {task.fields?.resolutiondate && (
-                                <div className={styles.line}>
-                                    <div className={styles.lineTitle}>{"Expected resolution time"}</div>
-                                    <div className={clsx(styles.lineData, styles.bold)}>{formatDate(task.fields?.resolutiondate)}</div>
-                                </div>
-                            )} */}
                 {ticket.fields?.created && (
                     <div className={styles.line}>
-                        <div className={styles.lineTitle}>{"Antrag eingereicht"}</div>
+                        <div className={styles.lineTitle}>{constants.CREATED}</div>
                         <div className={styles.lineData}>{formatDate(ticket.fields?.created)}</div>
                     </div>
                 )}
                 {ticket.fields?.customfield_10244 && (
                     <div className={styles.line}>
-                        <div className={styles.lineTitle}>{"Autor"}</div>
+                        <div className={styles.lineTitle}>{constants.AUTHOR}</div>
                         <div className={clsx(styles.lineData)}>
                             <span>{AuthorProcess(ticket.fields?.customfield_10244)}</span>
                         </div>
@@ -262,11 +299,17 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                 )}
                 {ticket.fields?.priority.name && (
                     <div className={styles.line}>
-                        <div className={styles.lineTitle}>{"Priorität"}</div>
+                        <div className={styles.lineTitle}>{constants.PIORITY}</div>
                         <div className={clsx(styles.lineData, styles.bold)}>
                             {ticket.fields?.priority?.iconUrl && (<Image src={ticket.fields?.priority?.iconUrl} alt={"status"} height={32} width={12} />)}
                             <span>{updatePriorityName(ticket.fields?.priority?.name)}</span>
                         </div>
+                    </div>
+                )}
+                {ticket.fields?.description?.content && ticket.fields?.description?.content.length > 0 && descriptionProcess(ticket.fields?.description?.content as Array<DescriptionSection>) && (
+                    <div className={styles.line}>
+                        <div className={clsx(styles.lineTitle, styles.pinchTop)}>{constants.DESCRIPTION}</div>
+                        <div className={clsx(styles.lineData, styles.paragraphs)} dangerouslySetInnerHTML={{ __html: descriptionProcess(ticket.fields?.description?.content as Array<DescriptionSection>) }} />
                     </div>
                 )}
             </div>
@@ -283,24 +326,9 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
                             </div>
                         ))}
 
-                        {/* <div className={styles.event}>
-                            <div className={styles.time}>{"Oct 30, 4:00 PM "}</div>
-                            <div className={styles.dexcription}>{"Ticket update description"}</div>
-                        </div>
-                        <div className={styles.event}>
-                            <div className={styles.time}>{"Oct 30, 4:00 PM "}</div>
-                            <div className={styles.dexcription}>{"Ticket update description"}</div>
-                        </div>
-                        <div className={styles.event}>
-                            <div className={styles.time}>{"Oct 30, 4:00 PM "}</div>
-                            <div className={styles.dexcription}>{"Ticket update description"}</div>
-                        </div> */}
                     </div>
                 </div>
             )}
-            {/* {Array.isArray(task.fields?.timetracking) && task.fields?.timetracking.length > 0 &&  */}
-
-            {/* } */}
         </div>
     </div>
 }

@@ -1,6 +1,17 @@
 declare global {
   type FieldType = "text" | "textarea" | "password" | "email" | "checkbox";
 
+  type NestedObject = {
+    [key: string]:
+      | NestedObject
+      | string
+      | number
+      | boolean
+      | null
+      | undefined
+      | Array<NestedObject>;
+  };
+
   interface jiraFields {
     summary: string;
     description: string;
@@ -134,6 +145,11 @@ declare global {
     items: Array<EventItem>;
   };
 
+  type DescriptionSection = {
+    type: string;
+    content: Array<NestedObject>
+  }
+
   type Ticket = {
     key: string;
     changelog?: {
@@ -158,20 +174,13 @@ declare global {
         name: string;
       };
       timetracking: Array<object>;
+      description: {
+        content: Array<DescriptionSection>
+      }
     };
   };
 
-  type NestedObject = {
-    [key: string]:
-      | NestedObject
-      | string
-      | number
-      | boolean
-      | null
-      | undefined
-      | Array<NestedObject>;
-  };
-
+ 
   type DropDownListItems = {
     title: string;
     value: string;
