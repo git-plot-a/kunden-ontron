@@ -7,6 +7,7 @@ import styles from "./ticketItem.module.scss"
 import useSendQuery from "@/app/hooks/sendQuery/sendQuery"
 import utils from "@/app/utils"
 import api from "../../api/crud"
+import { string } from "yup"
 
 type Props = {
     ticket: Ticket,
@@ -205,19 +206,48 @@ const TicketItem: React.FC<Props> = ({ ticket, classes = "", style = {} }) => {
 
     }
 
+    const processText = (content: DescriptionSection) => {
+        let description: string = "" as string
+            (content.content as NestedObject[]).forEach((line:NestedObject)=> {
+                if (line.type == 'text') {
+                    description += `<p><span>${line.text}</span></p>`
+                }
+            })
+        return description
+    }
+
+    const processBulletList = (section: DescriptionSection) => {
+        let description: string = ''
+        description += "<ul>" as string
+        section.content.forEach(line => {
+            if (line.type == "listItem" && line.content && (line.content as NestedObject[]).length > 0) {
+                description += "<li>" as string
+                (line.content as NestedObject[]).forEach(bulletItem => {
+                    if (bulletItem.type === 'paragraph' && (bulletItem.content as NestedObject[]).length > 0) {
+                        description+= processText(bulletItem as DescriptionSection)
+                    }
+                    if (bulletItem.type === "bulletList" && bulletItem.content && (bulletItem.content as NestedObject[]).length > 0) {
+                        description += processBulletList(bulletItem as DescriptionSection)
+                    }
+                })
+                 description += "</li>"
+
+            }
+        })
+        description += "</ul>"
+        return description
+    }
 
     //Only text is processed
     const descriptionProcess = (content: Array<DescriptionSection>) => {
         let description: string = ''
+        console.log(content)
         content.forEach(section => {
             if (section.type == "paragraph" && section.content && Array.isArray(section.content) && section.content.length > 0) {
-                description+= '<p>'
-                section.content.forEach(line => {
-                    if (line.type === 'text') {
-                        description += `<span>${line.text}</span>`
-                    }
-                })
-                description+='</p>'
+                description += processText(section)
+            }
+            if (section.type == "bulletList" && section.content && (section.content as NestedObject[]).length > 0) {
+                description += processBulletList(section)
             }
         })
         return description
