@@ -118,7 +118,7 @@ export const editUserFromSchems = yup.object().shape({
 export const sendRequestFormSchems = yup.object().shape({
   requestTypeId: yup.number().integer().required(constants.REQUIRED_FIELD),
   summary: yup.string().max(30, constants.MAX_LENGTH),
-  description: yup.string().max(250, constants.MAX_LENGTH).required(constants.REQUIRED_FIELD),
+  description: yup.string().max(3000, constants.MAX_LENGTH).required(constants.REQUIRED_FIELD),
   priority: yup.number().integer().max(4, constants.UNKNOWN_PRIORITY).min(1, constants.UNKNOWN_PRIORITY).required(constants.REQUIRED_FIELD),
   service: yup.number().integer().required()
 })

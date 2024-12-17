@@ -10,6 +10,14 @@ const FIRST_RESPONCE = 'Erste Antwort innerhalb von <span>8</span> Stunden'
 
 const SUPPORT_LEVEL = ' Ihr aktuelles Support-Level ist <span>Bronze</span>. Um schneller Lösungen zu erhalten, erwägen Sie ein Upgrade auf ein höheres Support-Level <a href="/platforms" class="link">Mehr erfahren ></a>'
 
+const CREATED = 'Antrag eingereicht'
+
+const AUTHOR = 'Autor'
+
+const PIORITY = 'Priorität'
+
+const DESCRIPTION = 'Beschreibung'
+
 const STYLES : {[key: string] : string} = {
     'todo' : 'Zu tun',
     'done' : 'Fertig',
@@ -32,5 +40,9 @@ export default {
     RESOLUTION_DATE,
     EXPECTED_REOLUTION_DATE,
     FIRST_RESPONCE,
-    SUPPORT_LEVEL
+    SUPPORT_LEVEL,
+    CREATED,
+    AUTHOR,
+    PIORITY,
+    DESCRIPTION
 }
