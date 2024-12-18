@@ -8,11 +8,10 @@ import styles from "./topoffersubpages.module.scss"
 
 type Props = {
     title: React.ReactNode,
-    imageUrl: string,
-    loadUrl?: string,
+    imageUrl: string
 }
 
-const TopOfferSubPages: React.FC<Props> = ({ title, imageUrl, loadUrl }) => {
+const TopOfferSubPages: React.FC<Props> = ({ title, imageUrl }) => {
     return <>
         <Container classes={styles.container}>
             <Row>
@@ -26,9 +25,7 @@ const TopOfferSubPages: React.FC<Props> = ({ title, imageUrl, loadUrl }) => {
                         alt="top-offer"
                         width={1160}
                         height={296}
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL={loadUrl ? loadUrl : imageUrl} />
+                        loading="lazy"/>
                 </div>
             </Row>
         </Container>
