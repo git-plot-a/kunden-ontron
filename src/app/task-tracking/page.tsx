@@ -169,16 +169,16 @@ const TaskTrackingPage = () => {
     }
 
     return <>
+        <Header currentPage="task-tracking" />
+        <section id="top-offer">
+            <TopOfferSubPages title={<>Überblick Tickets Gesamt</>} imageUrl="/animation/Banner3_2320x606.gif" loadUrl={'/img/trackingOffer.png'} />
+        </section>
         {!loading && (<>
-            <Header currentPage="task-tracking" />
-            <section id="top-offer">
-                <TopOfferSubPages title={<>Überblick Tickets Gesamt</>} imageUrl="/img/trackingOffer.png" />
-            </section>
             <section style={{ paddingBottom: '224px' }}>
                 <Container>
                     <Row>
                         <Col span={24}>
-                            <TaskList loading={loading} tickets={usedTickets ? usedTickets : []} sortingFunction={sortingFunction} filterFunc={filter} sort={getParam('sort') ? getParam('sort') : null} period={getParam('period') ? getParam('period') : null}/>
+                            <TaskList loading={loading} tickets={usedTickets ? usedTickets : []} sortingFunction={sortingFunction} filterFunc={filter} sort={getParam('sort') ? getParam('sort') : null} period={getParam('period') ? getParam('period') : null} />
                         </Col>
                     </Row>
                 </Container>
