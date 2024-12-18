@@ -172,7 +172,7 @@ const TaskTrackingPage = () => {
         {!loading && (<>
             <Header currentPage="task-tracking" />
             <section id="top-offer">
-                <TopOfferSubPages title={<>Überblick Tickets Gesamt</>} imageUrl="/animation/Banner3_2320x606.gif" />
+                <TopOfferSubPages title={<>Überblick Tickets Gesamt</>} imageUrl="/animation/Banner3_2320x606.gif"  loadUrl={'/img/trackingOffer.png'}/>
             </section>
             <section style={{ paddingBottom: '224px' }}>
                 <Container>
