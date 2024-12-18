@@ -68,7 +68,7 @@ const PlatformsPage = () => {
     <>
       <Header currentPage={"platforms"} />
       <section id="top-offer">
-        <TopOfferSubPages title={<>Produkte verwalten</>} imageUrl={'/animation/Banner1_2320x606_v002.gif'} loadUrl={'/img/platformsOffer.png'}/>
+        <TopOfferSubPages title={<>Produkte verwalten</>} imageUrl={'/animation/Banner1_2320x606_v002.gif'}/>
       </section>
       <section id="user-services" style={{ paddingBottom: '224px' }}>
         <ServiceListWiget services={services} current={hash}/>

@@ -460,7 +460,7 @@ const ReportPagePart = () => {
 
     return <Container classes={styles.mainContainer}>{loading ?
         (
-            <div className={clsx(styles.title, styles.loading, "animation-fade-in", "short-duration")}>{constants.LOADING_IS_IN_PROCESS}</div>
+            <div className={clsx("loading", "animation-fade-in", "short-duration")} style={{marginTop: '66px'}}>{constants.LOADING_IS_IN_PROCESS}</div>
         ) : (Array.isArray((result as NestedObject)?.issues) && ((result as NestedObject)?.issues as NestedObject[]).length > 0 ? (
             <>
                 <Row>

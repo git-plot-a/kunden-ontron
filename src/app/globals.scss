@@ -224,6 +224,24 @@ canvas{
   }
 }
 
+.loading {
+  font-size: 18px;
+  animation: blink 2s infinite;
+}
+
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes shimmer {
   0% {
     background-color: var(--most-light);
