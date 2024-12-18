@@ -1,47 +1,41 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from 'react';
-// import { useEffect, useState } from 'react';
 import lottie from 'lottie-web';
-// import Lottie from 'lottie-react';
-// import animation from "./Robo_email_v002.json"
-// import Image from 'next/image';
 
 type Props = {
-    animation: object
+    animation: object,
+    styles?: object
 }
 
-const LottieAnimation: React.FC<Props> = ({animation}) => {
+const LottieAnimation: React.FC<Props> = ({ animation, styles = {} }) => {
     const lottieContainer = useRef(null);
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        // Устанавливаем, что компонент отрендерился на клиенте
         setIsClient(true);
     }, []);
 
     useEffect(() => {
-        // console.log(animation)
-        // Запускаем анимацию только на клиенте
         if (isClient && lottieContainer.current) {
             lottie.loadAnimation({
-                container: lottieContainer.current, // указание контейнера через useRef
-                animationData: animation, // путь к JSON
+                container: lottieContainer.current,
+                animationData: animation,
                 loop: true,
                 autoplay: true,
+                rendererSettings: {
+                    preserveAspectRatio: 'xMidYMid meet', // Настройка пропорций
+                },
             });
         }
-    }, [isClient]); 
+    }, [isClient]);
 
     if (!isClient) {
         return null;
     }
 
-    return <div style={{ paddingTop: 100 }}>
-     
-        {/* {JSON.stringify(animation)} */}
-        {/* <Image width={500} height={300} src="/animation/Robo_email_v001.gif" alt="ttt" /> */}
-        <div ref={lottieContainer}></div>
+    return <div>
+        <div ref={lottieContainer} style={styles}></div>
     </div>;
 };
 
