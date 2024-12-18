@@ -26,6 +26,7 @@ const TopOfferSubPages: React.FC<Props> = ({ title, imageUrl, loadUrl }) => {
                         alt="top-offer"
                         width={1160}
                         height={296}
+                        loading="lazy"
                         placeholder="blur"
                         blurDataURL={loadUrl ? loadUrl : imageUrl} />
                 </div>
