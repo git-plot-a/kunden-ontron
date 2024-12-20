@@ -26,7 +26,6 @@ const HomePage = () => {
 
 
   useEffect(() => {
-    console.log(utils.user.getToken())
     if (!utils.user.getToken()) {
       utils.user.resetAllData()
       router.push('/login')

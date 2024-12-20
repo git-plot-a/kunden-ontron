@@ -23,7 +23,6 @@ const useSendQuery = () => {
     authorised: boolean = true
   ) => {
     const token = authorised ? utils.user.getUserData()?.token : false;
-    console.log(authorised)
     if ((token && authorised) || !authorised) {
       try {
         const params: RequestInit = {
