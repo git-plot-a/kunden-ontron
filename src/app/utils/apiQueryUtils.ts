@@ -21,10 +21,6 @@ const fetchData = async (
   const token = authorised ? user.getUserData()?.token : false;
   if ((token && authorised) || !authorised) {
     try {
-      console.log({
-        ...header,
-        ...(authorised && token ? { Authorization: `Bearer ${token}` } : {}),
-      })
       const params: {[key: string]: unknown} = {
         method: method,
         headers: {

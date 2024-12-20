@@ -35,14 +35,12 @@ const useSendQuery = () => {
           ...(body && method === "POST" ? { body } : {})
         };
         
-        console.log(params);
-        console.log(address)
         const response = await fetch(address, params);
   
         if (response.status === 403) {
           utils.user.resetAllData();
           router.push('/login');
-          return; // Останавливаем выполнение после редиректа
+          return; 
         }
   
         if (!response.ok) {
@@ -51,8 +49,7 @@ const useSendQuery = () => {
   
         return response.json();
       } catch (error: {[key: string] :string} | unknown) {
-        // Выбрасываем ошибку вместо возврата, чтобы внешние блоки могли обработать её
-        // throw error;
+       
         return {code: "error", "message": (error as {[key: string] :string}).message}
       }
     } else {

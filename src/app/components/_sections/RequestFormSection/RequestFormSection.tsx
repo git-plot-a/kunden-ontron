@@ -44,7 +44,6 @@ const RequestFormSection = () => {
         setLoading(true)
         const getServices = async () => {
             const res: Preview[] = await utils.api.fetchData(api.custom.PREVIEW_CARDS, 'GET', {}, null, true);
-            console.log(res)
             if (res) {
                 setServices(res)
                 if(res.length > 0) {
