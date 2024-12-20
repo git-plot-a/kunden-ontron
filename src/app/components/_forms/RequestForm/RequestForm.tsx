@@ -25,7 +25,6 @@ const RequestForm: React.FC<Props> = ({ handler, services, setChosenServiceId })
     const [loading, setLoading] = useState(false)
     const { fetchData } = useSendQuery()
 
-    console.log(services)
 
     const submitHandler = async (values: { requestTypeId: string, summary: string, description: string, priority: string, service: string }) => {
         setLoading(true)
@@ -42,7 +41,8 @@ const RequestForm: React.FC<Props> = ({ handler, services, setChosenServiceId })
                 }, ...(String(values.service) && String(values.service) != '0' ? { "service": { "id": String(values.service) } } : {})
             }
 
-            const result: { [key: string]: string } = await utils.jira.apiRequest(requestData)
+            const result: NestedObject = await utils.jira.apiRequest(requestData)
+            console.log(result)
             setLoading(false)
             if (result?.issueId) {
                 handler(true)
@@ -84,7 +84,6 @@ const RequestForm: React.FC<Props> = ({ handler, services, setChosenServiceId })
             }
             return res
         }, [])
-        console.log(res)
         return res
     }
 
@@ -110,9 +109,6 @@ const RequestForm: React.FC<Props> = ({ handler, services, setChosenServiceId })
 
              if (services && services.length > 0) {
                  serviceList = getServicesValues(services)
-                // if(serviceList.length > 0) {
-                //     setService(serviceList[0].value)
-                // }
              }
             return <Form>
                 <Row>

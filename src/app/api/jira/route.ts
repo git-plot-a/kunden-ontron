@@ -51,9 +51,9 @@ export async function POST(req: Request) {
         body: JSON.stringify(body),
       });
       //return response
-      if (!response.ok) {
-        throw new Error(`${errors.JIRA_ERROR_RESPONSE} ${response.statusText}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`${errors.JIRA_ERROR_RESPONSE} ${response.statusText}`);
+      // }
 
       const data = await response.json();
       // return response;
